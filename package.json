@@ -7,7 +7,6 @@
   "dependencies": {
     "babelify": "^6.1.2",
     "cssify": "^0.7.0",
-    "shifty": "^1.5.0",
     "watchify": "^3.2.2"
   },
   "devDependencies": {
