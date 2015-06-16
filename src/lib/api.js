@@ -1,6 +1,11 @@
 require('whatwg-fetch');
 
-function validate(response) {
+let headers = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+};
+
+function basicFilter(response) {
     if (response.status != 200)
         throw new Error(response.statusText);
 
@@ -9,6 +14,7 @@ function validate(response) {
 
 
 function authorize(response) {
+    console.log(`Now Authorized: Bearer ${ response.token }`)
     headers.Authorization = `Bearer ${ response.token }`;
     return response;
 }
@@ -18,10 +24,8 @@ let fetchApps = async function () {
     return await fetch('/apps', {
         method: 'get',
         headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
         }
-    }).then(validate);
+    }).then(basicFilter);
 }
 
 let sendLogin = async function (data) {
@@ -32,13 +36,13 @@ let sendLogin = async function (data) {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
-    }).then(validate).then(authorize);
+    }).then(basicFilter)
 
     if (!response) {
         console.log('response', response);
         return;
     }
-
+    authorize(response);
     return response;
 }
 
@@ -50,7 +54,7 @@ let sendRegister = async function (data) {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
-    }).then(validate);
+    }).then(basicFilter);
     return await login(data);
 
 }
@@ -64,7 +68,7 @@ let sendPurchase = async function (app_id, token) {
         body: JSON.stringify(data),
         method: 'post',
         headers,
-    }).then(validate);
+    }).then(basicFilter);
 }
 
 export default { fetchApps, sendLogin, sendRegister, sendPurchase }
