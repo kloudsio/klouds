@@ -1,5 +1,4 @@
 require('babelify/polyfill')
-require('whatwg-fetch');
 
 import { tree, render, element } from 'deku'
 

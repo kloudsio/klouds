@@ -1,0 +1,27 @@
+.stripe-form {
+
+}
+
+.title {
+
+}
+
+.info {
+
+}
+
+.stripe-errors {
+
+}
+
+input.expiry {
+  box-sizing: border-box;
+  display: inline-block;
+  width: 4em;
+}
+
+/* stripe stuff */
+button.stripe-busy {
+  pointer-events: none;
+  cursor: not-allowed;
+}

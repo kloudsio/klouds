@@ -1,4 +1,42 @@
-@import './global.css';
-@import './layout.css';
-@import './controls.css';
-@import './step.css';
+
+:root {
+  /*  color scheme*/
+  --astral-light: #57B4D6;
+  --astral-dark: #396E8B;
+
+  --black: #000000;
+  --dark: rgba(0, 0, 0, 0.8);
+  --purple: #664E99;
+  --venice-blue: #10486A;
+  --light: #DCDCDC;
+
+
+  --background: transparent;
+  --box-shadow: none;
+  --border: transparent;
+  --color: var(--light);
+
+  --button-background: var(--light);
+
+
+  --gutters: 10px;
+
+  --step-background: #FFF;
+  --step-border: #CCCCDD;
+
+  --button-primary-color: #E9E9E9;
+  --button-secondary: hsl(0, 0%, 86%);
+  --app-item: #EEE;
+}
+
+body {
+  background: radial-gradient(var(--astral-light), var(--astral-dark));
+  position: relative;
+  font: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+@import "../elements/page.css";
+@import "../elements/logo-text.css";
+@import "../elements/login.css";
+@import "../elements/apps.css";
+@import "../elements/stripe.css";

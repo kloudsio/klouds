@@ -8,16 +8,18 @@ function css {
 	echo "}"
 }
 
-function classes {
-	ls $1 | while read x ; do
-		NAME=$(basename $x .js)
-		cat $x | grep -oPw 'class=[{"]\K[^\s}"]+' | sed "s/.*/\.$NAME \.& {\n\t\n}\n/g"
-	done
-}
 
-FNAME=shift
-CMD=shift
-[ "$FNAME" = "classes" ] && classes $1 && exit $?
+FNAME=$0
+CMD=$1
+shift;
+if [ "$CMD" = "classes" ]; then
+
+	ls -1 $@ | while read x; do
+		OUTPUT=$(echo $x | sed s/\.js/\.css/g)
+		grep -oPw 'class=[{"]\K[^\s}"]+' $x | sed "s/.*/\\.& {\n\t\n}\n/g" > $OUTPUT
+	done
+	exit 0;
+fi
 [ "$CMD" = "css" ]     && css && exit $?
 
 
