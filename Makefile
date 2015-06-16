@@ -7,38 +7,53 @@ NODE_ENV ?= development
 #
 # Commands
 #
-all: install
+all: install build
 
 
-install:
+install: node_modules dist/lib
+
+# when package.json updates, npm install, update timestamp
+node_modules: package.json
+	@ npm install
+	@ touch node_modules
+
+
+# when node_modules or package.json updates, then copy vendor libs
+dist/lib: node_modules package.json
 	@[ -d dist ] || mkdir dist
 	@[ -d dist/lib ] || mkdir dist/lib
-	@ npm install
 	@ cp ./node_modules/flexboxgrid/css/index.min.css dist/lib/flexbox.css
-	@ cp ./node_modules/normalize.css/normalize.css dist/lib/normalize.css
 
 #
 # client build
 #
 
 BROWSERIFY := ./node_modules/.bin/browserify
+
+BABELIFY := babelify
+BABELIFY += --jsxPragma element
+BABELIFY += --stage 1
+BABELIFY += --optional utility.inlineEnvironmentVariables
+BABELIFY += --optional es7.asyncFunctions
+
 MYTH := ./node_modules/.bin/myth
 
-build: js css public
+PUBLIC := $(wildcard src/public/*)
+PUBLIC_TARGET := add_prefix(build/ $(PUBLIC))
+
+build: js css $(PUBLIC)
 
 css:
 	$(MYTH) src/styles/app.css dist/app.css
 
 js:
-	$(BROWSERIFY) src/lib/app.js -t [ babelify \
-				--jsxPragma element \
-				--stage 1 \
-				--optional utility.inlineEnvironmentVariables \
-				--optional es7.asyncFunctions \
-			] --outfile dist/app.js
+	@echo 'browserifying src/lib/app.js with a sprinkle of ES6 glory'
+	@$(BROWSERIFY) src/lib/app.js -t [ $(BABELIFY) ] --outfile dist/app.js
+	@echo done.
 
-public:
-	cp -R src/public/* dist/
+
+dist/%: src/public/%
+	cp src/public/$* dist/$*
 
 
 clean:
