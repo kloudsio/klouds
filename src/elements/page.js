@@ -3,6 +3,7 @@ import { element } from 'deku';
 import LogoText from './logo-text'
 import Login from './login'
 import Apps from './apps'
+import AppsOff from './apps-off'
 import Stripe from './stripe'
 
 /*
@@ -34,11 +35,27 @@ let Page = {
 export let Landing = {
 	name: 'Landing',
 
+	propTypes: {
+	  	api: {
+	    	source: 'api'
+	 	},
+	},
+
+	afterMount: async function (c, el) {
+		let { props } = c;
+		// Sets state of apps, appsOff
+		return props.api.apps();
+	},
 
  	render(c) {
  		let { props, state, setState } = c;
- 		function onPurchase(item) {
-		  setState({ item });
+
+ 		function openPurchase(item) {
+		  setState({ item: item });
+		}
+
+		function closePurchase() {
+		  setState({ item: null });
 		}
 
  		return <Page>
@@ -47,11 +64,12 @@ export let Landing = {
 		    	<Login />
 	    	</Row>
 	    	<Row n="2" text="Klouds ID">
-	    		<Apps onPurchase={onPurchase}/>
+	    		<Apps apps={state.apps} onPurchase={openPurchase}/>
 	    	</Row>
 	    	<Row n="3" text="Klouds ID">
-	    		<Stripe />
+	    		<AppsOff apps={state.appsOff} />
 	    	</Row>
+	    		<Stripe onClose={closePurchase} />
 		</Page>
 	}
 }

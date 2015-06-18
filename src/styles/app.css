@@ -35,8 +35,8 @@ body {
   font: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-@import "../elements/page.css";
-@import "../elements/logo-text.css";
-@import "../elements/login.css";
-@import "../elements/apps.css";
-@import "../elements/stripe.css";
+@import "./elements/page.css";
+@import "./elements/logo-text.css";
+@import "./elements/login.css";
+@import "./elements/apps.css";
+@import "./elements/stripe.css";

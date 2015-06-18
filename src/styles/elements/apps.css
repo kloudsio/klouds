@@ -25,7 +25,7 @@
   color: var(--dark);
 }
 
-app-off {
+.app-off {
   background: var(--light);
   color: var(--dark);
   border: none;

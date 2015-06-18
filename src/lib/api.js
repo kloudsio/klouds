@@ -1,4 +1,5 @@
 require('whatwg-fetch');
+let _ = require('lodash');
 
 
 /**
@@ -61,8 +62,15 @@ export default function (app) {
 
 
         apps: async function () {
-            return await get('/apps');
+            return await get('/apps').then(function (items) {
+           	    let [ appsOff, apps ] = _.partition(items.apps, 'disabled');
+                return {
+                    apps,
+                    appsOff
+                };
+            })
         },
+
         pay: async function (app_id, tok) {
             return await post('/payments', {app_id, tok});
         }

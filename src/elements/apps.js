@@ -2,97 +2,38 @@ import { element } from 'deku';
 let _ = require('lodash');
 
 
-let Item = {
+let App = {
+	render(c) {
+		let { props } = c;
+		let { name, description } = props.app;
+
+		return <div class="app item">
+			<h4>{name}</h4>
+			<p>{description}</p>
+			<button disabled={!props.launchable} onClick={props.onOpen}>Launch</button>
+		</div>
+	}
+}
+
+let Apps = {
+
 	propTypes: {
 		user: {
 			source: 'user'
-		}
+		},
+		apps: {}
 	},
 
 	render(c) {
-		let { props } = c;
+		let { state, props } = c;
 
-		return <div class="app item">
-			<h4>{props.name}</h4>
-			<p>{props.description}</p>
-			<button disabled={!props.user} onClick={props.onOpen}>{props.button}</button>
-		</div>
+		let apps = _.map(
+			props.apps,
+			app => <App app={app} launchable={props.user} onOpen={ props.onPurchase} />
+		);
+
+		return <div>{apps}</div>
 	}
 }
 
-
-let propTypes = {
-	user: {
-		source: 'user'
-	},
-	showPurchase: {
-		source: 'showPurchase'
-	},
-	api: {
-		source: 'api'
-	}
-}
-
-function initialState (props) {
-  return {
-  	itemsOn: [],
-	itemsOff: []
-  }
-}
-
-let afterMount = async function (c, el) {
-	let { props } = c;
-	let items = await props.api.apps();
-
-	let [appsOff, appsOn] = _.partition(items.apps, 'disabled');
-
-	let itemsOn = [];
-	let itemsOff = [];
-
-	for (let app of appsOn) {
-		itemsOn.push(<Item name={ app.name } description={ app.description } button="Launch" onOpen={ props.showPurchase } />);
-	}
-
-	for (let app of appsOff) {
-		itemsOff.push( <app-off>{app.name}</app-off> );
-	}
-
-	return {
-    	itemsOn: itemsOn,
-    	itemsOff: itemsOff
-  	}
-}
-
-function render(c) {
-
-	let { state, props } = c;
-
-	return <grid>
-		<div class="row middle-xs">
-			<div class="col-xs-2 center-xs">
-				<span class="num">2</span>
-			</div>
-			<div class="col-xs-10 middle-xs">
-				<h2>Purchase Apps</h2>
-			</div>
-		    <div class="col-xs-offset-2 col-xs-10 middle-xs">
-				{state.itemsOn}
-			</div>
-		</div>
-
-
-		<div class="row middle-xs">
-			<div class="col-xs-2 center-xs">
-				<span class="num">3</span>
-			</div>
-			<div class="col-xs-10 middle-xs">
-				<h2>Known Apps</h2>
-			</div>
-		    <div class="col-xs-offset-2 col-xs-10 middle-xs">
-		  		{state.itemsOff}
-		 	</div>
-		</div>
-	</grid>
-}
-
-export default { initialState, propTypes, afterMount, render };
+export default Apps;
