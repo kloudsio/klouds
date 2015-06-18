@@ -1,60 +1,55 @@
+export PATH := ./node_modules/.bin:${PATH}
 
-NODE := iojs
-NODE_ENV ?= development
-
-BROWSERIFY := ./node_modules/.bin/browserify
-
-BABELIFY := babelify
-BABELIFY += --jsxPragma element
-BABELIFY += --stage 1
-BABELIFY += --optional utility.inlineEnvironmentVariables
-BABELIFY += --optional es7.asyncFunctions
-
-MYTH := ./node_modules/.bin/myth
+bin = node_modules/.bin
+src = $(shell find src -name '*.js')
+css = $(shell find src -name '*.css')
+test = $(shell find test -name '*.js')
 
 
-#
-# Commands
-#
 all: install build
 .PHONY: all
 
 install: node_modules dist/lib
+	# install
 .PHONY: install
 
-# when package.json updates, npm install, update timestamp
 node_modules: package.json
-	@ echo 'Running npm install'
+	# node modules
 	@ npm install
 	@ touch node_modules
 
 
-# when node_modules or package.json updates, then copy vendor libs
 dist/lib: node_modules package.json
-	@echo 'Copying Vendor Dependencies'
-	@[ -d dist ] || mkdir dist
-	@[ -d dist/lib ] || mkdir dist/lib
-	@ cp ./node_modules/flexboxgrid/css/index.min.css dist/lib/flexbox.css
+	# manually copying vendor
+	@mkdir -p dist/lib
+	@ cp -v ./node_modules/flexboxgrid/css/index.min.css dist/lib/flexbox.css
 
 # build
 build: dist/app.js dist/app.css assets
+	# build done.
 .PHONY: build
 
 # css
-dist/app.css: src/**/*.css
-	@echo 'Starting myth:'
-	@$(MYTH) src/styles/app.css dist/app.css
+dist/app.css: $(css)
+	# myth
+	@$(bin)/myth src/styles/app.css dist/app.css
 
 # js
-dist/app.js: src/elements/*.js src/lib/*.js
-	@echo 'Starting browserify:'
-	@$(BROWSERIFY) src/lib/app.js -t [ $(BABELIFY) ] --outfile dist/app.js
+dist/app.js: $(src)
+	# browserify
+	@$(bin)/browserify -t babelify src/lib/app.js > dist/app.js
 
 # assets
 assets:
 	@ cp -vu src/public/* dist/
-
 .PHONY: assets
+
+mochify: node_modules $(src) $(test)
+	@$(bin)/mochify --transform babelify --reporter spec ./test/index.js
+.PHONY: mochify
+
+test: | mochify
+.PHONY: test
 
 # clean
 clean:

@@ -7,14 +7,44 @@ import Stripe from './stripe'
 
 const name = 'Login';
 
-function render(component, setState) {
-	return <div class="page">
-            <LogoText>Klouds.io</LogoText>
-            <Login />
-            <Apps />
-            <Stripe />
-        </div>;
+
+/*
+	App Events
+*/
+
+let show = function (item) {
+  app.set('payment', {
+    id: item.id,
+    name: item.name,
+    description: `Recurring Monthly Subscription to ${item.name}`,
+    amount: 999
+  });
 }
+
+let Row = {
+	render: c => <div class="row middle-xs">
+		<div class="col-xs-2 center-xs">
+			<span class="num">{c.props.n}</span>
+		</div>
+		<div class="col-xs-10 middle-xs">
+			<h2>{c.props.text}</h2>
+		</div>
+
+		<div class="col-xs-offset-2 col-xs-10 middle-xs">
+		 	{c.props.children}
+		</div>
+	</div>
+}
+
+
+let render = (c) => <div class="page">
+    <LogoText>Klouds.io</LogoText>
+    <Row n="1" text="Klouds ID">
+    	<Login />
+    </Row>
+    <Apps />
+    <Stripe />
+</div>;
 
 export default {
     name,

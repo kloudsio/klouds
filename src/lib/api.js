@@ -1,74 +1,69 @@
 require('whatwg-fetch');
 
+
+/**
+ * HTTP Request Headers
+ */
+
 let headers = {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
 };
 
-function basicFilter(response) {
-    if (response.status != 200)
-        throw new Error(response.statusText);
 
-    return response.json();
+/**
+ * HTTP Response Middlewares
+ */
+
+let filters = {
+    basic(response) {
+        if (response.status != 200)
+            throw response.json();
+
+        return response.json();
+    },
+    authorize(response) {
+        headers.Authorization = `Bearer ${ response.token }`;
+        return response;
+    },
+}
+
+/**
+ * HTTP Methods Shorthands
+ */
+function get(url) {
+    let method = 'get';
+    return fetch(url, {method,headers}).then(filters.basic);
+}
+
+function post(url, data) {
+    let method = 'post';
+    data = JSON.stringify(data);
+    return fetch(url, {method,headers,data}).then(filters.basic);
 }
 
 
-function authorize(response) {
-    console.log(`Now Authorized: Bearer ${ response.token }`)
-    headers.Authorization = `Bearer ${ response.token }`;
-    return response;
-}
+/**
+ * Expose calls to the rest of the app
+ */
+
+export default function () {
+    this.set('api', {
+
+        login: async function (body) {
+            return await post('/users/login').then(filters.authorize);
+        },
+
+        register: async function (data) {
+            return await post('/users', data).then(filters.authorize);
+        },
 
 
-let fetchApps = async function () {
-    return await fetch('/apps', {
-        method: 'get',
-        headers: {
+        apps: async function () {
+            return await get.bind(undefined, '/apps');
+        },
+        pay: async function (app_id, tok) {
+            return await post('/payments', {app_id, tok});
         }
-    }).then(basicFilter);
+    });
 }
-
-let sendLogin = async function (data) {
-    let response = await fetch('/users/login', {
-        body: JSON.stringify(data),
-        method: 'post',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-    }).then(basicFilter)
-
-    if (!response) {
-        console.log('response', response);
-        return;
-    }
-    authorize(response);
-    return response;
-}
-
-let sendRegister = async function (data) {
-    let response =  await fetch('/users', {
-        body: JSON.stringify(data),
-        method: 'post',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-    }).then(basicFilter);
-    return await login(data);
-
-}
-
-let sendPurchase = async function (app_id, token) {
-    let data = {
-        app_id: app_id,
-        tok: token
-    };
-    return await fetch.post('/payments', {
-        body: JSON.stringify(data),
-        method: 'post',
-        headers,
-    }).then(basicFilter);
-}
-
-export default { fetchApps, sendLogin, sendRegister, sendPurchase }

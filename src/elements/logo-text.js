@@ -12,7 +12,7 @@ function render(component) {
       <div class="col-xs-12 middle-xs">
         <svg class="logo">
           <text>{props.children}</text>
-        </svg>]
+        </svg>
       </div>
     </div>
 }

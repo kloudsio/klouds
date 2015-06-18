@@ -27,7 +27,7 @@ span.num {
   line-height: 1.5em;
 }
 
-input {
+.item input {
   border: 1px solid var(--light);
   background: var(--background);
   color: var(--light);
@@ -51,12 +51,6 @@ button:disabled {
   opacity: 0.8;
   pointer: none;
 }
-
-input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 1000px var(--purple) inset;
-  -webkit-text-shadow: 0 0 0 1000px var(--light) inset;
-}
-
 
 .page label {
   box-sizing: border-box;
