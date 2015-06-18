@@ -31,6 +31,7 @@ let filters = {
 /**
  * HTTP Methods Shorthands
  */
+
 function get(url) {
     let method = 'get';
     return fetch(url, {method,headers}).then(filters.basic);
@@ -47,8 +48,8 @@ function post(url, data) {
  * Expose calls to the rest of the app
  */
 
-export default function () {
-    this.set('api', {
+export default function (app) {
+    app.set('api', {
 
         login: async function (body) {
             return await post('/users/login').then(filters.authorize);
@@ -60,7 +61,7 @@ export default function () {
 
 
         apps: async function () {
-            return await get.bind(undefined, '/apps');
+            return await get('/apps');
         },
         pay: async function (app_id, tok) {
             return await post('/payments', {app_id, tok});

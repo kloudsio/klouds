@@ -2,38 +2,24 @@ require('babelify/polyfill')
 
 import { tree, render, element } from 'deku'
 import api from './api'
-import Page from '../elements/page'
+import config from './config'
+import { Landing } from '../elements/page'
 
 /*
-	App + Config
+  App + Config
 */
 
 let app = tree();
 
-app.set('stripe_pk', process.env.STRIPE_PK);
+app.use(config);
+app.use(api);
 
-
-app.set('setUser', function (user) {
-	app.set('user', user);
+app.use(function data(_app) {
+  _app.set('onLogin', function (user) {
+    _app.set('user', user);
+  });
 });
 
-app.set('showPurchase', show);
-
-
-app.set('fetchApps', api.fetchApps);
-app.set('sendLogin', api.sendLogin);
-app.set('sendRegister', api.sendRegister);
-app.set('sendPurchase', api.sendPurchase);
-
-/*
-	Make Render Tree
-*/
-
-
-app.mount(<Page />);
+app.mount(<Landing />);
 
 render(app, document.querySelector('main'));
-
-export default {
-	app: app
-};

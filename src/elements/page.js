@@ -5,23 +5,13 @@ import Login from './login'
 import Apps from './apps'
 import Stripe from './stripe'
 
-const name = 'Login';
-
-
 /*
 	App Events
 */
 
-let show = function (item) {
-  app.set('payment', {
-    id: item.id,
-    name: item.name,
-    description: `Recurring Monthly Subscription to ${item.name}`,
-    amount: 999
-  });
-}
 
 let Row = {
+	name: 'Row',
 	render: c => <div class="row middle-xs">
 		<div class="col-xs-2 center-xs">
 			<span class="num">{c.props.n}</span>
@@ -36,17 +26,32 @@ let Row = {
 	</div>
 }
 
+let Page = {
+	name: 'Page',
+	render: c => <div class="page">{c.props.children}</div>
+}
 
-let render = (c) => <div class="page">
-    <LogoText>Klouds.io</LogoText>
-    <Row n="1" text="Klouds ID">
-    	<Login />
-    </Row>
-    <Apps />
-    <Stripe />
-</div>;
+export let Landing = {
+	name: 'Landing',
 
-export default {
-    name,
-    render
-};
+
+ 	render(c) {
+ 		let { props, state, setState } = c;
+ 		function onPurchase(item) {
+		  setState({ item });
+		}
+
+ 		return <Page>
+	    	<LogoText>Klouds.io</LogoText>
+	    	<Row n="1" text="Klouds ID" complete={state.user} >
+		    	<Login />
+	    	</Row>
+	    	<Row n="2" text="Klouds ID">
+	    		<Apps onPurchase={onPurchase}/>
+	    	</Row>
+	    	<Row n="3" text="Klouds ID">
+	    		<Stripe />
+	    	</Row>
+		</Page>
+	}
+}

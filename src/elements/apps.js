@@ -28,8 +28,8 @@ let propTypes = {
 	showPurchase: {
 		source: 'showPurchase'
 	},
-	fetchApps: {
-		source: 'fetchApps'
+	api: {
+		source: 'api'
 	}
 }
 
@@ -42,7 +42,7 @@ function initialState (props) {
 
 let afterMount = async function (c, el) {
 	let { props } = c;
-	let items = await props.fetchApps();
+	let items = await props.api.apps();
 
 	let [appsOff, appsOn] = _.partition(items.apps, 'disabled');
 
