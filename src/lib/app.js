@@ -15,7 +15,7 @@ app.use(config);
 app.use(api);
 
 app.use(function data(_app) {
-  _app.set('onLogin', function (user) {
+  _app.set('setUser', function (user) {
     _app.set('user', user);
   });
 });

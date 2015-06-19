@@ -1,4 +1,5 @@
 import { element } from 'deku';
+import { api } from '../lib/api';
 let is = require('is_js');
 
 const name = 'Login';
@@ -19,44 +20,35 @@ function getErrorMessage(err) {
   return `Login Error: ${err.statusText}`;
 }
 
-function getFormData (component) {
-  let { email, password } = component;
+function getFormData (c) {
+  let { email, password } = c;
   return {
     email: email.value,
     password: password.value,
   };
 }
 
-async function onRegister (ev, component, setState) {
-  let { props } = component;
-  let body = getFormData(component);
+function onRegister (ev, c, setState) {
+  let { props } = c;
+  let data = getFormData(c);
 
-  try {
-    let response = await props.sendRegister(body);
-    props.setUser(response.token);
-  } catch (err) {
-      setState({ message: getErrorMessage(err) });
-  }
+  props.api.register(data)
+    .then(res => props.setUser(res.token))
+    .catch(err => setState({ message: getErrorMessage(err) }));
 }
 
-async function onLogin (ev, component, setState) {
-  let { props } = component;
-  let body = getFormData(component);
+function onLogin (ev, c, setState) {
+  let { props } = c;
+  let data = getFormData(c);
 
-  try {
-    let response = await props.sendLogin(body);
-    props.setUser(response.token);
-  } catch (err) {
-    setState({ message: getErrorMessage(err) });
-  }
+  props.api.login(data)
+    .then(res => props.setUser(res.token))
+    .catch(err => setState({ message: getErrorMessage(err) }));
 }
 
 const propTypes = {
-  sendLogin: {
-    source: 'sendLogin'
-  },
-  sendRegister: {
-    source: 'sendRegister'
+  api: {
+    source: 'api'
   },
   setUser: {
     source: 'setUser'
@@ -71,26 +63,27 @@ function initialState (props) {
 }
 
 
-function render(component, setState) {
-  let { props, state } = component;
+function render(c, setState) {
+  let { props, state } = c;
 
   return <form class="login">
     <span class="error">{ state.message }</span>
     <h4>Email</h4>
-  	<input onInput={ function () { } } type="email" />
+  	<input type="email" />
     <h4>Password</h4>
-    <input onInput={ function () { } } type="password" />
+    <input id="password" type="password" />
     <h4>Confirm Password</h4>
-    <input onInput={ function () { } } type="password" />
+    <inpu id="password2" type="password" />
     <button class="register-btn" type="button" disabled={ false } onClick={ onRegister }>Register</button>
     <button class="login-btn primary" type="button" disabled={ false } onClick={ onLogin }>Login</button>
   </form>
 
 }
 
-function afterRender(component, el) {
-  component.email = el.querySelector('input[type=email]');
-  component.password = el.querySelector('input[type=password]');
+function afterRender(c, el) {
+  c.email = el.querySelector('input[type=email]');
+  c.password = el.querySelector('input#password');
+  c.password2 = el.querySelector('input#password2');
 }
 
 export default { name, propTypes, initialState, render, afterRender }

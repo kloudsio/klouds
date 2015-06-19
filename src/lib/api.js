@@ -16,7 +16,7 @@ let headers = {
  * HTTP Response Middlewares
  */
 
-let filters = {
+let pipes = {
     basic(response) {
         if (response.status != 200)
             throw response.json();
@@ -35,13 +35,13 @@ let filters = {
 
 function get(url) {
     let method = 'get';
-    return fetch(url, {method,headers}).then(filters.basic);
+    return fetch(url, {method,headers}).then(pipes.basic);
 }
 
-function post(url, data) {
+function post(url, body) {
     let method = 'post';
-    data = JSON.stringify(data);
-    return fetch(url, {method,headers,data}).then(filters.basic);
+    body = JSON.stringify(body);
+    return fetch(url, {method,headers,body}).then(pipes.basic);
 }
 
 
@@ -52,17 +52,17 @@ function post(url, data) {
 export default function (app) {
     app.set('api', {
 
-        login: async function (body) {
-            return await post('/users/login').then(filters.authorize);
+        login: function (body) {
+            return post('/users/login', body).then(pipes.authorize);
         },
 
-        register: async function (data) {
-            return await post('/users', data).then(filters.authorize);
+        register: function (body) {
+            return post('/users/register', body).then(pipes.authorize);
         },
 
 
-        apps: async function () {
-            return await get('/apps').then(function (items) {
+        apps: function () {
+            return get('/apps').then(function (items) {
            	    let [ appsOff, apps ] = _.partition(items.apps, 'disabled');
                 return {
                     apps,
@@ -71,8 +71,8 @@ export default function (app) {
             })
         },
 
-        pay: async function (app_id, tok) {
-            return await post('/payments', {app_id, tok});
+        pay: function (app_id, tok) {
+            return post('/payments', {app_id, tok});
         }
     });
 }
