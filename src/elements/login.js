@@ -1,63 +1,15 @@
-import { element } from 'deku';
-import { api } from '../lib/api';
-let is = require('is_js');
+import { element } from 'deku'
+import Relay from '../lib/relay.js'
 
-const name = 'Login';
+let is = require('is_js')
 
-function getErrorMessage(err) {
-  const errors = {
-    400: 'Invalid Login',
-    401: 'Incorrect Login',
-    403: 'That User Already Exists',
-    404: 'Could Not Connect',
-    500: 'Internal Server Failz. Sorry',
-  };
+const name = 'Login'
 
-  if (typeof errors[err.status] !== 'undefined') {
-    return errors[err.status]
-  }
-
-  return `Login Error: ${err.statusText}`;
-}
-
-function getFormData (c) {
-  let { email, password } = c;
-  return {
-    email: email.value,
-    password: password.value,
-  };
-}
-
-function onRegister (ev, c, setState) {
-  let { props } = c;
-  let data = getFormData(c);
-
-  props.api.register(data)
-    .then(res => props.setUser(res.token))
-    .catch(err => setState({ message: getErrorMessage(err) }));
-}
-
-function onLogin (ev, c, setState) {
-  let { props } = c;
-  let data = getFormData(c);
-
-  props.api.login(data)
-    .then(res => props.setUser(res.token))
-    .catch(err => setState({ message: getErrorMessage(err) }));
-}
-
-const propTypes = {
-  api: {
-    source: 'api'
-  },
-  setUser: {
-    source: 'setUser'
-  }
-};
+export let login = Relay.create()
+export let register = Relay.create()
 
 function initialState (props) {
   return {
-    errors: {},
     message: '',
   }
 }
@@ -67,23 +19,24 @@ function render(c, setState) {
   let { props, state } = c;
 
   return <form class="login">
-    <span class="error">{ state.message }</span>
+    <span class="error">{state.message}</span>
     <h4>Email</h4>
-  	<input type="email" />
+  	<input id="email" type="email" />
     <h4>Password</h4>
     <input id="password" type="password" />
     <h4>Confirm Password</h4>
-    <inpu id="password2" type="password" />
-    <button class="register-btn" type="button" disabled={ false } onClick={ onRegister }>Register</button>
-    <button class="login-btn primary" type="button" disabled={ false } onClick={ onLogin }>Login</button>
+    <input id="password2" type="password" />
+    <button class="register-btn" onClick={register.go} type="button">Register</button>
+    <button class="login-btn primary" onClick={login.go} type="button">Login</button>
   </form>
 
 }
 
 function afterRender(c, el) {
-  c.email = el.querySelector('input[type=email]');
-  c.password = el.querySelector('input#password');
-  c.password2 = el.querySelector('input#password2');
+  c.data = () => ({
+    email: el.querySelector('#email').value,
+    password: el.querySelector('#password').value,
+  })
 }
 
 export default { name, propTypes, initialState, render, afterRender }

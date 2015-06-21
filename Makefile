@@ -35,9 +35,9 @@ dist/app.css: $(css)
 	@$(bin)/myth src/styles/app.css dist/app.css
 
 # js
-dist/app.js: $(src)
+dist/app.js: $(src) .babelrc
 	# browserify
-	@$(bin)/browserify -t babelify src/lib/app.js > dist/app.js
+	@browserify src/lib/app.js -t babelify --outfile dist/app.js
 
 # assets
 assets:

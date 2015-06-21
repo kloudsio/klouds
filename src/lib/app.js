@@ -1,7 +1,6 @@
-require('babelify/polyfill')
+require('babelify/polyfill');
 
 import { tree, render, element } from 'deku'
-import api from './api'
 import config from './config'
 import { Landing } from '../elements/page'
 
@@ -11,14 +10,12 @@ import { Landing } from '../elements/page'
 
 let app = tree();
 
-app.use(config);
-app.use(api);
+app.set(config);
 
-app.use(function data(_app) {
-  _app.set('setUser', function (user) {
-    _app.set('user', user);
-  });
+app.set('setUser', function (user) {
+  app.set('user', user);
 });
+
 
 app.mount(<Landing />);
 

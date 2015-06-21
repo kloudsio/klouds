@@ -1,5 +1,3 @@
 node_modules
-
 dist/
-
-make.sh
+scripts/make.sh

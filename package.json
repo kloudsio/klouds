@@ -5,20 +5,22 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "composition": "^2.1.1",
     "deku": "^0.4.4"
   },
   "devDependencies": {
-    "cssify": "^0.7.0",
-    "is_js": "^0.7.4",
-    "myth": "^1.4.0",
     "babelify": "^6.1.2",
-    "watchify": "^3.2.2",
     "browserify": "^10.2.4",
+    "co": "^4.5.4",
+    "cssify": "^0.7.0",
     "flexboxgrid": "^6.2.0",
+    "is_js": "^0.7.4",
     "lodash": "^3.9.3",
     "mochify": "^2.9.0",
+    "myth": "^1.4.0",
     "phantomjs": "^1.9.17",
     "shifty": "^1.5.0",
+    "watchify": "^3.2.2",
     "whatwg-fetch": "^0.9.0"
   }
 }
