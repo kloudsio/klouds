@@ -1,73 +1,62 @@
-require('whatwg-fetch');
-let _ = require('lodash');
+import axios from 'axios'
 
 
-/**
- * HTTP Request Headers
- */
 
-let headers = {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-};
-
+let Api = {};
 
 /**
- * HTTP Response Middlewares
+ * Authorization Header
  */
-
-function jsonPipe(response) {
-    let data = response.json();
-    if (response.status != 200)
-        throw data;
-    return data;
+let Authorization = '';
+Api.setAuthToken = token => {
+  Authorization = `Bearer ${token}`;
 }
-
-function authPipe(response) {
-    headers.Authorization = `Bearer ${ response.token }`;
-    return response;
-}
-
 
 /**
- * HTTP Methods Shorthands
+ * List Applications
  */
-
-function get(url) {
-    let method = 'get';
-    return fetch(url, { method, headers }).then(jsonPipe);
-}
-
-function post(url, data) {
-    let method = 'post';
-    data = JSON.stringify(data);
-    return fetch(url, { method, headers, data }).then(jsonPipe);
-}
-
+Api.apps = () => axios({
+  method: 'get',
+  url: '/apps'
+})
 
 /**
- * Expose calls to the rest of the app
+ * List Applications
  */
+Api.disabledApps = () => axios({
+  method: 'get',
+  url: '/disabled',
+})
 
-export let login = function (data) {
-    return post('/users/login', data).then(authPipe);
-}
+/**
+ * Login Account
+ */
+Api.login = data => axios({
+  method: 'post',
+  url: '/login',
+  data
+})
 
-export let register = function (data) {
-   return post('/users/register', data).then(authPipe);
-}
+/**
+ * Create Account
+ */
+Api.register = data => axios({
+  method: 'post',
+  url: '/register',
+  data
+})
+
+/**
+ * Purchase App
+ */
+Api.payment = data => axios({
+  method: 'post',
+  url: '/payment/',
+  headers: {
+    Authorization
+  },
+  data
+})
 
 
-export let apps = function () {
-    return get('/apps').then(function (items) {
-   	    let [ appsOff, apps ] = _.partition(items.apps, 'disabled');
-        return {
-            apps,
-            appsOff
-        };
-   })
-}
-
-export let pay = function (app_id, tok) {
-   return post('/payments', {app_id, tok});
-}
+export default Api;

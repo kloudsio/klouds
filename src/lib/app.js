@@ -1,8 +1,6 @@
-require('babelify/polyfill');
-
 import { tree, render, element } from 'deku'
 import config from './config'
-import { Landing } from '../elements/page'
+import { Landing } from '../pages/landing.js'
 
 /*
   App + Config

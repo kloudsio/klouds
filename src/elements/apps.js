@@ -6,7 +6,7 @@ let App = {
 	render(c) {
 		let { props } = c;
 		let { name, description } = props.app;
-
+		console.log(props.app)
 		return <div class="app item">
 			<h4>{name}</h4>
 			<p>{description}</p>

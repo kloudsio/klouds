@@ -9,7 +9,7 @@ test = $(shell find test -name '*.js')
 all: install build
 .PHONY: all
 
-install: node_modules dist/lib
+install: node_modules dist/lib/flexbox.css dist/lib/browser-polyfill.min.js
 	# install
 .PHONY: install
 
@@ -19,10 +19,11 @@ node_modules: package.json
 	@ touch node_modules
 
 
-dist/lib: node_modules package.json
+dist/lib/%: node_modules package.json
 	# manually copying vendor
 	@mkdir -p dist/lib
 	@ cp -v ./node_modules/flexboxgrid/css/index.min.css dist/lib/flexbox.css
+	@ cp -v ./node_modules/babelify/node_modules/babel-core/browser-polyfill.min.js dist/lib/browser-polyfill.min.js
 
 # build
 build: dist/app.js dist/app.css assets
@@ -37,7 +38,7 @@ dist/app.css: $(css)
 # js
 dist/app.js: $(src) .babelrc
 	# browserify
-	@browserify src/lib/app.js -t babelify --outfile dist/app.js
+	@$(bin)/browserify -d src/lib/app.js -t babelify --outfile dist/app.js
 
 # assets
 assets:
