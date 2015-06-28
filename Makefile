@@ -38,7 +38,7 @@ dist/app.css: $(css)
 # js
 dist/app.js: $(src) .babelrc
 	# browserify
-	@$(bin)/browserify -d src/lib/app.js -t babelify --outfile dist/app.js
+	@browserify -d src/lib/app.js -t babelify --outfile dist/app.js
 
 # assets
 assets:

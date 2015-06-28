@@ -9,59 +9,48 @@ import Stripe from '../elements/stripe'
 
 import Api from '../lib/api'
 
-async function onLogin (data, setState) {
-  setState({error: ''})
-  try {
-    let response = await Api.login({
-      email: data.email,
-      password: data.password
-    })
-    Api.setAuthToken(response.data.token);
-    setState({ done: true })
-  } catch (response) {
-      console.log(response);
-    if (response instanceof Error || response.status == 0) {
-      // Network Error
-      setState({error: 'Could not reach Klouds.io!'})
-    } else {
-      // non 2xx response
-      setState({error: response.data.error})
-    }
+async function onLogin (action, { email, password, password2 } ) {
+  let isNoob = (action == 'register')
+  let clumsyNoob = (isNoob && password != password2)
+  
+  if (clumsyNoob) return { error: "Passwords do not match." };
+  
+  let { data, err } = (isNoob ? await Api.register({email, password}) : await Api.login({email, password}))
+  
+  if (err) {
+    return { error: ({error='Could not reach Klouds.io!'}=err)};
   }
-}
-
-function onRegister (data, setState) {
-  let {email, password} = data;
-  if (data.password !== data.password2) {
-    return setState({
-      message: "Passwords do not match."
-    });
-  }
-
-  let res = Api.register({email, password});
+  
+  Api.setAuthToken(data.token);
+  return { done: true };
 }
 
 
 
 export let Landing = {
-  name: 'Landing',
-
-  afterMount: async function (c, el) {
-    try {
-      return await {
-        appsOn: (await Api.apps()).data,
-        appsOff: (await Api.disabledApps()).data
-      }
-    } catch (error) {
-      console.log(error.message);
-      return { error: error }
+  initialState() {
+    return {
+      noob: true,
+      appsOn: [],
+      appsOff: [],
     }
   },
+  async afterMount(c, el, setState) {
+    try {
+      let appsOn = await Api.apps()
+      let appsOff = await Api.disabledApps()
+      return {
+        appsOn: appsOn.data,
+        appsOff: appsOff.data
+      }
+    } catch (error) {
+      return { error }
+    }
+  },
+  render(component, setState) {
+    let { props, state } = component;
 
-  render(c) {
-    let { props, state, setState } = c;
-
-    function openPurchase(item) {
+    function openPurchase() {
       setState({ item: item });
     }
 
@@ -69,11 +58,18 @@ export let Landing = {
       setState({ item: null });
     }
 
+    function noobSwitch(e) {
+      setState({ noob: state.noob === false });
+    }
+    
+    let loginProps = state.noob ? { onClick: noobSwitch, class: "inactive" } : {}
+    let registerProps = !state.noob ? { onClick: noobSwitch, class: "inactive" } : {}
+
     return <Page>
       <LogoText>Klouds.io</LogoText>
-      <Row n="1" text="Klouds ID" complete={state.user} >
-        <Login onLogin={onLogin} />
-        <Login type="register" onRegister={onRegister} />
+      <Row n="1" text="Klouds Beta Accounts" complete={state.user} >
+        <h3><span {...registerProps}>Register</span> <span class="inactive">or</span> <span {...loginProps}>Login</span></h3>
+        <Login on={onLogin} noob={state.noob} />
       </Row>
       <Row n="2" text="Klouds ID">
         <Apps apps={state.appsOn} onPurchase={openPurchase}/>

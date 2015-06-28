@@ -1,18 +1,7 @@
 .login {
   position: relative;
   color: var(--light);
-}
-
-.login .register-btn {
-
-}
-
-.login .login-btn {
-
-}
-
-.login button {
-  width: 7em;
+  width: 18em;
 }
 
 .login h4 {
@@ -22,39 +11,12 @@
   color: var(--light);
   margin-top: 0.5em;
   padding-right: 2em;
+  margin-left: 1em;
 }
-
-.login h2 {
-  color: var(--light);
-  margin-top: 0.5em;
-  padding-right: 2em;
-}
-
 .login input {
-  box-sizing: margin-box;
-
-  outline-offset: 0px;
-  border: 2px solid var(--light);
-  background: transparent;
-  color: var(--light);
-
-
   width: 15.2em;
   margin-right: 1.4em;
   margin-bottom: 1em;
-}
-
-input:-webkit-autofill {
-}
-
-
-.login form {
-  width: 18em;
-  padding: 6em;
-}
-
-.login h4 {
-  margin-left: 1em;
 }
 
 .login .error {

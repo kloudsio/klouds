@@ -7,6 +7,12 @@
   background: transparent;
 }
 
+input, button {
+  outline-offset: 0px;
+  border: 2px solid var(--light);
+  background: transparent;
+  color: var(--light);
+}
 
 span.num {
   display: inline-block;
@@ -20,31 +26,16 @@ span.num {
   color: var(--light);
 }
 
-.row h2 {
+.row h2, .row h3 {
   color: var(--light);
   text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.7);
-  margin: 0;
+  margin: 0 0.5em 0 0;
   line-height: 1.5em;
+  display: inline-block;
 }
 
-.item input {
-  border: 1px solid var(--light);
-  background: var(--background);
-  color: var(--light);
-  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
-  outline-offset: 0px;
-}
-
-button {
-  background: var(--light);
-  border: rgba(100, 100, 100, 0.2) solid 1px;
-  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
-  color: var(--purple);
-}
-
-button.primary {
-  background: var(--purple);
-  color: var(--light);
+span.inactive {
+  opacity: 0.6;
 }
 
 button:disabled {

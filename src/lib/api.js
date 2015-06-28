@@ -1,7 +1,6 @@
 import axios from 'axios'
 
 
-
 let Api = {};
 
 /**
@@ -31,20 +30,18 @@ Api.disabledApps = () => axios({
 /**
  * Login Account
  */
-Api.login = data => axios({
-  method: 'post',
-  url: '/login',
-  data
-})
+Api.login = data => {
+  return axios({ method: 'post', url: '/login', data })
+    .then(res => res, err => ({ err }))
+}
 
 /**
  * Create Account
  */
-Api.register = data => axios({
-  method: 'post',
-  url: '/register',
-  data
-})
+Api.register = data => {
+  return axios({ method: 'post', url: '/register', data })
+    .then(res => res, err => ({ err }))
+}
 
 /**
  * Purchase App
