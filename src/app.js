@@ -1,7 +1,8 @@
-import { tree, render, element } from 'deku'
 import config from './config'
-import { Landing } from '../pages/landing.js'
+import { tree, render, element } from 'deku'
+import { Landing } from './components/layout.js'
 
+window.element = element;
 
 let app = tree();
 

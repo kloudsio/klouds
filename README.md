@@ -44,6 +44,6 @@ The app logic is separated as such.
 
 ``/app.js`` imports some ``/events.js`` to react to ``/elements/*.js`` events.
 
-``/events.js`` makes some calls to ``/lib/api.js``, the lib that talks to the server.
+``/events.js`` makes some calls to ``/api.js``, the lib that talks to the server.
 
 ``/app.js`` renders it into the page.

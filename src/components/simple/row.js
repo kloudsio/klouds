@@ -1,14 +1,3 @@
-import { element } from 'deku'
-
-export let Page = {
-  name: 'Page',
-  render(component, setState) {
-    let {state, props} = component
-    return <div class="page">
-      {props.children}
-     </div>
-  }
-}
 
 export let Row = {
   name: 'Row',

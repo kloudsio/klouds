@@ -34,8 +34,11 @@ span.num {
   display: inline-block;
 }
 
-span.inactive {
+h3.on-off > * {
   opacity: 0.6;
+}
+h3.on-off > on {
+  opacity: 1;
 }
 
 button:disabled {

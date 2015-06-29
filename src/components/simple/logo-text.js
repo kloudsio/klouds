@@ -1,9 +1,4 @@
-import { element } from 'deku';
-
-var Shifty = require('shifty');
-
-var shifty = new Shifty();
-
+import shifty from 'shifty'
 
 function render(component) {
   let { props, state } = component;
