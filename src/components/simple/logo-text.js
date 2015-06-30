@@ -1,7 +1,8 @@
+import { element } from 'deku'
 import shifty from 'shifty'
 
 function render(component) {
-  let { props, state } = component;
+  let { props, state } = component
 
   return <div class="row center-xs">
       <div class="col-xs-12 middle-xs">
@@ -14,19 +15,19 @@ function render(component) {
 
 
 function outline(el) {
-  shifty.tween({
+  new shifty().tween({
     from: { offset: 0 },
-    to:   { offset: -1200 },
+    to: { offset: -1200 },
     duration: 1500,
     easing: 'easeInQuad',
     step: ({offset}) => {
-      el.style.strokeDashoffset = offset;
+      el.style.strokeDashoffset = offset
     }
-  });
+  })
 }
 
 function afterRender(component, el) {
-  outline(el.querySelector('text'));
+  outline(el.querySelector('text'))
 }
 
 export default { render, afterRender }

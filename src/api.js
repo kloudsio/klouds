@@ -4,16 +4,33 @@ import axios from 'axios'
 let Api = {
   token: null,
   headers: {},
-  http: axios,
-};
+  http: axios
+}
 
 /**
  * setAuthToken authorizes future calls using an API token.
  */
 Api.setAuthToken = token => {
-  Api.token = token;
-  Api.headers.Authorization = `Bearer ${token}`;
+  Api.token = token
+  Api.headers.Authorization = `Bearer ${token}`
 }
+
+
+// Login Account
+
+Api.login = data => {
+  return axios({ method: 'post', url: '/login', data })
+    .then(res => res, err => ({ err }))
+}
+
+
+// Create Account
+
+Api.register = data => {
+  return axios({ method: 'post', url: '/register', data })
+    .then(res => res, err => ({ err }))
+}
+
 
 
 /**
@@ -29,7 +46,7 @@ Api.apps = () => axios({
  */
 Api.disabledApps = () => axios({
   method: 'get',
-  url: '/disabled',
+  url: '/disabled'
 })
 
 /**
@@ -39,8 +56,8 @@ Api.payment = data => axios({
   method: 'post',
   url: '/payment/',
   headers: Api.headers,
-  data: data
+  data
 })
 
 
-export default Api;
+export default Api

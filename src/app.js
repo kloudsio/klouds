@@ -1,13 +1,11 @@
 import config from './config'
+import Layout from './components/layout'
 import { tree, render, element } from 'deku'
-import { Landing } from './components/layout.js'
 
-window.element = element;
 
-let app = tree();
+let app = tree()
+app.set(config)
 
-app.set(config);
+app.mount(<Layout />)
 
-app.mount(<Landing />);
-
-render(app, document.querySelector('main'));
+render(app, document.querySelector('main'))

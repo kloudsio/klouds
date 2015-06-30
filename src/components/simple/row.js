@@ -1,7 +1,7 @@
+import { element } from 'deku'
 
-export let Row = {
-  name: 'Row',
-  render(component, setState) {
+let Row = {
+  render(component) {
     let {state, props} = component
     return <div class="row middle-xs">
       <div class="col-xs-2 center-xs">
@@ -16,3 +16,5 @@ export let Row = {
     </div>
   }
 }
+
+export default Row

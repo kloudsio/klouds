@@ -2,5 +2,6 @@
 	"jsxPragma": "element",
 	"stage": "1",
 	"optional": ["utility.inlineEnvironmentVariables", "es7.asyncFunctions"],
-	"ignore": "node_modules"
+	"ignore": "node_modules",
+	"sourceMaps": "inline"
 }

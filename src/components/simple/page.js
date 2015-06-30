@@ -1,5 +1,6 @@
+import { element } from 'deku'
 
-export let Page = {
+let Page = {
   name: 'Page',
   render(component, setState) {
     let {state, props} = component
@@ -8,3 +9,5 @@ export let Page = {
      </div>
   }
 }
+
+export default Page

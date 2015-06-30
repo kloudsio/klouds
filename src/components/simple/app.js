@@ -1,12 +1,13 @@
+import { element } from 'deku'
 let App = {
 
-  render(component) {
-    let { state, props } = component
+  render(c) {
+    let { state, props } = c
 
     return <div class="app item">
-      <h4>{props.name}</h4>
-      <p>{props.description}</p>
-      <button disabled={props.disabled} onClick={props.onClick}>Launch</button>
+      <h4>{props.app.name}</h4>
+      <p>{props.app.description}</p>
+      <button onClick={props.onClick}>Launch</button>
     </div>
   }
 }

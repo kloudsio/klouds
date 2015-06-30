@@ -25,6 +25,15 @@ dist/lib/%: node_modules package.json
 build: dist/app.js dist/app.css assets
 .PHONY: build
 
+watch:
+	@sane "make build" src --glob="**.*"
+.PHONY: watch
+
+
+# assets
+assets:
+	@ cp -vu src/public/* dist/
+.PHONY: assets
 
 # css
 dist/app.css: $(css)
@@ -34,13 +43,8 @@ dist/app.css: $(css)
 
 # js
 dist/app.js: $(src) .babelrc
-	# browserify
+	# browserify:
 	@browserify -d src/app.js -t babelify --outfile dist/app.js
-
-# assets
-assets:
-	@ cp -vu src/public/* dist/
-.PHONY: assets
 
 
 mochify: node_modules $(src) $(test)
@@ -53,7 +57,5 @@ test: | mochify
 # clean
 clean:
 	rm -rf dist
-	rm -rf node_modules
-	npm cache clean
 .PHONY: clean
 

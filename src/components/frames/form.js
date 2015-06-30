@@ -1,19 +1,14 @@
-import is from 'is_js'
+import { element } from 'deku'
 
 let Form = {
-
-  initialState(props) {
+  initialState() {
     return {
       getData: () => {},
-      errors: '',
+      errors: ''
     }
   },
-  render(c, setState) {
-    let { props, state } = c;
-
-    function on(x) {
-      return () => setState(props.on(x, state.getData()))
-    }
+  render(c) {
+    let { props, state } = c
 
     return <form class="login">
         <span class="error">{state.errors}</span>
@@ -24,12 +19,14 @@ let Form = {
   afterMount(c, el) {
     return {
       getData: () => {
-        let res = {};
-        for (let element of el.querySelector('[name="*"]'))
-          res[element.name] = element;
-        return res;
+        let res = {}
+        for (let element of el.querySelector('[name=*]'))
+          res[element.name] = element
+        return res
       }
     }
   }
 
 }
+
+export default Form

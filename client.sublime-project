@@ -1,0 +1,16 @@
+{
+	"folders":
+	[
+		{
+			"path": "src/components"
+		},
+		{
+			"path": "src/styles"
+		},
+		{
+			"path": "/code/client"
+		}
+	],
+	"tab_size": 2,
+	"trim_trailing_white_space_on_save": true
+}
