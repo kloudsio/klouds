@@ -10,23 +10,25 @@ let Form = {
   render(c) {
     let { props, state } = c
 
-    return <form class="login">
+    return <form class="login" onSubmit={submit}>
         <span class="error">{state.errors}</span>
         {props.children}
       </form>
-  },
+  }
+}
 
-  afterMount(c, el) {
-    return {
-      getData: () => {
-        let res = {}
-        for (let element of el.querySelector('[name=*]'))
-          res[element.name] = element
-        return res
-      }
-    }
+let submit = function(ev, c, update) {
+  ev.preventDefault()
+
+  let res = new Map()
+  let children = ev.target.querySelectorAll('input')
+
+  for (let child of children) {
+    res.set(child.name || child.id || child.type, child.value)
   }
 
+  c.props.onSubmit(res)
+  return false
 }
 
 export default Form

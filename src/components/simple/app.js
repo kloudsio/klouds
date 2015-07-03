@@ -1,6 +1,7 @@
 import { element } from 'deku'
-let App = {
 
+let App = {
+	name: 'App',
   render(c) {
     let { state, props } = c
 

@@ -2,13 +2,7 @@
 	"folders":
 	[
 		{
-			"path": "src/components"
-		},
-		{
-			"path": "src/styles"
-		},
-		{
-			"path": "/code/client"
+			"path": "."
 		}
 	],
 	"tab_size": 2,

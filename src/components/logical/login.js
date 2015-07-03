@@ -27,14 +27,22 @@ let Login = {
   render(component) {
     let {state, props} = component
 
-    return <Form>
+    return <Form onSubmit={submit}>
         <h4>Email</h4>
-        <input type="email" class="email" />
+        <input type="email" id="EMAIL"/>
         <h4>Password</h4>
         <input type="password" class="password" />
-        <input type="button" class="login-btn primary" value="Login" />
+        <input type="submit" class="login-btn primary" value="Login" />
      </Form>
   }
+}
+
+let login = async function() {
+
+}
+
+let submit = function(data) {
+  console.log(data);
 }
 
 export default Login

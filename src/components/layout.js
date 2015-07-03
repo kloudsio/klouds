@@ -31,6 +31,7 @@ let Layout = {
     let { props, state } = component
 
     function onLogin(e, c) {
+      console.log('well Hello');
       setState({
         user: c.state.user,
         stage: 2
