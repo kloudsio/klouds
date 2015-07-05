@@ -1,80 +1,44 @@
-import {element} from 'deku'
+import { element } from 'deku'
 import api from '../api'
+import lodash from 'lodash'
+import elements from './elements'
 
-import All from './elements'
-let { Page, LogoText, Row, Switch, Login, Register, App, Dummy } = All
+let { Switch, Page, LogoText, Col, Row, Numbered } = elements
+
+
 
 let Layout = {
+
   initialState() {
     return {
-      stage: 1,
-      noob: true,
-      appsOn: [],
-      appsOff: []
-
-    }
-  },
-  async afterMount(c, el) {
-    try {
-      let appsOn = await api.apps()
-      let appsOff = await api.disabledApps()
-      return {
-        appsOn: appsOn.data,
-        appsOff: appsOff.data
-      }
-    } catch (error) {
-      return { error }
+      page: 1
     }
   },
 
-  render(component, setState) {
-    let { props, state } = component
+  render(c, update) {
+    let { props, state } = c
+    let setpage = x => update({page: x})
 
-    function onLogin(e, c) {
-      console.log('well Hello');
-      setState({
-        user: c.state.user,
-        stage: 2
-       })
-    }
 
-    let switchFilter = () =>
-      (v, k) =>
-        (state.noob ? 0 : 1) === k
 
-    function toggle() {
-      setState({noob: !state.noob})
-    }
+    return (
+      <Page>
+        <LogoText>Klouds.io</LogoText>
+        <Row>
+          <Paged>
+            <Col xs="4+4" setpage={setpage}>
 
-    function onApp(e, c) {
-      setState({
-        app: c.props,
-        stage: 3
-       })
-    }
+            </Col>
+            <Col xs="4+4" setpage={setpage}>
 
-    return <Page>
-      <LogoText>Klouds.io</LogoText>
-      <Row n="1" text="Join The Beta">
-        <Switch filter={switchFilter}>
-          <div>
-            <h3>Register or <small onClick={toggle}>Login</small></h3>
-            <Register onLogin={onLogin} />
-          </div>
+            </Col>
+            <Col xs="4+4" setpage={setpage}>
 
-          <div>
-            <h3><small onClick={toggle}>Register</small> or Login</h3>
-            <Login onLogin={onLogin} />
-          </div>
-        </Switch>
-      </Row>
-
-      <Row n="2" text="We Host Apps">
-        {state.appsOn.map(app => <App app={app} onClick={onApp} />)}
-        {state.appsOff.map(app => <Dummy name={app.name} />)}
-      </Row>
-
-    </Page>
+            </Col>
+          </Paged>
+        </Row>
+      </Page>
+    )
   }
 }
 

@@ -1,13 +1,27 @@
 import { element } from 'deku'
+import { extend } from 'lodash'
 
-let Switch = {
-  render(c, setState) {
+
+
+let Filter = {
+  render(c) {
     let { props, state } = c
-    let filter = props.filter(c)
-    let on = props.children.filter(filter)
-
-    return <span>{on}</span>
+    return <div class="switch">{ props.filter(c) }</div>
   }
 }
 
-export default Switch
+let create = function(options) {
+  return extend(Filter, {
+		defaultProps: { filter: options.filter }
+	})
+}
+
+
+let Pages = create({
+  filter: c => {
+    let {props, state} = c
+    return props.children.filter((v, k) => k === props.page)
+  }
+})
+
+export default Pages
