@@ -1,58 +1,57 @@
 export PATH := ./node_modules/.bin:${PATH}
 
 bin = node_modules/.bin
+output = dist
 src = $(shell find src -name '*.js')
+elements = $(shell find src/components -name '*.js')
 css = $(shell find src -name '*.css')
 test = $(shell find test -name '*.js')
 
+default: mkdir npm-install build
 
-all: install build
-.PHONY: all
+mkdir:
+	@[ -d "$(output)" ] || mkdir -p $(output)
+npm-install: package.json
+	@npm install
 
-install: node_modules dist/lib/flexbox.css dist/lib/browser-polyfill.min.js
-.PHONY: install
+build: build-css build-js public
 
-node_modules: package.json
-	@ npm install
-	@ touch node_modules
+public:
+	@cp -rvu src/public/* dist/
 
-
-dist/lib/%: node_modules package.json
-	@mkdir -p dist/lib
-	@ cp -vu ./node_modules/flexboxgrid/css/index.min.css dist/lib/flexbox.css
-	@ cp -vu ./node_modules/babelify/node_modules/babel-core/browser-polyfill.min.js dist/lib/browser-polyfill.min.js
-
-build: dist/app.js dist/app.css assets
-.PHONY: build
-
-watch:
-	@sane "make build" src --glob="**.*"
-.PHONY: watch
-
-
-# assets
-assets:
-	@ cp -vu src/public/* dist/
-.PHONY: assets
+.PHONY: default build public npm-install
 
 # css
-dist/app.css: $(css)
-	# myth
+build-css: $(css)
+	# running myth...
 	@$(bin)/myth src/styles/app.css dist/app.css
-
+	# myth finished.
+.PHONY: build-css
 
 # js
-dist/app.js: $(src) .babelrc
-	# browserify:
-	@browserify -d src/app.js -t babelify --outfile dist/app.js
+build-js: $(src)
+	# running browserify...
+	@browserify -d src/app.js -t babelify -o dist/app.js -v
+	# browserify finished.
+.PHONY: build-js
 
+# js
+watch: $(src)
+	# running watchify...
+	@watchify -d src/app.js -t babelify -o dist/app.js -v
+	# watchify finished.
+.PHONY: watch
 
-mochify: node_modules $(src) $(test)
+test: elements mochify
+.PHONY: test
+
+elements:
+	./scripts/lint-elements.sh
+.PHONY: elements
+
+mochify: $(test)
 	@$(bin)/mochify --transform babelify --reporter spec ./test/index.js
 .PHONY: mochify
-
-test: | mochify
-.PHONY: test
 
 # clean
 clean:

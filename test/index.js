@@ -1,4 +1,4 @@
-import { element, tree, render } from 'deku'
+import { element, tree, render, renderString } from 'deku'
 
 import assert from 'assert'
 import is from 'is_js'
@@ -18,19 +18,17 @@ function isComponent(el) {
   return is.existy(component) && type === 'component'
 }
 
-describe('Elements are Valid', () => {
+lodash.forEach(elements, (El, name) => {
+  describe(name, () => {
 
-  lodash.mapValues(elements, el => {
-    console.log(el)
-    return it('should be a component', () => isComponent(el) )
-  })
+    it('exports a deku component', () => isComponent(El) )
 
-  lodash.mapValues(elements, el => {
-    let container = appendContainer()
-    tree(container)
-    it('Renders component', () => {
 
+    it('renders string, renders html', () => {
+      let app = tree(<El />)
+      renderString(app)
+      let container = appendContainer()
+      render(app, container)
     })
   })
-
 })
