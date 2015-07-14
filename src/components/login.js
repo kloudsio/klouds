@@ -21,7 +21,7 @@ import { element } from 'deku'
 // }
 
 
-import Form from '../frames/form'
+import Form from './form'
 
 let Login = {
   render(component) {

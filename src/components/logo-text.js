@@ -5,7 +5,7 @@ export default {
   render(c) {
     let { props, state } = c
 
-    return <div class="row center-xs">
+    return <div class="row center-xs" {... props} >
       <div class="col-xs-12 middle-xs">
         <svg class="logo">
           <text>{props.children}</text>
