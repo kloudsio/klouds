@@ -41,8 +41,8 @@ pub.get('/disabled', apps.disabled)
 auth.route(stripe.subscribe)
 
 pub.post('/paypal/hook', function* () {
-  let data = this.response.body
-
+  let data = this.request.body
+  console.log(data)
   this.body = data
 })
 
