@@ -13,28 +13,22 @@ lint() {
 	c=$1
 	imports="import { element } from 'deku'"
 	echo -n "Testing '$c' "
-	# Check for: import { element }...
+
+	# import { element } from 'deku' ?
+
 	if [[ $(head -1 $c) != "$imports" ]]; then
 		error $c is missing $imports; return
 	fi
 
-	# Check for: export default Captalizedword
+	# export default Foobar ?
+
 	if ! $(cat $c | grep -E 'export default [A-Z][a-z]+' ); then
 		error "missing required 'export default'"; return
 	fi
+
 	out "ok"
 }
 
-
-
-if [[ $1 ]]; then
-	components="$1"
-else
-	cd $(dirname $0)/../src/components
-	components=$(find */*.js | sed -E s/elements\.js//g)
-fi
-
-
-for c in $components; do
+for c in $@; do
 	lint $c
 done

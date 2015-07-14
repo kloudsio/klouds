@@ -33,13 +33,13 @@ async function api() {
     await axios({ method: 'post', url: base`/register`, data: logindata }).catch(fail)
 
     // login
-    let { data } = await axios({ method: 'post', url: base`/login`, data: logindata }).then(ok, fail)
+    let { data } = (await axios({ method: 'post', url: base`/login`, data: logindata }).then(ok, fail))
 
     headers.Authorization = `Bearer ${data.token}`
 
     await axios({ method: 'get', url: base`/apps` }).then(ok, fail)
     await axios({ method: 'get', url: base`/disabled` }).then(ok, fail)
-    await axios({ method: 'post', url: base`/payment`, headers, data: {} }).then(ok, fail)
+    await axios({ method: 'post', url: base`/subscribe`, headers, data: {} }).then(ok, fail)
 
   } catch (e) {
     console.error(e)
