@@ -1,4 +1,5 @@
 import { prompt } from 'inquirer'
+
 let beforeMount = x => `beforeMount({props, state, id}) {${x}}`
 let shouldUpdate = x => `shouldUpdate({props, state, id}, nextProps, nextState) {${x}}`
 let beforeRender = x => `beforeRender({props, state, id}) {${x}}`
@@ -8,36 +9,42 @@ let afterUpdate = x => `afterUpdate({props, state, id}, prevProps, prevState, se
 let afterMount = x => `afterMount({props, state, id}, el, setState) {${x}}`
 let beforeUnmount = x => `beforeUnmount({props, state, id}, el) {${x}}`
 
+
+let initialState = x => `initialState(props) {${x}}`
+let defaultProps = x => `defaultProps: {${x}}`
+
 let thener = fn => (... x) => new Promise(resolve => fn(... x, resolve))
-let ask = thener(prompt);
+let ask = thener(prompt)
+
+ask({
+  type: 'input',
+  name: 'appendState',
+  message: 'initialState(props) returns {?}',
+  default: 'Nope, all good!'
+})
 
 
-let element = name => `import { element } from 'deku'
+function template(options) {
+  let {
+    name,
+    initialState,
+    defaultProps,
+    beforeMount,
+    shouldUpdate,
+    beforeRender,
+    beforeUpdate,
+    afterRender,
+    afterUpdate,
+    afterMount,
+    beforeUnmount
+  } = options
 
-{
-    type: "input",
-    name: "comments",
-    message: "Any comments on your purchase experience",
-    default: "Nope, all good!"
-  },
-
+  return `import { element } from 'deku'
 let ${name} = {
   name: '${name}',
 
-  initialState(props) {
-		return {
-      ${ prompt({
-        type: 'input',
-        name: 'appendState',
-        message: 'initialState(props) returns {?}',
-        default: 'Nope, all good!'
-      })}
-    }
-  },
-
-  defaultProps: {
-    ${props}
-  },
+  ${initialState}
+  ${defaultProps}
 
   ${beforeMount}
   ${shouldUpdate}
@@ -55,3 +62,5 @@ let ${name} = {
 }
 export default ${name}
 `
+}
+

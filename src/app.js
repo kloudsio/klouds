@@ -1,5 +1,5 @@
 import config from './config'
-import Layout from './components/layout'
+import Layout from './layout'
 import { tree, render, element } from 'deku'
 
 

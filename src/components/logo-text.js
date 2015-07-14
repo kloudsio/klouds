@@ -15,7 +15,7 @@ export default {
   },
 
 
-  afterMounted(c, el) {
+  afterMount(c, el) {
     let shiftEl = el.querySelector('text')
 
     new Shifty().tween({

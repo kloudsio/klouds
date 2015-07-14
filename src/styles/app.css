@@ -31,6 +31,7 @@
 
 body {
   background: radial-gradient(var(--astral-light), var(--astral-dark));
+  min-height: 100vh;
   position: relative;
   font: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
