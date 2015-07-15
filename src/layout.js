@@ -59,6 +59,7 @@ let Layout = {
         <li class={{ active: state.page === 'payment' }}>
           <NumText left="">Checkout</NumText>
 
+          <Stripe {... state.app } />
         </li>
 
         <li class={{ active: state.page === 'dashboard' }}>
