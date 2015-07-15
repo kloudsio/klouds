@@ -1,10 +1,14 @@
 import { element } from 'deku'
+
 import Form from './form'
 
-
-
-
 async function register(email, password) {
+
+  if (password !== password2) {
+    return { error: 'Passwords do not match.' }
+  }
+
+  return login(email, password)
   let { data, err } = await Api.register({email, password})
   if (err) {
     console.error(err);
@@ -12,14 +16,12 @@ async function register(email, password) {
   }
 
   Api.setAuthToken(data.token)
-  return {  }
+  return data
 }
 
 let Register = {
-  render(component) {
-    let {state, props} = component
-
-    return <Form onSubmit={register           }>
+  render({state, props}) {
+    return <Form onSubmit={register} class="login">
         <h4>Email</h4>
         <input type="email" class="email" />
         <h4>Password</h4>

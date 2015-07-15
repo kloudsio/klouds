@@ -8,7 +8,7 @@ import Apps from './components/apps'
 import Dashboard from './components/dashboard'
 import Login from './components/login'
 import Register from './components/register'
-
+import NumText from './components/num-text'
 
 let Layout = {
 
@@ -36,23 +36,24 @@ let Layout = {
           <button onClick={dashboard}>DASHBOARD</button>
         </Debug>
         <li class={{ active: state.page === 'login' }}>
-          Open Klouds
+          <NumText left="">Open Klouds</NumText>
           <Login />
+          <Register />
         </li>
 
         <li class={{ active: state.page === 'apps' }}>
-          Browse Apps
+          <NumText left="">Browse Apps</NumText>
           <Apps />
         </li>
 
         <li class={{ active: state.page === 'payment' }}>
-          Checkout
+          <NumText left="">Checkout</NumText>
 
           <Stripe />
         </li>
 
         <li class={{ active: state.page === 'dashboard' }}>
-          Dashboard
+          <NumText left="">Dashboard</NumText>
           <Dashboard />
         </li>
 

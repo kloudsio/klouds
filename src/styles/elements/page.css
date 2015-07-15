@@ -6,11 +6,11 @@
 }
 
 .page li {
-  visibility: hidden;
+  display: none;
 }
 
 .page li.active {
-  visibility: visible;
+  display: block;
 }
 
 input, button {

@@ -1,8 +1,6 @@
 import { element } from 'deku'
 
 import Api from '../api'
-
-import { element } from 'deku'
 import Form from './form'
 
 
@@ -15,14 +13,9 @@ function submit({ email, password, password2 }) {
   //// is email an email?
 
   //// passwords match
-  if (password !== password2) {
-    return { error: 'Passwords do not match.' }
-  }
-
-  return register(email, password)
 }
 
-function login(email, password) {
+async function login(email, password) {
 
   Api.login({email, password})
     .then(response => {
@@ -39,7 +32,7 @@ let Login = {
   render(component) {
     let {state, props} = component
 
-    return <Form onSubmit={submit}>
+    return <Form onSubmit={submit} class="login">
         <h4>Email</h4>
         <input type="email" id="EMAIL"/>
         <h4>Password</h4>
