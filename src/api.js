@@ -1,63 +1,45 @@
 import axios from 'axios'
 
 
-let Api = {
+let api = {
   token: null,
   headers: {},
-  http: axios
+  http: axios,
+
+  setAuthToken: token => {
+    api.token = token
+    api.headers.Authorization = `Bearer ${token}`
+  },
+
+
+  login: data => {
+    return axios({ method: 'post', url: '/login', data })
+      .then(res => res, err => ({ err }))
+  },
+
+
+  register: data => {
+    return axios({ method: 'post', url: '/register', data })
+      .then(res => res, err => ({ err }))
+  },
+
+  apps: () => axios({
+    method: 'get',
+    url: '/apps'
+  }),
+
+  disabledApps: () => axios({
+    method: 'get',
+    url: '/disabled'
+  }),
+
+  subscribe: ({ app, source }) => axios({
+    method: 'post',
+    url: '/subscribe',
+    headers: api.headers,
+    data: { app, source }
+  })
 }
 
-/**
- * setAuthToken authorizes future calls using an API token.
- */
-Api.setAuthToken = token => {
-  Api.token = token
-  Api.headers.Authorization = `Bearer ${token}`
-}
 
-
-// Login Account
-
-Api.login = data => {
-  return axios({ method: 'post', url: '/login', data })
-    .then(res => res, err => ({ err }))
-}
-
-
-// Create Account
-
-Api.register = data => {
-  return axios({ method: 'post', url: '/register', data })
-    .then(res => res, err => ({ err }))
-}
-
-
-
-/**
- * List Applications
- */
-Api.apps = () => axios({
-  method: 'get',
-  url: '/apps'
-})
-
-/**
- * List Applications
- */
-Api.disabledApps = () => axios({
-  method: 'get',
-  url: '/disabled'
-})
-
-/**
- * Purchase App
- */
-Api.payment = data => axios({
-  method: 'post',
-  url: '/payment/',
-  headers: Api.headers,
-  data
-})
-
-
-export default Api
+export default api

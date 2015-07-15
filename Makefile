@@ -21,8 +21,15 @@ css: $(css)
 	@$(bin)/myth src/styles/app.css dist/app.css
 	# myth finished.
 
-serve:
-	$(bin)/beefy --cwd dist --open --live 3000 --command make
+development:
+	bash -c -- "NODE_ENV=development\
+		PORT=3000\
+		STRIPE_SK=wtfjoke\
+		JWT_KEY=abcdefg\
+		ASSETS=../dist\
+		MONGODB=localhost\
+		sane 'make; babel-node server/index.js' {src,server} --glob='**/*'"
+
 
 test:
 	@./scripts/lint-elements.sh

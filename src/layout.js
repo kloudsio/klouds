@@ -1,5 +1,6 @@
 import { element } from 'deku'
 
+import Debug from './components/debug'
 import LogoText from './components/logo-text'
 import Paypal from './templates/paypal'
 import Stripe from './components/stripe'
@@ -27,11 +28,13 @@ let Layout = {
 
     return (
       <ul class="page">
-        <LogoText onClick={open.bind(null, 'apps')}>Klouds.io</LogoText>
-        <button onClick={login}>LOGIN</button>
-        <button onClick={apps}>APPS</button>
-        <button onClick={payment}>PAYMENT</button>
-        <button onClick={dashboard}>DASHBOARD</button>
+        <LogoText>Klouds.io</LogoText>
+        <Debug>
+          <button onClick={login}>LOGIN</button>
+          <button onClick={apps}>APPS</button>
+          <button onClick={payment}>PAYMENT</button>
+          <button onClick={dashboard}>DASHBOARD</button>
+        </Debug>
         <li class={{ active: state.page === 'login' }}>
           Open Klouds
           <Login />
@@ -44,7 +47,7 @@ let Layout = {
 
         <li class={{ active: state.page === 'payment' }}>
           Checkout
-          <Paypal />
+
           <Stripe />
         </li>
 

@@ -1,4 +1,4 @@
-require('babel/register')
+#!/bin/babel-node
 
 
 /**

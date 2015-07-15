@@ -1,27 +1,39 @@
 import { element } from 'deku'
 
-// import Api from '../../api'
+import Api from '../api'
 
-// async function onLogin(action, { email, password, password2 } ) {
-//   let isNoob = (action === 'register')
-//   let clumsyNoob = (isNoob && password !== password2)
-
-//   if (clumsyNoob) {
-//     return { error: 'Passwords do not match.' }
-//   }
-
-//   let { data, err } = (isNoob ? await Api.register({email, password}) : await Api.login({email, password}))
-
-//   if (err) {
-//     return { error: err.error || 'Could not reach Klouds.io!' }
-//   }
-
-//   Api.setAuthToken(data.token)
-//   return { done: true }
-// }
-
-
+import { element } from 'deku'
 import Form from './form'
+
+
+let login = async function() {
+
+}
+
+function submit({ email, password, password2 }) {
+  // validation
+  //// is email an email?
+
+  //// passwords match
+  if (password !== password2) {
+    return { error: 'Passwords do not match.' }
+  }
+
+  return register(email, password)
+}
+
+function login(email, password) {
+
+  Api.login({email, password})
+    .then(response => {
+      let { data } = response
+      Api.setAuthToken(data.token)
+      setState({user: response.data})
+    })
+    .catch(err => {
+    setState({error: err.error})
+  })
+}
 
 let Login = {
   render(component) {
@@ -35,14 +47,6 @@ let Login = {
         <input type="submit" class="login-btn primary" value="Login" />
      </Form>
   }
-}
-
-let login = async function() {
-
-}
-
-let submit = function(data) {
-  console.log(data);
 }
 
 export default Login

@@ -1,0 +1,31 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/iojs',
+1 verbose cli   '/usr/bin/npm',
+1 verbose cli   'link',
+1 verbose cli   'node_modules/beefy/node_modules/open/' ]
+2 info using npm@2.11.2
+3 info using node@v2.3.1
+4 verbose linkPkg /code/klouds/node_modules/beefy/node_modules/open
+5 silly gentlyRm /usr/lib/node_modules/open is being purged
+6 verbose gentlyRm don't care about contents; nuking /usr/lib/node_modules/open
+7 verbose stack Error: EACCES: permission denied, symlink '/code/klouds/node_modules/beefy/node_modules/open' -> '/usr/lib/node_modules/open'
+7 verbose stack     at Error (native)
+8 verbose cwd /code/klouds
+9 error Linux 4.0.5-1-MANJARO
+10 error argv "/usr/bin/iojs" "/usr/bin/npm" "link" "node_modules/beefy/node_modules/open/"
+11 error node v2.3.1
+12 error npm  v2.11.2
+13 error path /code/klouds/node_modules/beefy/node_modules/open
+14 error code EACCES
+15 error errno -13
+16 error syscall symlink
+17 error Error: EACCES: permission denied, symlink '/code/klouds/node_modules/beefy/node_modules/open' -> '/usr/lib/node_modules/open'
+17 error     at Error (native)
+17 error  { [Error: EACCES: permission denied, symlink '/code/klouds/node_modules/beefy/node_modules/open' -> '/usr/lib/node_modules/open']
+17 error   errno: -13,
+17 error   code: 'EACCES',
+17 error   syscall: 'symlink',
+17 error   path: '/code/klouds/node_modules/beefy/node_modules/open',
+17 error   dest: '/usr/lib/node_modules/open' }
+18 error Please try running this command again as root/Administrator.
+19 verbose exit [ -13, true ]

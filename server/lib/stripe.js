@@ -2,10 +2,11 @@ import jwt from 'koa-jwt'
 import low from 'lowdb'
 import createStripe from 'stripe'
 
+import { stripeDb } from '../db'
+
 let { PORT, MONGODB, ASSETS, JWT_KEY, STRIPE_SK } = process.env
 
 let stripe = createStripe(STRIPE_SK)
-let stripeDb = low('stripe.json')
 let hasToken = jwt({ secret: JWT_KEY })
 
 function stripeCustomerCreate(customer) {

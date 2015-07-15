@@ -1,14 +1,20 @@
+import { appsDb } from '../db'
+
 let { PORT, MONGODB, ASSETS, JWT_KEY, STRIPE_SK } = process.env
 
-import low from 'lowdb'
-let appsDb = low('apps.json')
-
 function* apps() {
-  this.body = appsDb('disabled')
+  this.body = this.body = appsDb('apps').toArray()
+  console.log(this.body.apps)
 }
 
 function* disabled() {
-  this.body = appsDb('apps')
+  this.body = appsDb('disabled').toArray()
+  console.log(this.body.apps)
+
 }
 
-export default { apps, disabled }
+export default {
+  apps,
+  disabled,
+  appsDb
+}

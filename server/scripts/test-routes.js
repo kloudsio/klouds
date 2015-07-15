@@ -1,3 +1,4 @@
+#!/bin/babel-node
 
 import axios from 'axios'
 let { PORT=3000 } = process.env
