@@ -1,6 +1,5 @@
 #!/bin/babel-node
 
-
 /**
  * Environment Variables Validation
  */
@@ -13,5 +12,4 @@ env.map(function (v) {
   console.log(v, process.env[v])
 })
 
-
-require('./lib/server.js')
+require('./lib/server')

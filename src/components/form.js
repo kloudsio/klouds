@@ -11,21 +11,21 @@ function submitData(el) {
   return res
 }
 
-async function submit(ev, c, update) {
+function process(ev, c, update) {
+  ev.preventDefault()
+
   let res = null
   let error = false
 
-  ev.preventDefault()
-
   try {
-    res = c.props.onSubmit(submitData(ev.target))
+    res = c.props.process(submitData(ev.target), c, update)
+    update(res)
   } catch (e) {
-    return update({ error: typeof e.error || 'Failed to reach server'  })
+    update({ error: typeof e.error || 'Failed to reach server'  })
   }
 
-  update(res)
+  return false
 }
-
 let Form = {
   initialState() {
     return {
@@ -35,7 +35,7 @@ let Form = {
   render(c) {
     let { props, state } = c
 
-    return <form onSubmit={submit} {... props}>
+    return <form onSubmit={process} {... props} >
         <span class="error">{state.error}</span>
         {props.children}
       </form>

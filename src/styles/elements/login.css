@@ -5,8 +5,6 @@
 }
 
 .login h4 {
-  position: absolute;
-  right: 100%;
   white-space: nowrap;
   color: var(--light);
   margin-top: 0.5em;

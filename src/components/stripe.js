@@ -1,6 +1,6 @@
 import { element } from 'deku'
 import Debug from './debug'
-
+import Form from './form'
 import api from '../api'
 
 
@@ -21,53 +21,26 @@ function fetchToken(data) {
   return promise
 }
 
-let formData = () => ({
-  number: document.getElementById('card-number').value,
-  cvc: document.getElementById('card-cvc').value,
-  'exp_month': document.getElementById('card-expiry-month').value,
-  'exp_year': document.getElementById('card-expiry-year').value
-})
+async function submit(data, { props }, update) {
 
-async function purchase(event, c, setState) {
-  let { props, state } = c
-
-  setState({ busy: true })
-  let data = formData()
+  update({ busy: true })
 
   let res = await fetchToken(data)
+
   if (!res) {
-    return setState({ error: res.error.message })
+    return update({ error: res.error.message })
   }
 
   props.onToken(props.payment.id, res.id)
-  setState({ busy: false })
+  update({ busy: false })
 
 }
 
-let TestButton = {
-  render: c => <Debug>
-    <button type="button" onClick={() => {
-      document.getElementById('card-number').value = '4242424242424242'
-      document.getElementById('card-cvc').value = '121'
-      document.getElementById('card-expiry-month').value = '12'
-      document.getElementById('card-expiry-year').value = '2020' }}>
-      Test-Card
-    </button>
-  </Debug>
-}
 
 let Stripe = {
-
-  defaultProps: {
-    id: null,
-    amount: null,
-    name: 'Payment'
-  },
-
   initialState() {
     return {
-      busy: false,
-      error: ''
+      busy: false
     }
   },
 
@@ -75,10 +48,9 @@ let Stripe = {
     let { props, state } = c
 
     return (
-      <form class="stripe-form modal" action="#" id="payment-form">
+      <Form submit={submit} class="login">
         <span class="title">{props.name}</span>
         <span class="info">{`\$${props.amount} per Month`}</span>
-
 
         <label>Card Number</label>
         <input placeholder="credit card #" type="text" size="20" id="card-number" />
@@ -94,9 +66,27 @@ let Stripe = {
         </div>
 
         <TestButton />
-        <button class={{'stripe-busy': state.busy}} onClick={purchase} type="button">Purchase</button>
-      </form>
+        <input type="submit" class="login-btn primary stripe-busy" value="Purchase" />
+      </Form>
       )
   }
 }
+
+let TestButton = {
+  render() {
+    function fill() {
+      let val = (y,z) => { document.getElementById(y).value = z }
+      val('card-number', '4242424242424242')
+      val('card-cvc', '121')
+      val('card-expiry-month', '12')
+      val('card-expiry-year', '2020')
+    }
+    return <Debug>
+      <button type="button" onClick={fill}>
+        Test-Card
+      </button>
+    </Debug>
+  }
+}
+
 export default Stripe

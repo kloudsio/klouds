@@ -14,6 +14,7 @@ dir:
 
 
 js: $(src)
+	@./scripts/html-to-deku.sh src/templates/*.html
 	@browserify -d src/app.js -t babelify -o dist/app.js -v
 	# browserify finished.
 
@@ -22,13 +23,16 @@ css: $(css)
 	# myth finished.
 
 development:
-	bash -c -- "NODE_ENV=development\
-		PORT=3000\
-		STRIPE_SK=wtfjoke\
-		JWT_KEY=abcdefg\
-		ASSETS=../dist\
-		MONGODB=localhost\
-		sane 'make; babel-node server/index.js' {src,server} --glob='**/*'"
+	bash -c -- "\
+			NODE_ENV=development\
+			PORT=3000\
+			STRIPE_SK=wtfjoke\
+			JWT_KEY=abcdefg\
+			ASSETS=../dist\
+			MONGODB=localhost\
+		sane '\
+			make && killall -9 babel-node; sleep 1; ./server/index.js' {src,server}/ --glob='[^templates]**/*' --wait=3 --dot"
+
 
 
 test:

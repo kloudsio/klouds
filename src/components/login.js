@@ -32,7 +32,7 @@ let Login = {
   render(component) {
     let {state, props} = component
 
-    return <Form onSubmit={submit} class="login">
+    return <Form submit={submit} class="login">
         <h4>Email</h4>
         <input type="email" id="EMAIL"/>
         <h4>Password</h4>

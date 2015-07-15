@@ -16,7 +16,8 @@ let Apps = {
     let { props, state } = c
     let { apps } = state
 
-    let items = apps.map(v => <App app={v} />)
+
+    let items = apps.map(v => <App onClick={() => props.onLaunch(v)} app={v} />)
 
     return <div>{items}</div>
   }

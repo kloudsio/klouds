@@ -21,14 +21,15 @@ async function register(email, password) {
 
 let Register = {
   render({state, props}) {
-    return <Form onSubmit={register} class="login">
-        <h4>Email</h4>
-        <input type="email" class="email" />
-        <h4>Password</h4>
-        <input type="password" class="password" />
-        <h4> Confirm Password </h4>
-        <input type="password" class="password2" />
-        <input type="button" class="register-btn" value="Register" />
+    return <Form submit={register} class="login">
+      <h3>Register</h3>
+      <h4>Email</h4>
+      <input type="email" class="email" />
+      <h4>Password</h4>
+      <input type="password" class="password" />
+      <h4> Confirm Password </h4>
+      <input type="password" class="password2" />
+      <input type="button" class="register-btn" value="Register" />
      </Form>
   }
 }
