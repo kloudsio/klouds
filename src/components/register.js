@@ -23,14 +23,14 @@ async function register({ email, password, password2 }, c, update) {
 let Register = {
   render(c) {
     let { props, state } = c
-    return <Form process={register} class="form" title="register">
+    return <Form process={register} class="form" title="Register">
       <h4>Email</h4>
       <input type="email" class="email" name="email"/>
       <h4>Password</h4>
       <input type="password" class="password" name="password"/>
       <h4> Confirm Password </h4>
       <input type="password" class="password2" name="password2"/>
-      <input type="submit" class="register-btn" value="Register" />
+      <button type="submit" class="register-btn">Register</button>
      </Form>
   }
 }
