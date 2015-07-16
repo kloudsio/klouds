@@ -19,7 +19,7 @@ function process(ev, c, update) {
   let error = false
 
   try {
-    c.props.process(submitData(ev.target), c, update)
+    c.props.onSubmit(submitData(ev.target), c, update)
   } catch (e) {
     update({ error: typeof e.error ? e.error : 'Failed to reach server'  })
   }
@@ -37,7 +37,7 @@ let Form = {
     let { props, state } = c
     let title = props.title
 
-    return <form onSubmit={process} {... props} >
+    return <form {... props} onSubmit={process} >
       <h3>{title}</h3>
       <span class="error">{state.error}</span>
       {props.children}

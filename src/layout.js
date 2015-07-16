@@ -12,6 +12,7 @@ import NumText from './components/num-text'
 import Row from './components/grid-row'
 import Col from './components/grid-col'
 
+
 let Layout = {
 
   initialState() {
@@ -26,14 +27,21 @@ let Layout = {
 
     let login = () => update({ page: 'login' })
     let apps = () => update({ page: 'apps' })
-    let payment = app => {
+    let dashboard = () => update({ page: 'dashboard' })
+
+    function loggedIn(user) {
+      console.log(user)
+      apps()
+    }
+
+    function payment(app) {
       console.log(app)
       update({ page: 'payment', app: app })
     }
-    let dashboard = () => update({ page: 'dashboard' })
-    let purchased = (name, tok) => {
+    function purchased(name, tok) {
       console.log(name, tok)
     }
+
     let onLaunch = payment
 
     return (
@@ -46,10 +54,10 @@ let Layout = {
           <Row>
 
             <Col xs="4 2">
-              <Login />
+              <Login done={loggedIn} />
             </Col>
             <Col xs="4">
-              <Register />
+              <Register done={loggedIn} />
             </Col>
           </Row>
         </li>
