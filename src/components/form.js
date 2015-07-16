@@ -7,7 +7,7 @@ function submitData(el) {
   for (let child of children) {
     res[child.name || child.id || child.type] = child.value
   }
-
+  console.log(res)
   return res
 }
 
@@ -25,6 +25,7 @@ function process(ev, c, update) {
 
   return false
 }
+
 let Form = {
   initialState() {
     return {

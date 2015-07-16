@@ -1,44 +1,33 @@
 import { element } from 'deku'
-
-import Api from '../api'
 import Form from './form'
+import api from '../api'
 
 
-let login = async function() {
+async function login({ email, password }, update) {
 
-}
+  let { data, err } = await api.login({ email, password })
 
-function submit({ email, password, password2 }) {
-  // validation
-  //// is email an email?
+  if (err) {
+    console.error(err)
+    update({ error: err.error })
+  }
 
-  //// passwords match
-}
+  api.setAuthToken(data.token)
 
-async function login(email, password) {
-
-  Api.login({email, password})
-    .then(response => {
-      let { data } = response
-      Api.setAuthToken(data.token)
-      setState({user: response.data})
-    })
-    .catch(err => {
-    setState({error: err.error})
-  })
+  update({data})
 }
 
 let Login = {
   render(component) {
     let {state, props} = component
 
-    return <Form process={submit} class="form">
+    return <Form process={login} class="form">
       <h3>Login</h3>
       <h4>Email</h4>
-      <input type="email" id="EMAIL"/>
+      <input type="email" class="email"/>
       <h4>Password</h4>
       <input type="password" class="password" />
-      <input type="submit" class="login-btn primary" value="Login" />
+      <button type="submit" class="login-btn primary">Login</button>
     </Form>
   }
 }
