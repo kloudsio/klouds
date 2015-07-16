@@ -31,6 +31,7 @@ let subscribe = {
     stripeDb('customers').push(customer)
 
     this.body = customer.id
+
   }]
 }
 

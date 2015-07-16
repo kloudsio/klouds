@@ -35,14 +35,12 @@ let Layout = {
     }
 
     function payment(app) {
-      console.log(app)
-      update({ page: 'payment', app: app })
+      update({ page: 'payment', app })
     }
     function purchased(name, tok) {
       console.log(name, tok)
     }
 
-    let onLaunch = payment
 
     return (
       <ul class="page">
@@ -64,13 +62,13 @@ let Layout = {
 
         <li class={{ active: state.page === 'apps' }}>
           <NumText left="">Browse Apps</NumText>
-          <Apps onLaunch={onLaunch} />
+          <Apps onLaunch={payment} />
         </li>
 
         <li class={{ active: state.page === 'payment' }}>
           <NumText left="">Checkout</NumText>
 
-          <Stripe onPurchased={purchased} {... state.app } />
+          <Stripe done={purchased} name={state.app.name} amount="1000"/>
         </li>
 
         <li class={{ active: state.page === 'dashboard' }}>
