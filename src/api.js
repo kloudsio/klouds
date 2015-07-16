@@ -14,13 +14,11 @@ let api = {
 
   login: data => {
     return axios({ method: 'post', url: '/login', data })
-      .then(res => res, err => ({ err }))
   },
 
 
   register: data => {
     return axios({ method: 'post', url: '/register', data })
-      .then(res => res, err => ({ err }))
   },
 
   apps: () => axios({

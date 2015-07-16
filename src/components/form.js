@@ -13,14 +13,15 @@ function submitData(el) {
 
 function process(ev, c, update) {
   ev.preventDefault()
+  update({ error: '' })
 
   let res = null
   let error = false
 
   try {
-    res = c.props.process(submitData(ev.target), c, update)
+    c.props.process(submitData(ev.target), c, update)
   } catch (e) {
-    update({ error: typeof e.error || 'Failed to reach server'  })
+    update({ error: typeof e.error ? e.error : 'Failed to reach server'  })
   }
 
   return false
@@ -34,11 +35,13 @@ let Form = {
   },
   render(c) {
     let { props, state } = c
+    let title = props.title
 
     return <form onSubmit={process} {... props} >
-        <span class="error">{state.error}</span>
-        {props.children}
-      </form>
+      <h3>{title}</h3>
+      <span class="error">{state.error}</span>
+      {props.children}
+    </form>
   }
 }
 

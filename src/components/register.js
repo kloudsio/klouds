@@ -2,27 +2,28 @@ import { element } from 'deku'
 
 import Form from './form'
 import api from '../api'
+import assert from 'assert'
 
-async function register({ email, password, password2 }) {
+async function register({ email, password, password2 }, c, update) {
 
   if (password !== password2) {
-    return { error: 'Passwords do not match.' }
+    return update({ error: 'Passwords do not match.' })
   }
 
-  let { data, err } = await api.register({email, password})
-  if (err) {
-    console.error(err)
-    return { error: err.error }
+  try {
+    let { data } = await api.register({ email, password })
+  } catch (e) {
+    return update({ error: e.data.error })
   }
 
   api.setAuthToken(data.token)
-  return data
+  return update({ done: true })
 }
 
 let Register = {
-  render({state, props}) {
-    return <Form process={register} class="form">
-      <h3>Register</h3>
+  render(c) {
+    let { props, state } = c
+    return <Form process={register} class="form" title="register">
       <h4>Email</h4>
       <input type="email" class="email" name="email"/>
       <h4>Password</h4>
