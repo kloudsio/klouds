@@ -36,6 +36,20 @@ body {
   font: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+.debug {
+  display: inline-block;
+  background: rgba(47, 23, 20, 0.2);
+  border: 2px dashed rgba(47, 23, 20, 0.3);
+  padding: 1em;
+}
+
+.debug button {
+  border: none;
+  color: rgba(200, 230, 240, 0.8);
+  background: rgba(47, 23, 20, 0.9);
+  margin: 0.5em
+}
+
 @import "./elements/page.css";
 @import "./elements/logo-text.css";
 @import "./elements/login.css";

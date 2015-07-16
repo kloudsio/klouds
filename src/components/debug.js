@@ -1,11 +1,20 @@
 import { element } from 'deku'
 
 let Debug = {
-  render: c => {
-    if (process.env.NODE_ENV === 'development') {
-      return <div style={{background: 'rgba(100, 0, 0, 0.3)'}}>{c.props.children}</div>
+  initialState(props) {
+    return {
+      hidden: process.env.NODE_ENV !== 'development'
     }
-    return null
+  },
+  render: component => {
+    let { props, state } = component
+
+    function toggle(ev, c, setState) {
+      setState({ hidden: !state.hidden })
+    }
+
+    return state.hidden ? <div></div>
+      : <div class="debug" onDoubleClick={toggle}>{component.props.children}</div>
   }
 }
 

@@ -5,60 +5,47 @@ import api from '../api'
 
 
 function fetchToken(data) {
-  var promise = new Promise()
 
+
+
+}
+
+async function submit(data, c, update) {
+  update({ busy: true })
   Stripe.card.createToken(data, function (status, res) {
-
     if (res.error) {
-      promise.reject(res.error)
+      update({ error: res.error })
     } else if (status !== 200) {
-      promise.reject('Connection lost')
+      update({ error: 'Unable to reach klouds.io' })
     } else {
-      promise.resolve(res)
+      c.props.onPurchased(c.props.id, res.id)
+      update({ busy: false })
     }
   })
-
-  return promise
 }
 
-async function submit(data, { props }, update) {
-
-  update({ busy: true })
-
-  let res = await fetchToken(data)
-
-  if (!res) {
-    return update({ error: res.error.message })
-  }
-
-  props.onToken(props.payment.id, res.id)
-  update({ busy: false })
-
-}
-
-
-let Stripe = {
+let Payment = {
   initialState() {
     return {
       busy: false
     }
   },
 
-  render(c) {
+  render(c, update) {
     let { props, state } = c
 
     return (
-      <Form submit={submit} class="login">
-        <span class="title">{props.name}</span>
+      <Form process={submit} class="form">
+        <h3>{props.name}</h3>
         <span class="info">{`\$${props.amount} per Month`}</span>
 
-        <label>Card Number</label>
+        <h4>Card Number</h4>
         <input placeholder="credit card #" type="text" size="20" id="card-number" />
 
-        <label>CVC</label>
+        <h4>CVC</h4>
         <input placeholder="" type="text" size="4" id="card-cvc"/>
 
-        <label>Expiration (MM/YYYY)</label>
+        <h4>Expiration (MM/YYYY)</h4>
         <div>
           <input placeholder="MM" class="expiry" type="text" size="2" id="card-expiry-month"/>
           {'/'}
@@ -89,4 +76,4 @@ let TestButton = {
   }
 }
 
-export default Stripe
+export default Payment

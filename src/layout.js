@@ -31,7 +31,9 @@ let Layout = {
       update({ page: 'payment', app: app })
     }
     let dashboard = () => update({ page: 'dashboard' })
-
+    let purchased = (name, tok) => {
+      console.log(name, tok)
+    }
     let onLaunch = payment
 
     return (
@@ -41,11 +43,12 @@ let Layout = {
 
         <li class={{ active: state.page === 'login' }}>
           <NumText left="">Open Klouds</NumText>
-          <Row xs={'center'}>
-            <Col xs={[6]}>
+          <Row>
+
+            <Col xs="4 2">
               <Login />
             </Col>
-            <Col xs={[6]}>
+            <Col xs="4">
               <Register />
             </Col>
           </Row>
@@ -59,7 +62,7 @@ let Layout = {
         <li class={{ active: state.page === 'payment' }}>
           <NumText left="">Checkout</NumText>
 
-          <Stripe {... state.app } />
+          <Stripe onPurchased={purchased} {... state.app } />
         </li>
 
         <li class={{ active: state.page === 'dashboard' }}>

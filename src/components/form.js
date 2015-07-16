@@ -19,7 +19,6 @@ function process(ev, c, update) {
 
   try {
     res = c.props.process(submitData(ev.target), c, update)
-    update(res)
   } catch (e) {
     update({ error: typeof e.error || 'Failed to reach server'  })
   }

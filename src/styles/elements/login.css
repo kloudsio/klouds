@@ -1,22 +1,32 @@
-.login {
+.form {
   position: relative;
   color: var(--light);
   width: 18em;
+  background: var(--purple);
+  padding: 1em;
+}
+.form h3 {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 0.5em
 }
 
-.login h4 {
+.form h4 {
   white-space: nowrap;
   color: var(--light);
   margin-top: 0.5em;
-  padding-right: 2em;
-  margin-left: 1em;
+  margin-bottom: 0;
 }
-.login input {
-  width: 15.2em;
-  margin-right: 1.4em;
+.form input[type=submit] {
+  font-weight: bold;
+  margin: 2em 0 1em 0;
+
+}
+.form input {
+  width: 100%;
   margin-bottom: 1em;
 }
 
-.login .error {
+.form .error {
   color: #D01C1C;
 }

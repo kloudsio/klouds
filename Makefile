@@ -31,7 +31,7 @@ development:
 			ASSETS=../dist\
 			MONGODB=localhost\
 		sane '\
-			make && killall -9 babel-node; sleep 1; ./server/index.js' {src,server}/ --glob='[^templates]**/*' --wait=3 --dot"
+			make && killall -9 iojs; ./server/index.js & sleep 3; xdg-open http://dsont:3000 ' {src,server}/ --glob='[^templates]**/*' --wait=3 --dot"
 
 
 

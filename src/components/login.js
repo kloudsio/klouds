@@ -32,13 +32,14 @@ let Login = {
   render(component) {
     let {state, props} = component
 
-    return <Form submit={submit} class="login">
-        <h4>Email</h4>
-        <input type="email" id="EMAIL"/>
-        <h4>Password</h4>
-        <input type="password" class="password" />
-        <input type="submit" class="login-btn primary" value="Login" />
-     </Form>
+    return <Form process={submit} class="form">
+      <h3>Login</h3>
+      <h4>Email</h4>
+      <input type="email" id="EMAIL"/>
+      <h4>Password</h4>
+      <input type="password" class="password" />
+      <input type="submit" class="login-btn primary" value="Login" />
+    </Form>
   }
 }
 
