@@ -1,7 +1,7 @@
-#!/bin/babel-node
+#!babel-node
 
 import arg3r from 'minimist'
-import env from './config/env.json'
+import env from './env.json'
 import fs from 'fs'
 import { join } from 'path'
 import { spawn } from 'child_process'
@@ -14,10 +14,19 @@ let targets = argv._
 console.log(`klouds-run on ${ targets.length } targets`)
 
 
-function launch(script) {
+function scriptPath(name) {
+  return join(__dirname, `apps/${name}/${name}.sh`)
+}
+
+function launch(name) {
+  let script = scriptPath(name)
   console.log('spawning:', script)
 
-  let cp = spawn('bash', script, [], { env, ... process.env })
+  let cp = spawn('bash', [script], {
+    cwd: join(__dirname, 'apps', name),
+    env,
+    ...process.env
+  })
 
   cp.stdout.pipe(process.stdout)
   cp.stderr.pipe(process.stderr)
@@ -30,7 +39,7 @@ function launch(script) {
 
 function exists(x) {
   return new Promise((res, rej) => {
-    fs.exists(x, mmhm => {
+    fs.exists(scriptPath(x), mmhm => {
       if (mmhm) {
         return res(x)
       } else {
@@ -40,9 +49,6 @@ function exists(x) {
   })
 }
 
-function scriptPath(name) {
-  return join(__dirname, `apps/${name}/${name}.sh`)
-}
 
 for (let name of targets) {
   let ex = scriptPath(name)
