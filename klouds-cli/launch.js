@@ -17,7 +17,7 @@ console.log(`klouds-run on ${ targets.length } targets`)
 function launch(script) {
   console.log('spawning:', script)
 
-  let cp = spawn('bash', script, [], { env })
+  let cp = spawn('bash', script, [], { env, ... process.env })
 
   cp.stdout.pipe(process.stdout)
   cp.stderr.pipe(process.stderr)
