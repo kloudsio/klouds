@@ -1,4 +1,4 @@
-let { PORT, MONGODB, ASSETS, JWT_KEY, STRIPE_SK } = process.env
+let { PORT, MONGODB, WWWROOT, JWT_KEY, STRIPE_SK } = process.env
 
 import http from 'http'
 import koa from 'koa'
@@ -13,7 +13,7 @@ app.on('error', function (err) {
   console.log(`server error: ${ err }`);
 });
 
-app.use(serve(join(__dirname, '../', ASSETS), { defer: false }))
+app.use(serve(join(__dirname, '../', WWWROOT), { defer: false }))
 
 app.use(json())
 app.use(function* errors(next) {

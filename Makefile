@@ -22,16 +22,13 @@ css: $(css)
 	@$(bin)/myth src/styles/app.css dist/app.css
 	# myth finished.
 
-development:
-	bash -c -- "\
-			NODE_ENV=development\
-			PORT=3000\
-			STRIPE_SK=wtfjoke\
-			JWT_KEY=abcdefg\
-			ASSETS=../dist\
-			MONGODB=localhost\
-		sane '\
-			make && killall -9 iojs; ./server/index.js & sleep 1; xdg-open http://dsont:3000 ' {src,server}/ --glob='[^templates]**/**' --wait=3 --dot"
+serve:
+	killall -9 iojs
+	xdg-open http://dsont:3000
+	./server/index.js
+
+dev:
+	bash -c -- "sane '' {src,server}/ --glob='[^templates]**/**' --dot"
 
 
 

@@ -3,8 +3,6 @@ import Debug from './debug'
 import Form from './form'
 import api from '../api'
 
-
-
 let Mock = {
   render() {
     function fill() {
@@ -22,6 +20,19 @@ let Mock = {
   }
 }
 
+function createToken(data) {
+  return new Promise((resolve, reject) => {
+    Stripe.card.createToken(data, function (status, res) {
+      if (res.error) {
+        reject(res.error)
+      } else if (status !== 200) {
+        reject('Unable to reach klouds.io')
+      } else {
+        resolve(res)
+      }
+    })
+  })
+}
 
 let Payment = {
   defaultProps: {
@@ -38,23 +49,22 @@ let Payment = {
   render(c, setState) {
     let { props, state } = c
 
-    async function submit(data, c, update) {
+    async function pay(formdata) {
+      try {
+        let res = await createToken(formdata)
+        let { data } = api.subscribe({app: props.id, source: res.id})
+        props.done(data)
+      } catch (e) {
+        return setState({ error: e })
+      }
 
-      Stripe.card.createToken(data, function (status, res) {
 
-        if (res.error) {
-          setState({ error: res.error })
-        } else if (status !== 200) {
-          setState({ error: 'Unable to reach klouds.io' })
-        } else {
-          props.done(c.props.id, res.id)
-          setState({ busy: false })
-        }
-      })
+
+      setState({ busy: false })
     }
 
 
-    return <Form onSubmit={submit} class="form" id="stripe">
+    return <Form onSubmit={pay} class="form" id="stripe">
       <h3>{props.name}</h3>
       <span class="info">{`\$${props.amount} per Month`}</span>
 

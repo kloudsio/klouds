@@ -3,7 +3,7 @@
 /**
  * Environment Variables Validation
  */
-var env = [ 'PORT', 'MONGODB', 'ASSETS', 'JWT_KEY', 'STRIPE_SK' ]
+var env = [ 'PORT', 'MONGODB', 'WWWROOT', 'JWT_KEY', 'STRIPE_SK' ]
 
 env.map(function (v) {
   if (typeof process.env[v] === 'undefined') {

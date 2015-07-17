@@ -17,3 +17,5 @@ export STRIPE_SK='sk_test_huzzah?'
 
 cd server
 ./node_modules/.bin/babel-node index.js
+
+while read -n 1 x; do [ "$x" == "q" ] && exit; done

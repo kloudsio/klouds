@@ -62,13 +62,20 @@ let Layout = {
 
         <li class={{ active: state.page === 'apps' }}>
           <NumText left="">Browse Apps</NumText>
-          <Apps onLaunch={payment} />
+            <Row>
+              <Col xs="8 2">
+                <Apps onLaunch={payment} />
+            </Col>
+          </Row>
         </li>
 
         <li class={{ active: state.page === 'payment' }}>
           <NumText left="">Checkout</NumText>
-
-          <Stripe done={purchased} name={state.app.name} amount="1000"/>
+            <Row>
+              <Col xs="6 3">
+                <Stripe done={() => {dashboard(); alert('you bought an app!') }} id={state.app.id} name={state.app.name} amount="1000"/>
+            </Col>
+          </Row>
         </li>
 
         <li class={{ active: state.page === 'dashboard' }}>

@@ -1,0 +1,6 @@
+docker-wordpress-nginx:
+  ports:
+  - 80:80/tcp
+  tty: false
+  image: eugeneware/docker-wordpress-nginx
+  stdin_open: false

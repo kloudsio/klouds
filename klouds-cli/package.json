@@ -1,0 +1,31 @@
+{
+  "name": "klouds-cli",
+  "version": "1.0.0",
+  "description": "A Kloud's mini-cli that controls applications lifecycle ops.",
+  "main": "launch.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kloudsio/klouds-cli.git"
+  },
+  "keywords": [
+    "docker",
+    "cloud",
+    "orchestration",
+    "containers",
+    "apps",
+    "hosting",
+    "cli"
+  ],
+  "author": "daniel sont",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kloudsio/klouds-cli/issues"
+  },
+  "homepage": "https://github.com/kloudsio/klouds-cli#readme",
+  "dependencies": {
+    "minimist": "^1.1.1"
+  }
+}

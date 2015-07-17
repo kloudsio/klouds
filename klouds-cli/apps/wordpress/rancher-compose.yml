@@ -1,0 +1,2 @@
+docker-wordpress-nginx:
+  scale: 1
