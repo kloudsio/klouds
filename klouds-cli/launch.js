@@ -1,5 +1,3 @@
-#!babel-node
-
 import arg3r from 'minimist'
 import env from './env.json'
 import fs from 'fs'
