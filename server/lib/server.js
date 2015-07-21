@@ -1,4 +1,7 @@
-let { PORT, MONGODB, WWWROOT, JWT_KEY, STRIPE_SK } = process.env
+import users from './users'
+import apps from './apps'
+import stripe from './stripe'
+import config from '../config'
 
 import http from 'http'
 import koa from 'koa'
@@ -7,15 +10,22 @@ import router from 'koa-joi-router'
 import serve from 'koa-static'
 import { join } from 'path'
 
+
+// public routes
+let pub = router()
+pub.route(users.login)
+pub.route(users.register)
+pub.get('/apps', apps.apps)
+pub.get('/disabled', apps.disabled)
+
+// user routes
+let user = router()
+user.post('/subscribe', { validate: { type: 'json' } }, stripe.subscribe)
+
 let app = koa()
 
-app.on('error', function (err) {
-  console.log(`server error: ${ err }`);
-});
-
-app.use(serve(join(__dirname, '../', WWWROOT), { defer: false }))
-
-app.use(json())
+app.on('error', console.error)
+// serve directory & json response & 404s
 app.use(function* errors(next) {
   try {
     yield next
@@ -29,34 +39,17 @@ app.use(function* errors(next) {
     this.app.emit('error', err, this)
   }
 })
-
-
-
-let pub = router()
-let auth = router()
-
-import users from './users'
-import apps from './apps'
-import stripe from './stripe'
-
-pub.route(users.login)
-pub.route(users.register)
-pub.get('/apps', apps.apps)
-pub.get('/disabled', apps.disabled)
-
-auth.route(stripe.subscribe)
-
-pub.post('/paypal/hook', function* () {
-  let data = this.request.body
-  console.log(data)
-  this.body = data
-})
+app.use(serve(config.WWWROOT, { defer: false }))
+app.use(json())
 
 app.use(pub.middleware())
-app.use(auth.middleware())
+app.use(user.middleware())
 
 
-http.createServer(app.callback()).listen(PORT);
 
-console.log('\n'+`serving klouds from ${PORT}`)
+
+// Start Listening
+http.createServer(app.callback()).listen(config.PORT)
+
+console.log('\n' + `serving klouds from ${config.PORT}`)
 
