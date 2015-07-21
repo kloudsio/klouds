@@ -1,10 +1,7 @@
-import { appsDb } from '../db'
-
-let { PORT, MONGODB, ASSETS, JWT_KEY, STRIPE_SK } = process.env
+import { appsDb } from './db'
 
 function* apps() {
   this.body = this.body = appsDb('apps').toArray()
-  console.log(this.body.apps)
 }
 
 function* disabled() {
@@ -16,5 +13,4 @@ function* disabled() {
 export default {
   apps,
   disabled,
-  appsDb
 }

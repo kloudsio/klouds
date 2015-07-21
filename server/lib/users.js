@@ -1,18 +1,17 @@
-let { PORT, MONGODB, ASSETS, JWT_KEY, STRIPE_SK } = process.env
+import { usersDb } from './db'
+import config from '../config'
 
 import jwt from 'koa-jwt'
-import monk from 'monk'
-import wrap from 'co-monk'
 import createPswd from 'pswd'
 import joi from 'joi'
 
-let db = monk(process.env.MONGODB)
-let usersDb = wrap(db.get('users'))
+
+
 let pswd = createPswd()
 
 function* sign(next) {
-  yield next;
-  this.body.token = jwt.sign(this.body, JWT_KEY, { expiresInMinutes: 60 * 5 })
+  yield next
+  this.body.token = jwt.sign(this.body, config.JWT_KEY, { expiresInMinutes: 60 * 5 })
 }
 
 let login = {
@@ -73,4 +72,8 @@ let register = {
   }]
 }
 
-export default { login, register }
+export default {
+  login,
+  register
+}
+

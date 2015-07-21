@@ -1,38 +1,54 @@
+import { appsDb, stripeDb } from './db'
+import config from '../config'
+import deploys from './deploys'
 import jwt from 'koa-jwt'
-import low from 'lowdb'
-import createStripe from 'stripe'
+import Stripe from 'stripe'
+import Emitter from 'event'
 
-import { stripeDb } from '../db'
+let emitter = new Emitter();
 
-let { PORT, MONGODB, ASSETS, JWT_KEY, STRIPE_SK } = process.env
+let stripe = Stripe(config.STRIPE_SK)
 
-let stripe = createStripe(STRIPE_SK)
-let hasToken = jwt({ secret: JWT_KEY })
+/**
+ * customer is a promisified wrapper for stripe.customers.create
+ */
+function createCustomer(info) {
+  return new Promise((resolve, reject) => {
+    let cb = (err, data) => err ? reject(err) : resolve(data)
+      stripe.customers.create(info, cb)
+    }
+  )
+}
+function* subscribe() {
+  // app exists
+  let app = appsDb.find(this.request.body.app)
+  this.assert(app, 404, `Incorrect app ${app}`)
 
-function stripeCustomerCreate(customer) {
-  return cb => stripe.customers.create(customer, cb)
+
+  // stripe create customer
+  let result = yield customer({
+    plan: 'app',
+    email: this.state.user.email,
+    source: this.request.body.source,
+    metadata: {
+      app
+    }
+  })
+  this.assert(result, 500, 'Stripe Create Customer Failure')
+
+  // Save Customer
+  stripeDb('customers').push(result)
+
+  // broadcast
+  emitter.emit('subscription', {
+    app,
+    payment: result.id,
+    user: this.state.user
+  })
+  this.body = result.id
 }
 
-let subscribe = {
-  method: 'post',
-  path: '/subscribe',
-  validate: { type: 'json' },
-  handler: [ hasToken, function*() {
-
-    let { app, source } = this.request.body
-    let { email } = this.state.user
-    let plan = 'app'
-
-    let customer = yield stripeCustomerCreate({ plan, source, email })
-    this.assert(customer, 500, 'Stripe Create Customer Failure')
-
-    console.log('Created Stripe Customer', customer)
-
-    stripeDb('customers').push(customer)
-
-    this.body = customer.id
-
-  }]
+export default {
+  subscribe,
+  on: emitter.on
 }
-
-export default { subscribe }
