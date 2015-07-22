@@ -6,7 +6,6 @@ function* apps() {
 
 function* disabled() {
   this.body = appsDb('disabled').toArray()
-  console.log(this.body.apps)
 
 }
 

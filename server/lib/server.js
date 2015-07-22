@@ -10,6 +10,12 @@ import router from 'koa-joi-router'
 import serve from 'koa-static'
 import { join } from 'path'
 
+function failure(failed) {
+  console.error(failed.stack)
+}
+
+let app = koa()
+app.on('error', failure)
 
 // public routes
 let pub = router()
@@ -22,16 +28,12 @@ pub.get('/disabled', apps.disabled)
 let user = router()
 user.post('/subscribe', { validate: { type: 'json' } }, stripe.subscribe)
 
-let app = koa()
 
-app.on('error', console.error)
 // serve directory & json response & 404s
 app.use(function* errors(next) {
   try {
     yield next
   } catch (err) {
-    console.error(err)
-
     this.status = err.status || 500
     this.body = {
       error: err.message

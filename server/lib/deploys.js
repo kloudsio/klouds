@@ -1,8 +1,5 @@
-import config from '../config'
-import { deploysDb } from './db'
 import { up, down, restart } from '../../apps'
-
-
+import { deploysDb } from './db'
 
 let create = function* (appId, paymentId, options ) {
   let { userid = this.state.user.id } = options
@@ -21,7 +18,7 @@ let destroy = function* () {
 
 }
 
-let apps = {
+export default {
   create,
   destroy,
   up,

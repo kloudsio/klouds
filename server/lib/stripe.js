@@ -3,9 +3,9 @@ import config from '../config'
 import deploys from './deploys'
 import jwt from 'koa-jwt'
 import Stripe from 'stripe'
-import Emitter from 'event'
+import { EventEmitter } from 'events'
 
-let emitter = new Emitter();
+let emitter = new EventEmitter()
 
 let stripe = Stripe(config.STRIPE_SK)
 
@@ -20,31 +20,36 @@ function createCustomer(info) {
   )
 }
 function* subscribe() {
-  // app exists
-  let app = appsDb.find(this.request.body.app)
-  this.assert(app, 404, `Incorrect app ${app}`)
 
+  let app = appsDb.find({
+    name: this.request.body.app
+  })
+
+  this.assert(app, 404, `Invalid parameter as app: ${app}`)
 
   // stripe create customer
-  let result = yield customer({
-    plan: 'app',
-    email: this.state.user.email,
+  let result = yield createCustomer({
     source: this.request.body.source,
+    email: this.state.user.email,
+    plan: 'app',
     metadata: {
-      app
+      app,
+      user: this.state.user._id
     }
   })
+
   this.assert(result, 500, 'Stripe Create Customer Failure')
 
   // Save Customer
   stripeDb('customers').push(result)
 
-  // broadcast
+  // Broadcast subscription
   emitter.emit('subscription', {
     app,
     payment: result.id,
     user: this.state.user
   })
+
   this.body = result.id
 }
 

@@ -9,8 +9,8 @@ let Code = {
   afterMount({ props, state, id}, elem, update) {
     update({
       codemirror: codebox.fromTextArea(elem.querySelector('textarea'), {
-        mode: 'javascript',
-        // theme: 'monokai',
+        mode: 'htmlmixed',
+        theme: 'monokai',
         inputStyle: "contenteditable",
         lineNumbers: true,
       })

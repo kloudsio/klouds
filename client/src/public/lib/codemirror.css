@@ -1,19 +1,13 @@
 /* BASICS */
 
 .CodeMirror {
-  z-index: 1000;
-  position: absolute !important;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 400px;
-  height: 300px;
-  margin: auto;
-  text-align: center;
-
   font-family: monospace;
-  color: black;
+  position: absolute !important;
+  z-index: 1000;
+  top: 10px;
+  left: 10px;
+  width: 300px;
+  height: 200px;
 }
 
 /* PADDING */
