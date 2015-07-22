@@ -1,15 +1,11 @@
-import { appsDb } from './db'
+import { low } from './db'
 
 function* apps() {
-  this.body = this.body = appsDb('apps').toArray()
+  this.body = low('apps').toArray()
 }
 
 function* disabled() {
-  this.body = appsDb('disabled').toArray()
-
+  this.body = low('disabled').toArray()
 }
 
-export default {
-  apps,
-  disabled,
-}
+export default { apps, disabled }

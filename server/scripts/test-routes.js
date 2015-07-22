@@ -1,7 +1,7 @@
 #!/bin/babel-node
 
 import axios from 'axios'
-let { PORT=3000 } = process.env
+let { PORT=2020 } = process.env
 
 let base = (suffix) => {
   console.log('http://localhost:' + PORT + suffix)
@@ -14,8 +14,8 @@ let ok = c => {
 }
 
 let fail = c => {
-  let { status, data } = c
-  console.error(status, data)
+  // let { status, data } = c
+  console.error(c)
 }
 
 let logindata = {

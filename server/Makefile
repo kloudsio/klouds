@@ -1,7 +1,12 @@
 
-serve-dev:
-  @xdg-open http://localhost:7775
+export NODE_ENV=development
+export DEBUG=koa*
 
-serve-prod:
-	@ NODE_ENV=production
-	babel-node index.js
+
+all: default
+
+default:
+	@ xdg-open 'http://127.0.0.1:9300'
+	@ babel-node start.js
+
+PHONY: all default

@@ -1,4 +1,4 @@
-import { up, down, restart } from '../../apps'
+import { up, down, restart } from '../rancher/compose'
 import { deploysDb } from './db'
 
 let create = function* (appId, paymentId, options ) {

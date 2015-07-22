@@ -1,6 +1,6 @@
 import { appsDb, stripeDb } from './db'
 import config from '../config'
-import deploys from './deploys'
+import deploys from './rancher'
 import jwt from 'koa-jwt'
 import Stripe from 'stripe'
 import { EventEmitter } from 'events'
