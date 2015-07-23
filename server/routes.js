@@ -7,7 +7,7 @@ import compose from 'koa-compose'
 // guest routes
 let guest = router()
 guest.post('/login', users.login)
-guest.route(users.register)
+guest.post('/register', users.register)
 guest.get('/apps', apps.apps)
 guest.get('/disabled', apps.disabled)
 
