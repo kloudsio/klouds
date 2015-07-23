@@ -6,7 +6,6 @@ import createPswd from 'pswd'
 import joi from 'joi'
 
 
-
 let pswd = createPswd()
 
 function* sign(next) {
@@ -15,8 +14,6 @@ function* sign(next) {
 }
 
 let login = {
-  method: 'post',
-  path: '/login',
   validate: {
     body: {
       email: joi.string().lowercase().email(),
@@ -41,8 +38,6 @@ let login = {
 }
 
 let register = {
-  method: 'post',
-  path: '/register',
   validate: {
     body: {
       email: joi.string().lowercase().email(),

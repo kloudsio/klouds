@@ -1,12 +1,10 @@
-
 export NODE_ENV=development
 export DEBUG=koa*
 
 
-all: default
 
 default:
-	@ xdg-open 'http://127.0.0.1:9300'
-	@ babel-node start.js
+	@xdg-open 'http://localhost:2020'
+	@./serve.js
 
-PHONY: all default
+PHONY: default

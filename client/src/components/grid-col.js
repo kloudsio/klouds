@@ -16,13 +16,10 @@ let Col = {
 
     let classes = []
     _.forEach({xs, sm, md, lg}, (v, k) => {
-      console.log(k, v)
-
       let words = v.match(/([a-zA-Z]+)/)
       let cols = v.match(/^([0-9]+)/)
       let offsets = v.match(/\s([0-9]+)/)
 
-      console.log(words, offsets, cols)
       if (words) {
         classes.push([words[0], k].join('-'))
       }

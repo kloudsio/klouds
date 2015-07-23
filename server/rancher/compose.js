@@ -4,7 +4,7 @@ import { spawn } from 'child_process'
 import extend from 'extend'
 
 let commandify = function (cmd, funcs, defaults = {}) {
-  let fns = {};
+  let fns = {}
   for (let func of funcs) {
     fns[func] = x => spawn(`${cmd} ${func}`, extend(defaults, x))
   }
