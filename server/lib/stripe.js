@@ -1,6 +1,7 @@
 import config from '../config'
 import { appsDb, stripeDb } from './db'
 
+import joi from 'joi'
 import stripeApi from 'stripe'
 import { EventEmitter } from 'events'
 
@@ -18,35 +19,43 @@ function createCustomer(info) {
   })
 }
 
-function* subscribe() {
-  let { email, userId } = this.state.user
-  let { app, source } = this.request.body
+let subscribe = {
+  validate: {
+    body: {
+      app: joi.string().max(100),   // app-name
+      source: joi.string().max(100) // customer token
+    },
+    type: 'json'
+  },
+  * handler() {
+    let user = this.state.user,
+      app = this.request.body.app,
+      token = this.request.body.source
+    let customerData = {
+      plan: config.STRIPE_PLAN,
+      email: user.email,
+      source: token,
+      metadata: {user: user.id, app}
+    }
 
+    let customer = yield createCustomer(customerData)
 
-  // stripe create customer
-  let result = yield createCustomer({
-    plan: 'app',
-    email,
-    metadata: { app, userId },
-    source
-  })
+    // save
+    stripeDb.push(customer)
 
-  this.assert(result, 500, 'Stripe Create Customer Failure')
+    // Broadcast subscription
+    events.emit('subscribe', user, app)
 
-  // Save Customer
-  stripeDb.push(result)
-
-  // Broadcast subscription
-  events.emit('subscribe', {
-    app,
-    payment: result.id,
-    user: this.state.user
-  })
-
-  this.body = result.id
+    this.body = {
+      app,
+      customer: {
+        id: customer.id
+      }
+    }
+  }
 }
 
 export default {
   subscribe,
-  on: events.on
+  onSubscribe: handler => events.on('subscribe', handler)
 }

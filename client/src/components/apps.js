@@ -3,13 +3,14 @@ import App from '../templates/app-item'
 import api from '../api'
 
 let Apps = {
-	initialState (props) {
-		return {
-			apps: []
-		}
-	},
+  initialState() {
+    return {
+      apps: []
+    }
+  },
   async afterMount() {
     let apps = await api.apps()
+    console.log(apps)
     return { apps: apps.data }
   },
   render(c) {
@@ -17,7 +18,11 @@ let Apps = {
     let { apps } = state
 
 
-    let items = apps.map(v => <App onClick={() => props.onLaunch(v)} app={v} />)
+    let items = apps.map(v =>
+      <div onClick={() => props.onLaunch(v)} >
+        <App app={v} />
+      </div>
+    )
 
     return <div>{items}</div>
   }

@@ -1,14 +1,5 @@
 import axios from 'axios'
 
-let tokenInterceptor = axios.interceptors.request.use(res => {
-  if (res.data.token) {
-    api.token = res.data.token
-    api.headers.Authorization = `Bearer ${res.data.token}`
-    axios.interceptors.request.eject(tokenInterceptor)
-  }
-  return res
-})
-
 
 let api = {
   token: null,
@@ -28,13 +19,27 @@ let api = {
     url: '/disabled'
   }),
 
-  subscribe: ({ app, source }) => axios({
+  subscribe: (app, source) => axios({
     method: 'post',
     url: '/subscribe',
     headers: api.headers,
     data: { app, source }
   })
 }
+
+let setToken = token => {
+  api.token = token
+  api.headers.Authorization = `Bearer ${token}`
+}
+
+let authInterceptor = res => {
+  if (res.data && res.data.token) {
+    setToken(res.data.token)
+  }
+  return res
+}
+
+axios.interceptors.response.use(authInterceptor)
 
 
 export default api

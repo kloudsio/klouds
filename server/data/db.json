@@ -200,7 +200,459 @@
       "name": "paperwork"
     }
   ],
-  "stripe": [],
+  "stripe": [
+    {
+      "object": "customer",
+      "created": 1437947046,
+      "id": "cus_6gJX7KRBUMLwmF",
+      "livemode": false,
+      "description": null,
+      "email": "1@1",
+      "delinquent": false,
+      "metadata": {
+        "app": "wordpress"
+      },
+      "subscriptions": {
+        "object": "list",
+        "total_count": 1,
+        "has_more": false,
+        "url": "/v1/customers/cus_6gJX7KRBUMLwmF/subscriptions",
+        "data": [
+          {
+            "id": "sub_6gJXERoK4AexW0",
+            "plan": {
+              "interval": "month",
+              "name": "Klouds Test App",
+              "created": 1437947039,
+              "amount": 1000,
+              "currency": "usd",
+              "id": "app",
+              "object": "plan",
+              "livemode": false,
+              "interval_count": 1,
+              "trial_period_days": null,
+              "metadata": {},
+              "statement_descriptor": null
+            },
+            "object": "subscription",
+            "start": 1437947046,
+            "status": "active",
+            "customer": "cus_6gJX7KRBUMLwmF",
+            "cancel_at_period_end": false,
+            "current_period_start": 1437947046,
+            "current_period_end": 1440625446,
+            "ended_at": null,
+            "trial_start": null,
+            "trial_end": null,
+            "canceled_at": null,
+            "quantity": 1,
+            "application_fee_percent": null,
+            "discount": null,
+            "tax_percent": null,
+            "metadata": {}
+          }
+        ]
+      },
+      "discount": null,
+      "account_balance": 0,
+      "currency": "usd",
+      "sources": {
+        "object": "list",
+        "total_count": 1,
+        "has_more": false,
+        "url": "/v1/customers/cus_6gJX7KRBUMLwmF/sources",
+        "data": [
+          {
+            "id": "card_16SwtUIdwtfpniEzqOECeKH9",
+            "object": "card",
+            "last4": "4242",
+            "brand": "Visa",
+            "funding": "credit",
+            "exp_month": 12,
+            "exp_year": 2020,
+            "fingerprint": "BzwQYrYcE80Gwn3x",
+            "country": "US",
+            "name": null,
+            "address_line1": null,
+            "address_line2": null,
+            "address_city": null,
+            "address_state": null,
+            "address_zip": null,
+            "address_country": null,
+            "cvc_check": "pass",
+            "address_line1_check": null,
+            "address_zip_check": null,
+            "tokenization_method": null,
+            "dynamic_last4": null,
+            "metadata": {},
+            "customer": "cus_6gJX7KRBUMLwmF"
+          }
+        ]
+      },
+      "default_source": "card_16SwtUIdwtfpniEzqOECeKH9"
+    },
+    {
+      "object": "customer",
+      "created": 1437948808,
+      "id": "cus_6gK1SRxd0AueSx",
+      "livemode": false,
+      "description": null,
+      "email": "1@1",
+      "delinquent": false,
+      "metadata": {
+        "user": "{\"_id\":\"55b0f1e561bdf94167217439\",\"email\":\"1@1\",\"iat\":1437948801,\"exp\":1437966801}",
+        "app": "wordpress"
+      },
+      "subscriptions": {
+        "object": "list",
+        "total_count": 1,
+        "has_more": false,
+        "url": "/v1/customers/cus_6gK1SRxd0AueSx/subscriptions",
+        "data": [
+          {
+            "id": "sub_6gK1COyMvvK6bH",
+            "plan": {
+              "interval": "month",
+              "name": "Klouds Test App",
+              "created": 1437947039,
+              "amount": 1000,
+              "currency": "usd",
+              "id": "app",
+              "object": "plan",
+              "livemode": false,
+              "interval_count": 1,
+              "trial_period_days": null,
+              "metadata": {},
+              "statement_descriptor": null
+            },
+            "object": "subscription",
+            "start": 1437948808,
+            "status": "active",
+            "customer": "cus_6gK1SRxd0AueSx",
+            "cancel_at_period_end": false,
+            "current_period_start": 1437948808,
+            "current_period_end": 1440627208,
+            "ended_at": null,
+            "trial_start": null,
+            "trial_end": null,
+            "canceled_at": null,
+            "quantity": 1,
+            "application_fee_percent": null,
+            "discount": null,
+            "tax_percent": null,
+            "metadata": {}
+          }
+        ]
+      },
+      "discount": null,
+      "account_balance": 0,
+      "currency": "usd",
+      "sources": {
+        "object": "list",
+        "total_count": 1,
+        "has_more": false,
+        "url": "/v1/customers/cus_6gK1SRxd0AueSx/sources",
+        "data": [
+          {
+            "id": "card_16SxN5IdwtfpniEzl4AnCKvS",
+            "object": "card",
+            "last4": "4242",
+            "brand": "Visa",
+            "funding": "credit",
+            "exp_month": 12,
+            "exp_year": 2020,
+            "fingerprint": "BzwQYrYcE80Gwn3x",
+            "country": "US",
+            "name": null,
+            "address_line1": null,
+            "address_line2": null,
+            "address_city": null,
+            "address_state": null,
+            "address_zip": null,
+            "address_country": null,
+            "cvc_check": "pass",
+            "address_line1_check": null,
+            "address_zip_check": null,
+            "tokenization_method": null,
+            "dynamic_last4": null,
+            "metadata": {},
+            "customer": "cus_6gK1SRxd0AueSx"
+          }
+        ]
+      },
+      "default_source": "card_16SxN5IdwtfpniEzl4AnCKvS"
+    },
+    {
+      "object": "customer",
+      "created": 1437948913,
+      "id": "cus_6gK2w4dntcB6b9",
+      "livemode": false,
+      "description": null,
+      "email": "1@1",
+      "delinquent": false,
+      "metadata": {
+        "app": "wordpress"
+      },
+      "subscriptions": {
+        "object": "list",
+        "total_count": 1,
+        "has_more": false,
+        "url": "/v1/customers/cus_6gK2w4dntcB6b9/subscriptions",
+        "data": [
+          {
+            "id": "sub_6gK2ONdQF2DBNd",
+            "plan": {
+              "interval": "month",
+              "name": "Klouds Test App",
+              "created": 1437947039,
+              "amount": 1000,
+              "currency": "usd",
+              "id": "app",
+              "object": "plan",
+              "livemode": false,
+              "interval_count": 1,
+              "trial_period_days": null,
+              "metadata": {},
+              "statement_descriptor": null
+            },
+            "object": "subscription",
+            "start": 1437948913,
+            "status": "active",
+            "customer": "cus_6gK2w4dntcB6b9",
+            "cancel_at_period_end": false,
+            "current_period_start": 1437948913,
+            "current_period_end": 1440627313,
+            "ended_at": null,
+            "trial_start": null,
+            "trial_end": null,
+            "canceled_at": null,
+            "quantity": 1,
+            "application_fee_percent": null,
+            "discount": null,
+            "tax_percent": null,
+            "metadata": {}
+          }
+        ]
+      },
+      "discount": null,
+      "account_balance": 0,
+      "currency": "usd",
+      "sources": {
+        "object": "list",
+        "total_count": 1,
+        "has_more": false,
+        "url": "/v1/customers/cus_6gK2w4dntcB6b9/sources",
+        "data": [
+          {
+            "id": "card_16SxOmIdwtfpniEzR4AJUeZn",
+            "object": "card",
+            "last4": "4242",
+            "brand": "Visa",
+            "funding": "credit",
+            "exp_month": 12,
+            "exp_year": 2020,
+            "fingerprint": "BzwQYrYcE80Gwn3x",
+            "country": "US",
+            "name": null,
+            "address_line1": null,
+            "address_line2": null,
+            "address_city": null,
+            "address_state": null,
+            "address_zip": null,
+            "address_country": null,
+            "cvc_check": "pass",
+            "address_line1_check": null,
+            "address_zip_check": null,
+            "tokenization_method": null,
+            "dynamic_last4": null,
+            "metadata": {},
+            "customer": "cus_6gK2w4dntcB6b9"
+          }
+        ]
+      },
+      "default_source": "card_16SxOmIdwtfpniEzR4AJUeZn"
+    },
+    {
+      "object": "customer",
+      "created": 1437949031,
+      "id": "cus_6gK4TDN3H77PnA",
+      "livemode": false,
+      "description": null,
+      "email": "1@1",
+      "delinquent": false,
+      "metadata": {
+        "app": "wordpress"
+      },
+      "subscriptions": {
+        "object": "list",
+        "total_count": 1,
+        "has_more": false,
+        "url": "/v1/customers/cus_6gK4TDN3H77PnA/subscriptions",
+        "data": [
+          {
+            "id": "sub_6gK4IQq3kbHC5H",
+            "plan": {
+              "interval": "month",
+              "name": "Klouds Test App",
+              "created": 1437947039,
+              "amount": 1000,
+              "currency": "usd",
+              "id": "app",
+              "object": "plan",
+              "livemode": false,
+              "interval_count": 1,
+              "trial_period_days": null,
+              "metadata": {},
+              "statement_descriptor": null
+            },
+            "object": "subscription",
+            "start": 1437949031,
+            "status": "active",
+            "customer": "cus_6gK4TDN3H77PnA",
+            "cancel_at_period_end": false,
+            "current_period_start": 1437949031,
+            "current_period_end": 1440627431,
+            "ended_at": null,
+            "trial_start": null,
+            "trial_end": null,
+            "canceled_at": null,
+            "quantity": 1,
+            "application_fee_percent": null,
+            "discount": null,
+            "tax_percent": null,
+            "metadata": {}
+          }
+        ]
+      },
+      "discount": null,
+      "account_balance": 0,
+      "currency": "usd",
+      "sources": {
+        "object": "list",
+        "total_count": 1,
+        "has_more": false,
+        "url": "/v1/customers/cus_6gK4TDN3H77PnA/sources",
+        "data": [
+          {
+            "id": "card_16SxQfIdwtfpniEzNmyjvAwQ",
+            "object": "card",
+            "last4": "4242",
+            "brand": "Visa",
+            "funding": "credit",
+            "exp_month": 12,
+            "exp_year": 2020,
+            "fingerprint": "BzwQYrYcE80Gwn3x",
+            "country": "US",
+            "name": null,
+            "address_line1": null,
+            "address_line2": null,
+            "address_city": null,
+            "address_state": null,
+            "address_zip": null,
+            "address_country": null,
+            "cvc_check": "pass",
+            "address_line1_check": null,
+            "address_zip_check": null,
+            "tokenization_method": null,
+            "dynamic_last4": null,
+            "metadata": {},
+            "customer": "cus_6gK4TDN3H77PnA"
+          }
+        ]
+      },
+      "default_source": "card_16SxQfIdwtfpniEzNmyjvAwQ"
+    },
+    {
+      "object": "customer",
+      "created": 1437949563,
+      "id": "cus_6gKDmG81HGEyFU",
+      "livemode": false,
+      "description": null,
+      "email": "1@1",
+      "delinquent": false,
+      "metadata": {
+        "app": "wordpress"
+      },
+      "subscriptions": {
+        "object": "list",
+        "total_count": 1,
+        "has_more": false,
+        "url": "/v1/customers/cus_6gKDmG81HGEyFU/subscriptions",
+        "data": [
+          {
+            "id": "sub_6gKDmSnKjMJ2mj",
+            "plan": {
+              "interval": "month",
+              "name": "Klouds Test App",
+              "created": 1437947039,
+              "amount": 1000,
+              "currency": "usd",
+              "id": "app",
+              "object": "plan",
+              "livemode": false,
+              "interval_count": 1,
+              "trial_period_days": null,
+              "metadata": {},
+              "statement_descriptor": null
+            },
+            "object": "subscription",
+            "start": 1437949563,
+            "status": "active",
+            "customer": "cus_6gKDmG81HGEyFU",
+            "cancel_at_period_end": false,
+            "current_period_start": 1437949563,
+            "current_period_end": 1440627963,
+            "ended_at": null,
+            "trial_start": null,
+            "trial_end": null,
+            "canceled_at": null,
+            "quantity": 1,
+            "application_fee_percent": null,
+            "discount": null,
+            "tax_percent": null,
+            "metadata": {}
+          }
+        ]
+      },
+      "discount": null,
+      "account_balance": 0,
+      "currency": "usd",
+      "sources": {
+        "object": "list",
+        "total_count": 1,
+        "has_more": false,
+        "url": "/v1/customers/cus_6gKDmG81HGEyFU/sources",
+        "data": [
+          {
+            "id": "card_16SxZGIdwtfpniEzZ7KedSDy",
+            "object": "card",
+            "last4": "4242",
+            "brand": "Visa",
+            "funding": "credit",
+            "exp_month": 12,
+            "exp_year": 2020,
+            "fingerprint": "BzwQYrYcE80Gwn3x",
+            "country": "US",
+            "name": null,
+            "address_line1": null,
+            "address_line2": null,
+            "address_city": null,
+            "address_state": null,
+            "address_zip": null,
+            "address_country": null,
+            "cvc_check": "pass",
+            "address_line1_check": null,
+            "address_zip_check": null,
+            "tokenization_method": null,
+            "dynamic_last4": null,
+            "metadata": {},
+            "customer": "cus_6gKDmG81HGEyFU"
+          }
+        ]
+      },
+      "default_source": "card_16SxZGIdwtfpniEzZ7KedSDy"
+    }
+  ],
   "deploys": [],
   "disabled": []
 }

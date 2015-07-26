@@ -18,7 +18,7 @@ dir:
 
 js: $(src)
 	@./scripts/html-to-deku.sh src/templates/*.html
-	@browserify -d src/app.js -t babelify -o dist/app.js -v
+	@ NODE_ENV="development" browserify -d src/app.js -t babelify -o dist/app.js -v
 	# browserify finished.
 
 css: $(css)

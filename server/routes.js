@@ -17,7 +17,7 @@ user.post('/subscribe', stripe.subscribe)
 
 let routes = compose([
   guest.middleware(),
-  users.auth(),
+  users.auth,
   user.middleware()
 ])
 

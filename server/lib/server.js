@@ -4,6 +4,7 @@ import serve from 'koa-static'
 
 import config from '../config'
 import routes from '../routes'
+import rancher from './rancher'
 
 function failure(failed) {
   console.error(failed.stack)
@@ -30,9 +31,7 @@ app.use(routes)
 
 import stripe from './stripe'
 
-stripe.on('subscribe', function(app, payment, user) {
-  console.log(`Firing up container: ${app}:${payment.id}:${user.email}`)
-})
+stripe.onSubscribe(rancher.create)
 
 console.log('\n' + `serving klouds from ${config.PORT}`)
 

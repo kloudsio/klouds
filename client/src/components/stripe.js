@@ -1,9 +1,8 @@
 import { element } from 'deku'
 import Debug from './debug'
 import Form from './form'
-import api from '../api'
 
-let Mock = {
+let DebugFill = {
   render() {
     function fill() {
       let val = (y, z) => { document.querySelector(y).value = z }
@@ -42,30 +41,23 @@ let Payment = {
 
   initialState() {
     return {
-      busy: false
     }
   },
 
   render(c, setState) {
     let { props, state } = c
 
-    async function pay(formdata) {
+    async function onCard(formdata) {
       try {
-        let res = await createToken(formdata)
-        let { data } = api.subscribe({app: props.name, source: res.id})
-        props.done(data)
+        let { id } = await createToken(formdata)
+        props.onToken(id)
       } catch (e) {
         return setState({ error: e })
       }
-
-
-
-      setState({ busy: false })
     }
 
-
-    return <Form onSubmit={pay} class="form" id="stripe">
-      <h3>{props.name}</h3>
+    return <Form onSubmit={onCard} class="form" id="stripe">
+      <h3>{props.title}</h3>
       <span class="info">{`\$${props.amount} per Month`}</span>
 
       <h4>Card Number</h4>
@@ -82,7 +74,7 @@ let Payment = {
       </div>
 
       <button type="submit" class="login-btn primary">Purchase</button>
-      <Mock />
+      <DebugFill />
     </Form>
   }
 }
