@@ -52,7 +52,7 @@ let Payment = {
     async function pay(formdata) {
       try {
         let res = await createToken(formdata)
-        let { data } = api.subscribe({app: props.id, source: res.id})
+        let { data } = api.subscribe({app: props.name, source: res.id})
         props.done(data)
       } catch (e) {
         return setState({ error: e })

@@ -1,25 +1,22 @@
 import axios from 'axios'
 
+let tokenInterceptor = axios.interceptors.request.use(res => {
+  if (res.data.token) {
+    api.token = res.data.token
+    api.headers.Authorization = `Bearer ${res.data.token}`
+    axios.interceptors.request.eject(tokenInterceptor)
+  }
+  return res
+})
+
 
 let api = {
   token: null,
   headers: {},
   http: axios,
 
-  setAuthToken: token => {
-    api.token = token
-    api.headers.Authorization = `Bearer ${token}`
-  },
-
-
-  login: data => {
-    return axios({ method: 'post', url: '/login', data })
-  },
-
-
-  register: data => {
-    return axios({ method: 'post', url: '/register', data })
-  },
+  login: data => axios({ method: 'post', url: '/login', data }),
+  register: data => axios({ method: 'post', url: '/register', data }),
 
   apps: () => axios({
     method: 'get',

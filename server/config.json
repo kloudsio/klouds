@@ -1,8 +1,0 @@
-{
-  "PORT": "2020",
-  "MONGODB": "localhost",
-  "DATADIR": "./data",
-  "WWWROOT": "../client/dist",
-  "JWT_KEY": "pirates-have-keys-too",
-  "STRIPE_SK": "but-they-havn't-stripes"
-}

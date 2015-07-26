@@ -1,22 +1,30 @@
-import config from './config.json'
+/**
+ * Wrapper for rancher-compose command.
+ */
+
+import extend from 'extend'
 import { join } from 'path'
 import { spawn } from 'child_process'
-import extend from 'extend'
 
-let commandify = function (cmd, funcs, defaults = {}) {
-  let fns = {}
-  for (let func of funcs) {
-    fns[func] = x => spawn(`${cmd} ${func}`, extend(defaults, x))
+import config from '../config'
+
+/**
+ * Creates an interface for an app
+ * app('wordpress')
+ */
+function appCompose(path) {
+  let spawnOptions = extend(config.rancher, {
+    cwd: join(__dirname, path)
+  })
+  console.dir(spawnOptions)
+  let composeCmd = cmd => () => spawn(`rancher-compose`, [ cmd ], spawnOptions)
+  return {
+    up: composeCmd('up'),
+    down: composeCmd('down'),
+    restart: composeCmd('restart')
   }
-  return fns
 }
 
-
-function app(name) {
-  let options = config.options
-  options.cwd = join(__dirname, name)
-  return commandify(config.bin, config.commands, options)
+export default {
+  wordpress: appCompose('./wordpress')
 }
-
-export let run = app
-export let wordpress = app('wordpress')

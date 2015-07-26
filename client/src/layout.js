@@ -1,6 +1,5 @@
 import { element } from 'deku'
 
-import CodeMirror from './components/code-mirror'
 import Debug from './components/debug'
 import LogoText from './components/logo-text'
 import Paypal from './templates/paypal'
@@ -47,7 +46,6 @@ let Layout = {
       <ul class="page">
         <LogoText>Klouds.io</LogoText>
         <Debug><button onClick={login}>LOGIN</button><button onClick={apps}>APPS</button><button onClick={payment}>PAYMENT</button><button onClick={dashboard}>DASHBOARD</button></Debug>
-        <CodeMirror />
         <li class={{ active: state.page === 'login' }}>
           <NumText left="">Open Klouds</NumText>
           <Row>

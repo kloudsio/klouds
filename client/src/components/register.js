@@ -14,7 +14,6 @@ let Register = {
 
       try {
         let { data } = await api.register({ email, password })
-        api.setAuthToken(data.token)
         props.done(data.user)
       } catch (e) {
         return update({ error: e.data.error })

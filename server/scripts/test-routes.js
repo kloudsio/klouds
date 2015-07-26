@@ -29,15 +29,14 @@ let headers = {}
 
 async function api() {
   try {
-
     // register
     await axios({ method: 'post', url: base`/register`, data: logindata }).catch(fail)
 
     // login
     let { data } = (await axios({ method: 'post', url: base`/login`, data: logindata }).then(ok, fail))
 
-    headers.Authorization = `Bearer ${data.token}`
 
+    headers.Authorization = `Bearer ${data.token}`
     await axios({ method: 'get', url: base`/apps` }).then(ok, fail)
     await axios({ method: 'get', url: base`/disabled` }).then(ok, fail)
     await axios({ method: 'post', url: base`/subscribe`, headers, data: {} }).then(ok, fail)

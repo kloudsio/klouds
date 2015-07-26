@@ -8,9 +8,8 @@ import joi from 'joi'
 
 let pswd = createPswd()
 
-function* sign(next) {
-  yield next
-  this.body.token = jwt.sign(this.body, config.JWT_KEY, { expiresInMinutes: 60 * 5 })
+function sign(user) {
+  return jwt.sign(user, config.JWT_KEY, { expiresInMinutes: 60 * 5 })
 }
 
 let login = {
@@ -21,7 +20,7 @@ let login = {
     },
     type: 'json'
   },
-  handler: [sign, function* () {
+  * handler() {
     let { email, password } = this.request.body
 
     let user = yield usersDb.findOne({ email })
@@ -31,10 +30,10 @@ let login = {
     this.assert(valid, 401, 'Incorrect Email or Password')
     delete user.password
 
-    this.body = {
-      user
-    }
-  }]
+    let token = sign(user)
+
+    this.body = { user, token }
+  }
 }
 
 let register = {
@@ -45,7 +44,7 @@ let register = {
     },
     type: 'json'
   },
-  handler: [sign, function* () {
+  * handler() {
     let { email, password } = this.request.body
 
     let duplicate = yield usersDb.findOne({ email })
@@ -61,14 +60,15 @@ let register = {
     this.assert(user, 500, 'Failed to insert new user')
     delete user.password
 
-    this.body = {
-      user
-    }
-  }]
+    let token = sign(user)
+
+    this.body = { user, token }
+  }
 }
 
 export default {
   login,
-  register
+  register,
+  auth: jwt({ secret: config.JWT_KEY })
 }
 

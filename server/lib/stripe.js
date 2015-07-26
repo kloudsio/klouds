@@ -1,13 +1,12 @@
-import { appsDb, stripeDb } from './db'
 import config from '../config'
-import deploys from './rancher'
-import jwt from 'koa-jwt'
-import Stripe from 'stripe'
+import { appsDb, stripeDb } from './db'
+
+import stripeApi from 'stripe'
 import { EventEmitter } from 'events'
 
-let emitter = new EventEmitter()
 
-let stripe = Stripe(config.STRIPE_SK)
+let stripe = stripeApi(config.STRIPE_SK)
+let events = new EventEmitter()
 
 /**
  * customer is a promisified wrapper for stripe.customers.create
@@ -15,36 +14,30 @@ let stripe = Stripe(config.STRIPE_SK)
 function createCustomer(info) {
   return new Promise((resolve, reject) => {
     let cb = (err, data) => err ? reject(err) : resolve(data)
-      stripe.customers.create(info, cb)
-    }
-  )
-}
-function* subscribe() {
-
-  let app = appsDb.find({
-    name: this.request.body.app
+    stripe.customers.create(info, cb)
   })
+}
 
-  this.assert(app, 404, `Invalid parameter as app: ${app}`)
+function* subscribe() {
+  let { email, userId } = this.state.user
+  let { app, source } = this.request.body
+
 
   // stripe create customer
   let result = yield createCustomer({
-    source: this.request.body.source,
-    email: this.state.user.email,
     plan: 'app',
-    metadata: {
-      app,
-      user: this.state.user._id
-    }
+    email,
+    metadata: { app, userId },
+    source
   })
 
   this.assert(result, 500, 'Stripe Create Customer Failure')
 
   // Save Customer
-  stripeDb('customers').push(result)
+  stripeDb.push(result)
 
   // Broadcast subscription
-  emitter.emit('subscription', {
+  events.emit('subscribe', {
     app,
     payment: result.id,
     user: this.state.user
@@ -55,5 +48,5 @@ function* subscribe() {
 
 export default {
   subscribe,
-  on: emitter.on
+  on: events.on
 }

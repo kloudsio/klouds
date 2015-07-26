@@ -20,6 +20,6 @@
   stroke-width: 1.5;
 
   stroke-dashoffset: 0;
-  text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
+  text-shadow: 0px 1px 1px rgba(var(--astral-light));
   stroke-dasharray: 0 1200 0;
 }

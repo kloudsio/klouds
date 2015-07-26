@@ -9,13 +9,11 @@ let Login = {
     async function login({ email, password }, c, update) {
       try {
         let { data } = await api.login({ email, password })
-        api.setAuthToken(data.token)
         props.done(data.user)
       } catch (e) {
-        return update({ error: e.data.error })
+        return update({ error: e.data.error || e.error })
       }
     }
-
 
     return <Form onSubmit={login} class="form" title="Login">
       <h4>Email</h4>

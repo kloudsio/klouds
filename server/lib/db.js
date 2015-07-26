@@ -13,6 +13,7 @@ export default {
   low,
   usersDb: wrap(mongo.get('users')),
   appsDb: low('apps'),
+  appsDisabledDb: low('apps-disabled'),
   stripeDb: low('stripe'),
   deploysDb: low('deploys')
 }

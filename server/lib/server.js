@@ -1,11 +1,9 @@
-
-import http from 'http'
 import koa from 'koa'
 import json from 'koa-json'
 import serve from 'koa-static'
 
 import config from '../config'
-import { routes } from '../routes'
+import routes from '../routes'
 
 function failure(failed) {
   console.error(failed.stack)
@@ -30,9 +28,15 @@ app.use(json())
 
 app.use(routes)
 
+import stripe from './stripe'
 
-// Start Listening
-http.createServer(app.callback()).listen(config.PORT)
+stripe.on('subscribe', function(app, payment, user) {
+  console.log(`Firing up container: ${app}:${payment.id}:${user.email}`)
+})
 
 console.log('\n' + `serving klouds from ${config.PORT}`)
+
+// Start Listening
+app.listen(config.PORT)
+
 
