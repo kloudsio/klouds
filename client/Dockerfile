@@ -1,34 +1,20 @@
 FROM iojs:latest
 
-#
-# Klouds IO Directory
-#
+### Install Babel
+RUN npm install -g babel
 
-RUN mkdir -p /k-io/server
+### Create Klouds Folder
+RUN mkdir -p /klouds
+
+### Install NPM Packages
+ADD ./server/package.json /klouds/package.json
+RUN npm install -q
 
 
-#
-# copy package.json & npm install
-#
+### Copy Source
+ADD ./server/ /klouds/
 
-ADD ./package.json /k-io/package.json
-RUN cd /k-io && npm install -q
-
-ADD ./server/package.json /k-io/server/package.json
-RUN cd /k-io/server/ && npm install -q
-
-#
-# copy all
-#
-
-ADD . ./k-io
-RUN cd /k-io/ && make
-
-#
-# Container Settings
-#
-
+### Start
+WORKDIR /klouds
+CMD babel-node serve.js
 EXPOSE 8080
-WORKDIR /k-io
-CMD bash start.sh
-
