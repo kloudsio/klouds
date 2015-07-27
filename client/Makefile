@@ -13,8 +13,8 @@ test = $(shell find test -name '*.js')
 all: dir js css
 
 dir:
-	@[ -d "dist" ] || mkdir -p dist
-	@cp -rvu src/public/* dist/
+	@[ -d "dist" ] || mkdir dist
+	@cp -rv src/public/* dist/
 
 js: $(src)
 	@./scripts/html-to-deku.sh src/templates/*.html
