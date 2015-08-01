@@ -1,14 +1,12 @@
+import db from '../lib/db'
 // Rancher interface
 
-import compose from '../rancher/compose'
-import { deploysDb } from './db'
-
-
+import compose from '../lib/rancher-compose'
 
 function create(uid, appName) {
   console.log(`Launching ${appName} for ${uid}`)
   compose[appName].up()
-  deploysDb.push({ uid, appName })
+  db.deploys.push({ uid, appName })
 }
 
 export default { create }

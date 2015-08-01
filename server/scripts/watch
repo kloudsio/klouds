@@ -1,0 +1,5 @@
+#!/bin/bash
+
+project_root=`dirname $0`/..
+
+sane "make" "$project_root/" --glob="[^node_modules]**/**.js"

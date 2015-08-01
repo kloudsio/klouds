@@ -5,15 +5,14 @@ import { join } from 'path'
 import monk from 'monk'
 import wrap from 'co-monk'
 
-let low = lowdb(join(__dirname, `../${ config.DATADIR }/db.json`))
+const lowData = join(__dirname, '..', config.DATADIR, 'db.json')
 let mongo = monk(config.MONGODB)
+let low = lowdb(lowData)
 
 export default {
-  mongo,
-  low,
-  usersDb: wrap(mongo.get('users')),
-  appsDb: low('apps'),
-  appsDisabledDb: low('apps-disabled'),
-  stripeDb: low('stripe'),
-  deploysDb: low('deploys')
+  users: wrap(mongo.get('users')),
+  apps: low('apps'),
+  disabled: low('apps-disabled'),
+  stripe: low('stripe'),
+  deploys: low('deploys')
 }

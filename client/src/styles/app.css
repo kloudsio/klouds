@@ -1,8 +1,8 @@
 
 :root {
   /*  color scheme*/
-  --astral-light: #B4B7C7;
-  --astral-dark: rgba(0,0,0,0.5);
+  --astral-light: #614C45;
+  --astral-dark: #FFF;
 
   --black: #000000;
   --dark: rgba(0, 0, 0, 0.8);
@@ -30,7 +30,7 @@
 }
 
 body {
-  background: -50vw -50vh radial-gradient(var(--astral-dark), var(--astral-light));
+  background: radial-gradient(var(--astral-dark), var(--astral-light));
   min-height: 100vh;
   position: relative;
   font: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;

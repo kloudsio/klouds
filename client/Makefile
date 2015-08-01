@@ -1,8 +1,7 @@
 export PATH := ./node_modules/.bin:${PATH}
 export SHELL := /bin/bash
-
-SERVER := ./server
-CLIENT := ./
+export NODE_ENV=development
+export DEBUG=browserify*
 
 bin = node_modules/.bin
 src = $(shell find src -name '*.js')
@@ -18,7 +17,7 @@ dir:
 
 js: $(src)
 	@./scripts/html-to-deku.sh src/templates/*.html
-	@ NODE_ENV="development" browserify -d src/app.js -t babelify -o dist/app.js -v
+	@ browserify -d src/app.js -t babelify -o dist/app.js -v
 	# browserify finished.
 
 css: $(css)

@@ -1,0 +1,6 @@
+mongo:
+  ports:
+  - 27017:27017/tcp
+  tty: false
+  image: mongo
+  stdin_open: false
