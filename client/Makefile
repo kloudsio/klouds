@@ -3,6 +3,7 @@ export SHELL := /bin/bash
 export NODE_ENV=development
 export DEBUG=browserify*
 
+out = ${HOME}/.klouds/bundled
 bin = node_modules/.bin
 src = $(shell find src -name '*.js')
 css = $(shell find src -name '*.css')
@@ -12,16 +13,16 @@ test = $(shell find test -name '*.js')
 all: dir js css
 
 dir:
-	@[ -d "dist" ] || mkdir dist
-	@cp -rv src/public/* dist/
+	@[ -d "$(out)" ] || mkdir $(out)
+	@cp -rv src/public/* $(out)/
 
 js: $(src)
 	@./scripts/html-to-deku.sh src/templates/*.html
-	@ browserify -d src/app.js -t babelify -o dist/app.js -v
+	@ browserify -d src/app.js -t babelify -o $(out)/app.js -v
 	# browserify finished.
 
 css: $(css)
-	@$(bin)/myth src/styles/app.css dist/app.css
+	@$(bin)/myth src/styles/app.css $(out)/app.css
 	# myth finished.
 
 test:
@@ -30,6 +31,6 @@ test:
 
 # clean
 clean:
-	rm -rf dist
+	rm -rf $(out)
 
 .PHONY: all dir css js serve dev test clean

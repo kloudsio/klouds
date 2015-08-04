@@ -1,49 +1,30 @@
-# Front-End Client
+# Klouds UI
+
+Klouds UI is the UI component of Klouds. I can't imagine why anyone might be in this page. But I'm curious, so surprise me open an issue or pull request or edit this readme.
+
+This is the main repository: http://github.com/kloudsio/klouds
 
 
-The Front-End Client is a **Single-Page Application**. written in awesome ES6 Javascript with Babeljs. Written with the spiffiest of web components, using Deku.
+## Gamification is recommended.
 
-### Technology Crash Course
+If you can remember a troublesome Klouds mishap.
 
-1. Babeljs: Learn the ES6 Javascript Syntax. [ES6 Playground](https://babeljs.io/repl/)
+Roll a d20.
 
-2. Deku: Front End Components. [Add a component to Klouds](https://github.com/metadevfoundation/microgrid/tree/master/client/elements) - [Docs](https://github.com/dekujs/deku)
+1. A roll of 5 to 15 is pretty normal, proceed as usual.
 
+2. A roll below 5 is pretty bad. if you got a 1 (gods have mercy), you better just restart your computer before things auto-save... 2, 3, 4, 5 just the page. Run!
 
-### A Legend of Syntax wtfx
+3. A roll of 15 - 19 is rather effective. You should probably get a trophy, but if you file an issue, I will most certainly add you to awesome.md
 
-``<Page>...</Page>`` inside JS
-https://github.com/dekujs/deku
+4. A roll of 20 means your **too awesome for apostrphies and sub-omnipotence**. Leaning back into a posture that chiropractors would find invalidating, you have earn my permission to grab your todo and cross everything off with complete confidence, marking it as complete.
 
-``(x) => x * 5``
-https://babeljs.io/docs/learn-es2015/#arrows
+GG.
 
-``'let' is the same as 'var'``
+Share your results on twitter!!?
 
-``let { state, props } = component;``
-https://babeljs.io/docs/learn-es2015/#destructuring
+@ds0nt, @jacobgadikian, #metadev, #klouds
 
 
 
-``import`` and ``export``
-https://babeljs.io/docs/learn-es2015/#modules
-
-``yield`` and ``function* ()``
-https://github.com/tj/co -- cleaner than [promises](https://babeljs.io/docs/learn-es2015/#promises)
-
-
-### Single-Page Application
-
-No reloading, No changing pages.
-
-The app logic is separated as such.
-
-``/app.js`` creates some ``/elements``
-
-``/app.js`` sets some global states ``app.set(/* tree */)``
-
-``/app.js`` imports some ``/events.js`` to react to ``/elements/*.js`` events.
-
-``/events.js`` makes some calls to ``/api.js``, the lib that talks to the server.
-
-``/app.js`` renders it into the page.
+a JavaScript **Native Application**.
