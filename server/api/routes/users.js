@@ -12,7 +12,7 @@ function sign(user) {
 }
 
 function* login() {
-  console.log(this)
+  console.dir(this.request.body)
   let { email, password } = this.request.body
 
   let user = yield db.users.findOne({ email })

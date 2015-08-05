@@ -1,3 +1,18 @@
+  // 13 passing (13ms)
+  // 1 failing
+
+  // 1) Apps renders string, renders html:
+  //    ReferenceError: Can't find variable: regeneratorRuntime
+  //     at afterMount (null:null)
+  //     at trigger (node_modules/deku/lib/render.js:992)
+  //     at triggerUpdate (node_modules/deku/lib/render.js:1009)
+  //     at flushMountQueue (node_modules/deku/lib/render.js:307)
+  //     at render (node_modules/deku/lib/render.js:291)
+  //     at render (node_modules/deku/lib/render.js:94)
+  //     at test/index.js:49
+
+
+
 import { element, tree, render, renderString } from 'deku'
 
 import Apps from '../src/components/apps'

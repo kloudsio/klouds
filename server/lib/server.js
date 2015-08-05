@@ -3,7 +3,6 @@ import routes from '../api'
 import rancher from './rancher'
 
 import koa from 'koa'
-import json from 'koa-json'
 import serve from 'koa-static'
 
 let app = koa()
@@ -23,7 +22,6 @@ function* errors(next) {
 
 app.use(errors)
 app.use(serve(config.WWWROOT, { defer: false }))
-app.use(json())
 app.use(routes())
 
 

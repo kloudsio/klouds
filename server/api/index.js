@@ -6,8 +6,11 @@ import stripe from './routes/stripe'
 import scheme from 'koa-scheme'
 import route from 'koa-route'
 import compose from 'koa-compose'
+import jsonbody from 'koa-json-body'
+
 
 let routes = [
+  jsonbody(),
   scheme(spec),
   route.post('/login', users.login),
   route.post('/register', users.register),

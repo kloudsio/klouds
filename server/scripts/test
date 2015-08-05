@@ -1,0 +1,8 @@
+#!/bin/bash
+
+server=localhost
+port=2020
+
+cd `dirname $0`/..
+
+./test/test-routes.js $server $port
