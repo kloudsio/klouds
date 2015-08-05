@@ -1,7 +1,7 @@
-import db from '../lib/db'
+import db from './db'
 // Rancher interface
 
-import compose from '../lib/rancher-compose'
+import compose from '../../kloud-compose'
 
 function create(uid, appName) {
   console.log(`Launching ${appName} for ${uid}`)

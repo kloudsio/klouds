@@ -1,7 +1,7 @@
 /**
  * Wrapper for rancher-compose command.
  */
-import config from '../config'
+import config from './config'
 
 import {join} from 'path'
 import {exec} from 'child_process'
@@ -26,9 +26,9 @@ function loadApp(path) {
   }
 
   return {
-    up: exec.apply(`rancher-compose ${config.rancher} ${'up -d'}`, options, logProcess),
-    down: exec.apply(`rancher-compose ${config.rancher} ${'down'}`, options, logProcess),
-    restart: exec.apply(`rancher-compose ${config.rancher} ${'restart'}`, options, logProcess)
+    up: () => exec(`rancher-compose ${config.rancher} ${'up -d'}`, options, logProcess),
+    down: () => exec(`rancher-compose ${config.rancher} ${'down'}`, options, logProcess),
+    restart: () => exec(`rancher-compose ${config.rancher} ${'restart'}`, options, logProcess)
   }
 }
 
