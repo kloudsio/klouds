@@ -4,10 +4,10 @@ export default {
   '/(login|register)': {
     request: {
       method: 'POST',
-      body: {
-        email: validator.isEmail,
-        password: /.{6,100}/
-      },
+      // body: {
+      //   email: validator.isEmail,
+      //   password: /.{6,100}/
+      // },
       type: 'json'
     }
   },

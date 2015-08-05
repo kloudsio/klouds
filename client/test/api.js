@@ -1,4 +1,3 @@
-'use strict';
 import { login, register, apps, pay} from './api'
 import { element, tree, render } from 'deku'
 import assert from 'assert'

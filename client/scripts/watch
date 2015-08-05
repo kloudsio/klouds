@@ -1,6 +1,5 @@
 #!/bin/bash
 
-project_root=`dirname $(readlink $0)`/..
-cd $project_root
+cd `dirname $0`/..
 
-sane "make" "$project_root/src" --glob="[^templates]**/**.js"
+sane "./scripts/build" "src" --glob="[^templates]**/**.js"

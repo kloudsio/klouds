@@ -1,2 +1,7 @@
-mongo:
+lb:
+  # Two load balancer containers
+  scale: 2
+  load_balancer_config:
+    name: lb config
+docker-wordpress-nginx:
   scale: 1

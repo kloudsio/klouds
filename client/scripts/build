@@ -14,7 +14,7 @@ if [ ! -e $target/.done ]; then
 fi
 
 
-./scripts/html-to-deku.sh src/templates/*.html
+./scripts/build-templates src/templates/*.html
 echo Done generating templates
 
 browserify -d src/app.js -t babelify -o $target/app.js -v
@@ -23,8 +23,8 @@ echo Done generating app.js
 myth src/styles/app.css $target/app.css
 echo Done generating app.css
 
-./scripts/lint-elements.sh
-mochify --transform babelify --reporter spec ./test/index.js
+# ./scripts/lint-elements.sh
+# mochify --transform babelify --reporter spec ./test/index.js
 
 echo Done testing
 echo Done building

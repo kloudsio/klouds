@@ -5,7 +5,7 @@ import { join } from 'path'
 import monk from 'monk'
 import wrap from 'co-monk'
 
-const lowData = join(__dirname, '..', config.DATADIR, 'db.json')
+const lowData = join(config.DATADIR, 'db.json')
 let mongo = monk(config.MONGODB)
 let low = lowdb(lowData)
 

@@ -1,5 +1,8 @@
 #!/bin/bash
 
-project_root=`dirname $0`/..
+cd `dirname $0`/..
 
-sane "make" "$project_root/" --glob="[^node_modules]**/**.js"
+export NODE_ENV=development
+export DEBUG=koa*
+
+nodemon -x babel-node main.js

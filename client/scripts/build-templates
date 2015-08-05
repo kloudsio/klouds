@@ -1,0 +1,12 @@
+#!/bin/bash
+
+for template in $@; do
+	target="$(dirname $template)/$(basename -s .html $template).js"
+  html=`cat $template`
+  echo html | grep '\<([A-Z]\S*).*\>'
+	(
+    echo "import { element } from 'deku'";
+    echo 'export default {';
+    echo -e "  render: ({props}) => $html"; echo '}'
+  )> $target
+done

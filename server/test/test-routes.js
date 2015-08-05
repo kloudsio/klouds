@@ -15,20 +15,28 @@ let testPass = c => {
   return c
 }
 
-let testFail = c => console.error(c)
+let isServerError = ({data=false}) => (data && data.error)
+
+function getErrorMessage (e) {
+  if (e instanceof Error)
+    return e.stack
+  if (isServerError(e))
+    return `API Error ${e.status}: ${e.data.error}`
+  return e.statusText
+}
+
+let testFail = c => console.error(getErrorMessage(c) )
 
 let testUser = {
   email: 'test@klouds.io',
   password: 'testage occurs now'
 }
 
-
-
 async function test() {
   try {
     // register
     await axios({
-      method: 'post',
+    method: 'post',
       url: x`/register`,
       data: testUser
     }).catch(testFail)
@@ -67,4 +75,6 @@ async function test() {
   } catch (e) {
     console.error(e)
   }
-}()
+}
+
+test()

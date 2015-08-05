@@ -23,6 +23,7 @@ function* errors(next) {
 
 app.use(errors)
 app.use(serve(config.WWWROOT, { defer: false }))
+app.use(json())
 app.use(routes())
 
 
