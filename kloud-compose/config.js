@@ -1,9 +1,15 @@
-export default {
+const url = 'http://192.168.0.53:8080/v1/projects/1a5/environments/1a2'
+const projectname = 'test'
+const accesskey = 'A93752C01458187DF894'
+const secretkey = 'iXTy9zffMhgwUXMYYLBWgrD8WMQgErZAr3Gyn3a'
 
-  // rancher-compose configuration
-  'rancher':
-    ' --url "http://130.211.186.18:8080/"' +
-    ' --access-key F8A06AD4BCB39B1A8324' +
-    ' --secret-key ky3E1ibdCTFKmMoDKUzX2zGRueuNDTpiMCugnoDf' +
-    ' --project-name 1a5'
+const rancher = `--url "${url}" \
+  --project-name ${projectname} \
+  --access-key ${accesskey} \
+  --secret-key ${secretkey}`
+
+export default {
+  rancher
 }
+
+

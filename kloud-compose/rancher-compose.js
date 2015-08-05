@@ -2,12 +2,28 @@
  * Wrapper for rancher-compose command.
  */
 import config from './config'
-
 import {join} from 'path'
 import {exec} from 'child_process'
 
+const args = `--url "${config.url}" \
+  --project-name ${config.projectname} \
+  --access-key ${config.accesskey} \
+  --secret-key ${config.secretkey}`
 
-let logProcess = (err, stdout, stderr) => {
+const mapping = [
+  ['create', 'create'],
+  ['up', 'up -d' ],
+  ['start', 'start' ],
+  ['logs', 'logs' ],
+  ['restart', 'restart' ],
+  ['stop', 'stop' ],
+  ['down', 'down' ],
+  ['scale', 'scale' ],
+  ['rm', 'rm' ],
+  ['upgrade', 'upgrade' ]
+]
+
+function attach(err, stdout, stderr) {
   console.log(stdout)
   console.error(stderr)
   if (err !== null) {
@@ -15,24 +31,17 @@ let logProcess = (err, stdout, stderr) => {
   }
 }
 
-/**
- * Returns a function(cmd) to control the apps at path
- * path: folder name
- * returns: a closure like fn(up|down|restart)
- */
-function loadApp(path) {
-  let options = {
-    cwd: join(__dirname, path)
+function commands(path) {
+  let all = {}
+  let cwd = join(__dirname, path)
+  let defer = (...x) => () => exec(...x)
+  for (let [name, cmd] of mapping) {
+    all[name] = defer(`rancher-compose ${args} ${cmd}`, { cwd }, attach)
   }
 
-  return {
-    up: () => exec(`rancher-compose ${config.rancher} ${'up -d'}`, options, logProcess),
-    down: () => exec(`rancher-compose ${config.rancher} ${'down'}`, options, logProcess),
-    restart: () => exec(`rancher-compose ${config.rancher} ${'restart'}`, options, logProcess)
-  }
+  return all
 }
 
 export default {
-  wordpress: loadApp('./wordpress'),
+  wordpress: commands('./wordpress')
 }
-
