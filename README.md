@@ -2,6 +2,10 @@
 
 Web application launchpad built for the open-source web.
 
+---> Disclaimer: Dan writes more code than english.
+---> your understanding may be strained until babatunde's attention sweeps upon it, as his gaze carve unbeheld glory of readmes marked perfect.
+---> Cheers!
+
 What does that mean?
 
  - Wordpress
@@ -11,8 +15,7 @@ What does that mean?
 
 All sorts of neat things.
 
-
-### Shoulders of giants can stand apps well.
+## Shoulders of giants can stand apps well.
 
   **Docker** - Containerizes Apps
   
