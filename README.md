@@ -2,9 +2,6 @@
 
 Web application launchpad built for the open-source web.
 
----> Disclaimer: Dan writes more code than english.
----> your understanding may be strained until babatunde's attention turns here
----> Cheers!
 
 What does that mean?
 
