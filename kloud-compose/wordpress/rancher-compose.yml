@@ -1,6 +1,3 @@
-lb:
-  scale: 1
-  load_balancer_config:
-    name: lb config
 wordpress:
   scale: 1
+  hostname: gotwords.ds0nt.com

@@ -2,22 +2,27 @@ import spec from './spec'
 import users from './routes/users'
 import apps from './routes/apps'
 import stripe from './routes/stripe'
+import config from '../config'
 
 import scheme from 'koa-scheme'
 import route from 'koa-route'
-import compose from 'koa-compose'
 import jsonbody from 'koa-json-body'
+import jwt from 'koa-jwt'
 
 
-let routes = [
-  jsonbody(),
-  scheme(spec),
-  route.post('/login', users.login),
-  route.post('/register', users.register),
-  route.get('/apps', apps.apps),
-  route.get('/disabled', apps.disabled),
-  users.auth,
-  route.post('/subscribe', stripe.subscribe)
-]
 
-export default () => compose(routes)
+export default app => {
+  let wire = (x, y) => app.use(y)
+  let GET = (str, handler) => app.use(route.get(str, handler))
+
+  GET `/path ${users.login}`
+
+  wire`${jsonbody()}`
+  wire`${scheme(spec)}`
+  wire`${route.post('/login', users.login)}`
+  wire`${route.post('/register', users.register)}`
+  wire`${route.get('/apps', apps.apps)}`
+  wire`${route.get('/disabled', apps.disabled)}`
+  wire`${jwt({ secret: config.JWT_KEY })}`
+  wire`${route.post('/subscribe', stripe.subscribe)}`
+}

@@ -7,12 +7,11 @@ import createPswd from 'pswd'
 
 let pswd = createPswd()
 
-function sign(user) {
+function tokenize(user) {
   return jwt.sign(user, config.JWT_KEY, { expiresInMinutes: 60 * 5 })
 }
 
 function* login() {
-  console.dir(this.request.body)
   let { email, password } = this.request.body
 
   let user = yield db.users.findOne({ email })
@@ -22,7 +21,7 @@ function* login() {
   this.assert(valid, 401, 'Incorrect Email or Password')
   delete user.password
 
-  let token = sign(user)
+  let token = tokenize(user)
 
   this.body = { user, token }
 }
@@ -43,14 +42,12 @@ function* register() {
   this.assert(user, 500, 'Failed to insert new user')
   delete user.password
 
-  let token = sign(user)
+  let token = tokenize(user)
 
   this.body = { user, token }
 }
 
 export default {
   login,
-  register,
-  auth: jwt({ secret: config.JWT_KEY })
+  register
 }
-

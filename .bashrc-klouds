@@ -1,0 +1,58 @@
+#!/bin/bash
+
+if [ -f /etc/bash_completion ]; then
+      . /etc/bash_completion
+fi
+
+alias ls='ls --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
+alias ll='ls -l --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
+alias la='ls -la --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
+alias grep='grep --color=tty -d skip'
+
+
+# SSH Shortforms
+
+alias kloudsio="ssh root@klouds.io"
+alias ds0nt="ssh root@ds0nt.com"
+alias srctree="tree -I node_modules"
+export PATH=$PATH:/code/hax/bin
+alias hax="cd /code/hax/"
+
+
+KLOUDS_HOME=/code/klouds
+
+cd $KLOUDS_HOME
+
+
+
+edit () {
+  xfce4-terminal\
+    --drop-down\
+    --fullscreen\
+    --command='bash -tc "subl3 `fzf`"'
+}
+
+server () {
+  cd $KLOUDS_HOME/server/$1
+}
+
+client () {
+  cd $KLOUDS_HOME/server/$1
+}
+
+client-run () {
+  script=$1
+  shift
+  $KLOUDS_HOME/client/scripts/$script "$@"
+}
+
+server-run () {
+  script=$1
+  shift
+  $KLOUDS_HOME/server/scripts/$script "$@"
+}
+
+
+PS1='[klouds->\W]\$ '
+
+alias kloudsio="ssh root@klouds.io"

@@ -1,45 +1,43 @@
 import axios from 'axios'
 
+let apiroot = 'http://localhost:48113'
+let token = null
+let headers = {}
 
-let api = {
-  token: null,
-  headers: {},
-  http: axios,
-
-  login: data => axios({ method: 'post', url: '/login', data }),
-  register: data => axios({ method: 'post', url: '/register', data }),
-
-  apps: () => axios({
-    method: 'get',
-    url: '/apps'
-  }),
-
-  disabledApps: () => axios({
-    method: 'get',
-    url: '/disabled'
-  }),
-
-  subscribe: (app, source) => axios({
-    method: 'post',
-    url: '/subscribe',
-    headers: api.headers,
-    data: { app, source }
-  })
-}
-
-let setToken = token => {
-  api.token = token
-  api.headers.Authorization = `Bearer ${token}`
-}
-
-let authInterceptor = res => {
+//
+// Intercept Auth Tokens
+//
+axios.interceptors.response.use(res => {
   if (res.data && res.data.token) {
-    setToken(res.data.token)
+    token = res.data.token
+    headers.Authorization = `Bearer ${token}`
   }
   return res
+})
+
+//
+// HTTP Verbs
+//
+let iox = method =>
+  ([url], options) =>
+    data => axios({url: `${apiroot}${url}`, data, ...options, method })
+
+let GET = iox('GET')
+let POST = iox('POST')
+
+
+
+let routes = {
+  login: POST`/login`,
+  register: POST`/register`,
+  apps: GET`/apps`,
+  disabledApps: GET`/disabled`,
+  subscribe: POST`/subscribe ${{headers}}`
 }
 
-axios.interceptors.response.use(authInterceptor)
-
-
-export default api
+export default {
+  apiroot,
+  token,
+  headers,
+  ...routes
+}

@@ -1,14 +1,6 @@
-docker-wordpress-nginx:
-  ports:
-  - 80:80/tcp
-  tty: false
-  image: eugeneware/docker-wordpress-nginx
+wordpress:
+  image: eugeneware/wordpress
   stdin_open: false
-lb:
-  image: rancher/load-balancer-service
-  ports:
-  - 80       # orly?
-  - 82:81    # 82 and by default forward private port 81 using HTTP
-  - 8011
-  labels:
-    - "io.rancher.loadbalancer.target.docker-wordpress-nginx=8011"
+  port:
+    - 80
+    - 8080

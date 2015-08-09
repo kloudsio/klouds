@@ -13,6 +13,7 @@
     "deku": "0.4.4",
     "inquirer": "^0.8.5",
     "myth": "^1.4.0",
+    "proxey": "^0.4.2",
     "watchify": "^3.2.3"
   },
   "devDependencies": {
