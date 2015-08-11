@@ -18,6 +18,7 @@ import LogoText from './components/logo-text'
 import Register from './components/register'
 import Apps from './components/apps'
 import Dashboard from './components/dashboard'
+import Forkme from './components/github'
 
 import api from './api'
 
@@ -53,61 +54,36 @@ let Layout = {
 
     return (
       <ul class="page">
+        <Forkme repo="https://github.com/kloudsio/klouds" />
 
-        <LogoText>Klouds.io</LogoText>
-
-        <li class={{ active: state.page === 'login' }}>
-          <NumText left="">
-            Open Klouds
-          </NumText>
-
+        <li class={{ active: state.page === 'login', landing: true }}>
           <Row>
-
-            <Col xs="4 2">
-              <Login done={navigation.apps} />
-            </Col>
-
-            <Col xs="4">
-              <Register done={navigation.apps} />
-            </Col>
-
+            <Col xs="12 center"><LogoText>Klouds.io</LogoText></Col>
+            <Col xs="12 center"><h1>Web Applications For All.</h1></Col>
+          </Row>
+          <Row>
+            <Col xs="6"><Login done={navigation.apps} /></Col>
+            <Col xs="6"><Register done={navigation.apps} /></Col>
           </Row>
         </li>
 
-
         <li class={{ active: state.page === 'apps' }}>
-          <NumText left="">
-            Browse Apps
-          </NumText>
+          <NumText left="">Browse Apps</NumText>
           <Row>
-
-            <Col xs="8 2">
-              <Apps onLaunch={navigation.payment} />
-            </Col>
-
+            <Col xs="8 2"><Apps onLaunch={navigation.payment} /></Col>
           </Row>
         </li>
 
         <li class={{ active: state.page === 'payment' }}>
-          <NumText left="">
-            Checkout
-          </NumText>
-            <Row>
-
-            <Col xs="6 3">
-              <Stripe onToken={onStripeCustomer} title={state.app.name} amount="10"/>
-            </Col>
-
+          <NumText left="">Checkout</NumText>
+          <Row>
+            <Col xs="6 3"><Stripe onToken={onStripeCustomer} title={state.app.name} amount="10"/></Col>
           </Row>
         </li>
 
         <li class={{ active: state.page === 'dashboard' }}>
-          <NumText left="">
-            Dashboard
-          </NumText>
-
+          <NumText left="">Dashboard</NumText>
           <Dashboard />
-
         </li>
 
         <Debug>

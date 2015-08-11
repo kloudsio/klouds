@@ -1,15 +1,14 @@
+/*@import "./reset.css";*/
 
 :root {
-  /*  color scheme*/
-  --astral-light: #614C45;
-  --astral-dark: #FFF;
+  --astral-light: #FFF;
+  --astral-dark: #002b90;
 
   --black: #000000;
   --dark: rgba(0, 0, 0, 0.8);
-  --purple: #664E99;
+  --purple: #161751;
   --venice-blue: #10486A;
-  --light: #DCDCDC;
-
+  --light: #10486A;
 
   --background: transparent;
   --box-shadow: none;
@@ -30,7 +29,7 @@
 }
 
 body {
-  background: radial-gradient(var(--astral-dark), var(--astral-light));
+  background: var(--astral-light);
   min-height: 100vh;
   position: relative;
   font: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -50,8 +49,29 @@ body {
   margin: 0.5em
 }
 
+.gh-banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.landing {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: auto;
+  transform: translate(-50%, -50%);
+  color: var(--light);
+/*  background: var(--purple);*/
+}
+
+
+
 @import "./elements/page.css";
 @import "./elements/logo-text.css";
 @import "./elements/login.css";
 @import "./elements/apps.css";
 @import "./elements/stripe.css";
+
+
+

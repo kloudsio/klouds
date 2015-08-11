@@ -1,25 +1,21 @@
-
 .logo {
   display: inline-block;
-  height: 58px;
+  height: 72px;
   margin-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 45px;
 }
 
 .logo text {
-  transform: translate(0, 48px);
-  font-size: 48px;
-
-  stroke: var(--color);
+  transform: translate(0, 64px);
+  font-size: 65px;
+  stroke: var(--light);
   fill: none;
-
   font-weight: bold;
   paint-order:fill;
   text-rendering: optimizeLegibility;
   stroke-linejoin: miter;
   stroke-width: 1.5;
-
   stroke-dashoffset: 0;
-  text-shadow: 0px 1px 1px rgba(var(--astral-light));
+  text-shadow: 0px 1px 1px var(--dark);
   stroke-dasharray: 0 1200 0;
 }

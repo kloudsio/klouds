@@ -2,4 +2,4 @@
 
 cd `dirname $0`/..
 
-sane "./scripts/build" "src" --glob="[^templates]**/**.js"
+watchman "./src" ./scripts/build

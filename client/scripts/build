@@ -1,27 +1,22 @@
 #!/bin/bash
 
-cd $(dirname $0)
-cd ..
-
-
+cd $(dirname $0)/..
 
 target=$HOME/.klouds/bundled
-port=2020
 
 PATH=./node_modules/.bin:$PATH
 
 export NODE_ENV=development
 export API="http://localhost:8080"
 
-if [ ! -e $target/.done ]; then
+if [ ! -d $target ]; then
     mkdir -p $target
-    touch $target/.done
 fi
 
-cp -rvu src/public $target/
+cp -rvu src/public/* $target/
 
-./scripts/build-templates src/templates/*.html
-echo Done generating templates
+# ./scripts/build-templates src/templates/*.html
+# echo Done generating templates
 
 browserify -d src/app.js -t babelify -o $target/app.js -v
 echo Done generating app.js
@@ -33,4 +28,3 @@ echo Done generating app.css
 # mochify --transform babelify --reporter spec ./test/index.js
 
 echo Done building
-http-server -p$port $target
