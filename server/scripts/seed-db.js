@@ -1,6 +1,4 @@
-#!/bin/bash
-
-babel-node -e <<EOF
+#!/bin/babel-node
 import { appsDb, appsDisabledDb } from '../lib/db'
 
 appsDb.push({ name: 'Flarum', repo: 'flarum/flarum' })
@@ -67,4 +65,3 @@ appsDisabledDb.push({ name: 'Taiga' })
 appsDisabledDb.push({ name: 'OpenBazaar' })
 appsDisabledDb.push({ name: 'codeboxide' })
 appsDisabledDb.push({ name: 'paperwork' })
-EOF
