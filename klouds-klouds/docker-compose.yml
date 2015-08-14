@@ -1,0 +1,16 @@
+web:
+  hostname: web
+  domainname: ds0nt
+  build: ../client
+  ports:
+    - "80:2020"
+api:
+  hostname: api
+  domainname: ds0nt
+  build: ../server
+  ports:
+    - "48113:48113"
+  links:
+    - "db"
+db:
+  image: mongo

@@ -1,6 +1,0 @@
-#!/bin/bash
-set -e
-
-cd $(dirname $0)/..
-
-babel-node -ep "import x from './rancher-compose'; x"

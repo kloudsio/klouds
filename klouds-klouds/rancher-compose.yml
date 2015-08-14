@@ -1,0 +1,10 @@
+api:
+  hostname: klouds.io
+  scale: 1
+mongo:
+  scale: 1
+redis:
+  scale: 1
+client:
+  hostname: klouds.io
+  scale: 1

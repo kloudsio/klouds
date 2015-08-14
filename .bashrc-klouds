@@ -12,7 +12,7 @@ alias grep='grep --color=tty -d skip'
 
 # SSH Shortforms
 
-KLOUDS_HOME=/home/dsont/code/klouds
+KLOUDS_HOME=/code/klouds
 
 cd $KLOUDS_HOME
 
