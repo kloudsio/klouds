@@ -1,16 +1,17 @@
+lb:
+  image: rancher/load-balancer-service
+  ports: [ 80, 8080 ]
+  links: [ web, api ]
+  labels:
+    io.rancher.loadbalancer.target.web: klouds.io:80=80
+    io.rancher.loadbalancer.target.api: klouds.io:8080=8080
 web:
-  hostname: web
-  domainname: ds0nt
-  build: ../client
-  ports:
-    - "80:2020"
+  image: ds0nt/klouds-ui
+  expose: [ 80 ]
+  links: [ api ]
 api:
-  hostname: api
-  domainname: ds0nt
-  build: ../server
-  ports:
-    - "48113:48113"
-  links:
-    - "db"
+  image: ds0nt/klouds-api
+  expose: [ 8080 ]
+  links: [ db ]
 db:
   image: mongo

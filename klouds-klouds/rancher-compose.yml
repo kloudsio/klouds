@@ -1,10 +1,11 @@
+lb:
+  # Two load balancer containers
+  scale: 2
+  load_balancer_config:
+    name: lb config
+web:
+  scale: 1
 api:
-  hostname: klouds.io
   scale: 1
-mongo:
-  scale: 1
-redis:
-  scale: 1
-client:
-  hostname: klouds.io
+db:
   scale: 1

@@ -1,7 +1,6 @@
 #!/bin/bash
 
-cd $(dirname $0)/..
+TAG=ds0nt/klouds-api
+BASE=$(dirname $0)/..
 
-docker build -t klouds-api .
-
-echo "klouds-api built"
+docker build -t $TAG $BASE

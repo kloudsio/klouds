@@ -1,6 +1,5 @@
 wordpress:
   image: eugeneware/wordpress
-  stdin_open: false
   port:
     - 80
     - 8080
