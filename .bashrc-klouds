@@ -1,0 +1,39 @@
+. ~/.bashrc
+
+echo " #  #   ######## ######            ###### ########   #  # "
+echo "### ## #####  ### ###     klouds     ##  ###  ##### ## ###"
+echo " #  #   ######## ##                    ## ########   #  # "
+echo ""
+
+BASE=/code/klouds
+cd $BASE
+
+client()
+{
+  if [[ -f $BASE/client/scripts/"$@" ]]; then
+    $BASE/client/scripts/"$@"
+  else
+    echo "Commands in $BASE/client/scripts/"
+    ls --format=single-column $BASE/client/scripts/
+  fi
+}
+
+server()
+{
+  if [[ -f $BASE/server/scripts/"$@" ]]; then
+    $BASE/server/scripts/"$@"
+  else
+    echo "Commands in $BASE/server/scripts/"
+    ls --format=single-column $BASE/server/scripts/
+  fi
+}
+
+compose() {
+  app=$1
+  cmd=$2
+  if [[ $app && $cmd && -d $BASE/apps/$app ]]; then
+    $BASE/compose/lib/cli.js $BASE/apps/$app $cmd
+  else
+    ls --format=single-column $BASE/apps/
+  fi
+}

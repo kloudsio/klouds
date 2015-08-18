@@ -1,0 +1,12 @@
+klouds:
+  name: Wordpress
+  description: I am pressed for words to describe it.
+docker-compose:
+  wordpress:
+    image: eugeneware/wordpress
+    port:
+      - 80
+      - 8080
+rancher-compose:
+  wordpress:
+    scale: 1

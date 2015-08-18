@@ -1,5 +1,0 @@
-wordpress:
-  image: eugeneware/wordpress
-  port:
-    - 80
-    - 8080
