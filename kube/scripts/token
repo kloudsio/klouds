@@ -1,0 +1,5 @@
+APISERVER=$(kubectl config view | grep server | cut -f 2- -d ":" | tr -d " ")
+TOKEN=$(kubectl config view | grep token | cut -f 2 -d ":" | tr -d " ")
+echo $APISERVER
+echo $TOKEN
+curl $APISERVER/api --header "Authorization: Bearer $TOKEN" --insecure

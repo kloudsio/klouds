@@ -1,0 +1,6 @@
+{
+	"name": "about",
+	"template": "./template.hbs",
+	"errorTemplate": "./error.hbs"
+}
+
