@@ -1,0 +1,11 @@
+lb:
+  # Two load balancer containers
+  scale: 2
+  load_balancer_config:
+    name: lb config
+web:
+  scale: 1
+api:
+  scale: 1
+db:
+  scale: 1
