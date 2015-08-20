@@ -4,23 +4,24 @@
  */
 
 import { element } from 'deku'
+import api from './api'
+
+import LogoText from './components/logo-text'
+import Forkme from './components/forkme'
 
 import NumText from './components/num-text'
 import Row from './components/grid-row'
 import Col from './components/grid-col'
 
 import Login from './components/login'
-import Debug from './components/debug'
-import Paypal from './templates/paypal'
+import Register from './components/register'
+
+import Apps from './components/apps'
+
 import Stripe from './components/stripe'
 
-import LogoText from './components/logo-text'
-import Register from './components/register'
-import Apps from './components/apps'
 import Dashboard from './components/dashboard'
-import Forkme from './components/github'
 
-import api from './api'
 
 
 let Layout = {
@@ -86,12 +87,6 @@ let Layout = {
           <Dashboard />
         </li>
 
-        <Debug>
-          <button onClick={navigation.login}>LOGIN</button>
-          <button onClick={navigation.apps}>APPS</button>
-          <button onClick={navigation.payment}>PAYMENT</button>
-          <button onClick={navigation.dashboard}>DASHBOARD</button>
-        </Debug>
       </ul>
     )
   }

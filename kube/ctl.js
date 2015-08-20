@@ -1,16 +1,16 @@
 var Client = require('node-kubernetes-client');
 
 var client = new Client({
-    host:  '104.197.127.202',
-    protocol: 'http:',
-    version: 'v1beta2',
-    token: ''
+    host:  'admin:gZ7UeNmGzqhuvJUv@104.155.215.248',
+    protocol: 'http',
+    version: 'v1'
 });
 
-client.pods.get((err, pods) => {
+client.nodes.get((err, pods) => {
   if (err)
     console.log(err)
 
+  console.dir("Pods: ")
   console.dir(pods)
 })
 
