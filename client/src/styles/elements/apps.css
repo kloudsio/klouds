@@ -1,42 +1,153 @@
-.app {
-
+.sheet a {
+  color: var(--light);
 }
-
-.app button {
-  width: 150px;
+.sheet .links .fa {
+    margin-right: 4px;
 }
-
-.item {
-  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
-  background: var(--light);
-  color: var(--dark);
-  margin: 10px;
-  display: inline-block;
-  padding: 10px;
+.sheet h3 {
+  margin: 18px 0 0;
 }
-
-.item h4 {
-  margin: 0;
-  line-height: 1.5em;
-  color: var(--dark);
+.sheet h4 {
+  margin: 12px 0 0;
+  line-height: 1.2;
 }
-
-.item input {
-  color: var(--dark);
+.sheet ol, .sheet ul {
+  padding: 0;
 }
+.sheet ol ol, .sheet ol ul, .sheet ul ol, .sheet ul ul {
+  margin-top: 12px;
+  padding-left: 20px;
+}
+.sheet li {
+  margin-bottom: 0;
+}
+.sheet h3 + ul { margin-top: 0; }
 
-.app-off {
-  background: var(--light);
-  color: var(--dark);
+.sheet img {
+  margin: 18px 0;
+  width: 100%;
   border: none;
-  opacity: 0.6;
-  display: inline-block;
-  padding: 1rem;
-  line-height: 1rem;
+  box-shadow: 0 0 7px rgba(0,0,0,.2);
+}
+
+
+.card {
+  color: #EEE;
+  box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.5);
+  background: var(--light);
+}
+/*
+.card > * {
+  margin-left: 100px;
+}*/
+
+.card .title {
+  text-shadow: 0px 1px 1px var(--dark);
+  /*font-size: 120%;*/
+  /*line-height: 1.4em;*/
+  /*font-weight: bold;*/
+}
+/*
+.card img {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+
+  height: 100px;
+  margin: auto;
+}*/
+
+
+
+.stats, .trends {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.card {
+/*  background: rgba(255,255,255,0.8);*/
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  padding: 18px;
+  margin: 0 0 18px;
+  font-size: 14px;
+}
+.card .title {
+  margin: -18px -18px 0px;
+  padding: 12px 18px 6px;
+/*  background: #0971B2;*/
+  font-weight: normal;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
   text-align: center;
-  margin: 0.5em;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+}
+.card .title a, .card .title a:visited, .card .title a:active, .card .title a:hover {
+  color: #444;
+  text-decoration: none;
+}
+.card .url {
+  margin: 0;
+  text-align: center;
+  font-size: 12px;
+}
+.card .url a, .card .url a:visited, .card .url a:active, .card .url a:hover {
+  text-decoration: none;
+  color: #666;
+  font-weight: normal;
+}
+.card .description {
+  min-height: 5em;
+}
+
+.stats {
   overflow: hidden;
-  max-width: 150px;
+  margin: 16px -18px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+.stat, .trend {
+  display: block;
+}
+.stat {
+  font-size: 18px;
+  margin: 2px 0 1px;
+  -webkit-font-smoothing: antialiased;
+}
+.trend.up {
+  color: #31BB47;
+}
+.trend.down {
+  color: #C91B1B;
+}
+.stats li, .trends li {
+  float: left;
+  width: 33.33333333%;
+  text-align: center;
+  margin: 0;
+  padding: 6px;
+  line-height: 1.4;
+}
+.sheet:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.text, .charts {
+    float: left;
+}
+.text {
+  width: 70%;
+  padding-right: 47px;
+}
+.charts {
+  width: 30%;
+}
+
+.chart {
+  width: 100%;
+  height: 200px;
 }

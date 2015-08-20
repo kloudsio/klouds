@@ -9,9 +9,13 @@ let Apps = {
     }
   },
   async afterMount() {
-    let apps = await api.apps()
-    console.log(apps)
-    return { apps: apps.data }
+    const apps = await api.apps()
+    function empty(app) {
+      let { name="--", description="--", repo="--", image="#"} = app
+      return { name, description, repo, image }
+    }
+
+    return { apps: apps.data.map(empty) }
   },
   render(c) {
     let { props, state } = c
@@ -19,12 +23,12 @@ let Apps = {
 
 
     let items = apps.map(v =>
-      <div onClick={() => props.onLaunch(v)} >
+      <div class="col-lg-3" onClick={() => props.onLaunch(v)}>
         <App app={v} />
       </div>
     )
 
-    return <div>{items}</div>
+    return <div class="sheet row">{items}</div>
   }
 }
 

@@ -70,7 +70,7 @@ let Layout = {
         <li class={{ active: state.page === 'apps' }}>
           <NumText left="">Browse Apps</NumText>
           <Row>
-            <Col xs="8 2"><Apps onLaunch={navigation.payment} /></Col>
+            <Col xs="12"><Apps onLaunch={navigation.payment} /></Col>
           </Row>
         </li>
 

@@ -15,7 +15,8 @@ let Login = {
       }
     }
 
-    return <Form onSubmit={login} class="form" title="Login">
+
+    return <Form onSubmit={login} title="Login">
       <h4>Email</h4>
       <input autofocus type="email" class="email"/>
       <h4>Password</h4>

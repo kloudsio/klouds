@@ -30,14 +30,17 @@ function process(ev, c, update) {
 let Form = {
   initialState() {
     return {
-      error: ''
+      error: '',
+      faded: true,
     }
   },
-  render(c) {
+  render(c, update) {
     let { props, state } = c
     let title = props.title
 
-    return <form {... props} onSubmit={process} >
+    let focus = (e) => update({ faded: false })
+    let blur = (e) => update({ faded: true })
+    return <form {... props} onSubmit={process} onFocus={focus} onBlur={blur} class={{ form: true, faded: state.faded }}>
       <h3>{title}</h3>
       <span class="error">{state.error}</span>
       {props.children}

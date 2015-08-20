@@ -1,6 +1,8 @@
 #!/bin/bash
 
-for template in $@; do
+all=`dirname $0`/../src/templates/*.html
+
+for template in $all; do
 	target="$(dirname $template)/$(basename -s .html $template).js"
   html=`cat $template`
   echo html | grep '\<([A-Z]\S*).*\>'
