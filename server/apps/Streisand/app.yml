@@ -1,0 +1,3 @@
+name: "Streisand"
+repo: "jlund/streisand"
+description: "Streisand sets up a new server running L2TP/IPsec, OpenSSH, OpenVPN, Shadowsocks, sslh, Stunnel, and a Tor bridge"

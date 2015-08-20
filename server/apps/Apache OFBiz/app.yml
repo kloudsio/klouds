@@ -1,0 +1,3 @@
+name: "Apache OFBiz"
+repo: "apache/ofbiz"
+description: "an open source product for the automation of enterprise processes that includes framework components and business applications for ERP (Enterprise Resource Planning), CRM (Customer Relationship Management), E-Business / E-Commerce, SCM (Supply Chain Management), MRP (Manufacturing Resource Planning), MMS/EAM (Maintenance Management System/Enterprise Asset Management), POS (Point Of Sale)."
