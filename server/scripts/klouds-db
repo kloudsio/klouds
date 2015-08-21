@@ -1,6 +1,7 @@
 #!/bin/bash
 
-cd $(dirname $0)/..
-
-# db=`babel-node -pe 'require("./config").MONGODB'`
-docker run -d -p 27017:27017 --name="klouds-db" mongo
+# redis in docker
+docker run --restart="always" -d \
+  -p 6379:6379 \
+  -v /var/redis:/data \
+  --name="redis" redis

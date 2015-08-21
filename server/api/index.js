@@ -12,8 +12,8 @@ import jwt from 'koa-jwt'
 
 
 export default app => {
-  let wire = (x, y) => app.use(y)
-  let GET = (str, handler) => app.use(route.get(str, handler))
+  let wire = (_, y) => app.use(y)
+  let GET = (x,y) => app.use(route.get(x,y))
 
   GET `/path ${users.login}`
 

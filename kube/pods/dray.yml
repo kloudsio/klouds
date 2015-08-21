@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    name: dray
+  name: dray
+spec:
+  containers:
+  - resources:
+      limits:
+        cpu: "0.1"
+    image: centurylink/dray
+    name: dray
+    ports:
+    - port: 3000
+      containerPort: 3000
+    volumeMounts:
+    - name: docksock
+      mountPath: /var/run/docker.sock
+  volumes:
+    - name: docksock
+      emptyDir: {}
+containers:
+- resources:
+    limits:
+      cpu: "0.1"
+  image: redis
+  name: redis
+  ports:
+  - port: 3000
+    containerPort: 3000
+  volumeMounts:
+  - name: docksock
+    mountPath: /var/run/docker.sock
+volumes:
+  - name: docksock
+    emptyDir: {}
