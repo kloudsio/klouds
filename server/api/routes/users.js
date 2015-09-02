@@ -1,40 +1,61 @@
 import config from '../../config'
 import db from '../../lib/db'
-
 import assert from 'assert'
-import jwt from 'koa-jwt'
 import createPswd from 'pswd'
-
+import jwt from 'koa-jwt'
 
 let pswd = createPswd()
 
-let userToken = function(user) {
+/**
+ * Access Token - jwt signs a user object
+ */
+function userToken(user) {
   return jwt.sign(user, config.JWT_KEY, { expiresInMinutes: 60 * 5 })
 }
 
-let openUser = function*({ email, password }) {
-  let user = yield db.redis.get(`user-${email}`)
-  assert(user, 'User not found')
+/**
+ * Login User
+ */
+async function loginUser({ email, password }) {
+  let target = await (
+    db.redis.hgetall(`user-${email}`)
+  )
+  assert(target, 'Incorrect Email or Password')
 
-  let isOk = yield pswd.compare(password, user.hash)
-  assert(isOk, 'Incorrect Email or Password')
+  let passOk = await (
+    pswd.compare(password, target.hash)
+  )
+  assert(passOk, 'Incorrect Email or Password')
 
+  delete target.hash
+  return target;
+}
+
+/**
+ * Create User
+ */
+async function createUser({ email, password }) {
+  let existing = await (
+    db.redis.hgetall(`user-${email}`)
+  )
+  assert(!existing, 'User already exists')
+
+  let hash = await (
+    pswd.hash(password)
+  )
+  let user = await (
+    db.redis.hmset(`user-${email}`, { email, hash })
+  )
   delete user.hash
   return user;
 }
 
-let createUser = function*({ email, password }) {
-  let userAlreadyExists = yield db.redis.get(`user-${email}`)
-  assert(!userAlreadyExists, 'User already exists')
-  let hash = yield pswd.hash(password)
-  let user = yield db.redis.set(`user-${email}`, { email, hash })
-  delete user.hash
-  return user;
-}
-
+/**
+ * Routes
+ */
 export default {
   * login() {
-    let user = yield openUser(this.request.body)
+    let user = yield loginUser(this.request.body)
     let token = userToken(user)
     this.body = { user, token }
   },
@@ -42,6 +63,9 @@ export default {
   * register() {
     let user = yield createUser(this.request.body)
     let token = userToken(user)
-    this.body = { user, token }
+    this.body = {
+      user,
+      token
+    }
   }
 }
