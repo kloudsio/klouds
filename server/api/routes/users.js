@@ -1,48 +1,47 @@
 import config from '../../config'
 import db from '../../lib/db'
 
+import assert from 'assert'
 import jwt from 'koa-jwt'
 import createPswd from 'pswd'
 
 
 let pswd = createPswd()
 
-function authtoken(user) {
+let userToken = function(user) {
   return jwt.sign(user, config.JWT_KEY, { expiresInMinutes: 60 * 5 })
 }
 
-function* login() {
-  let { email, password } = this.request.body
+let openUser = function*({ email, password }) {
+  let user = yield db.redis.get(`user-${email}`)
+  assert(user, 'User not found')
 
-  let user = yield redis.get(`user-${email}`)
-  this.assert(user, 401, 'Incorrect Email or Password')
+  let isOk = yield pswd.compare(password, user.hash)
+  assert(isOk, 'Incorrect Email or Password')
 
-  let valid = yield pswd.compare(password, user.password)
-  this.assert(valid, 401, 'Incorrect Email or Password')
-  delete user.password
-
-  let token = authtoken(user)
-
-  this.body = { user, token }
+  delete user.hash
+  return user;
 }
 
-function* register() {
-  let { email, password } = this.request.body
-  // check duplicate
-  let duplicate = yield redis.get(`user-${email}`)
-  this.assert(!duplicate, 400, 'Klouds ID already exists')
-  // set user
+let createUser = function*({ email, password }) {
+  let userAlreadyExists = yield db.redis.get(`user-${email}`)
+  assert(!userAlreadyExists, 'User already exists')
   let hash = yield pswd.hash(password)
-  let user = yield redis.set(`user-${email}`, {
-    email,
-    password: hash
-  })
-  // create auth token
-  let token = authtoken(user)
-  this.body = { user, token }
+  let user = yield db.redis.set(`user-${email}`, { email, hash })
+  delete user.hash
+  return user;
 }
 
 export default {
-  login,
-  register
+  * login() {
+    let user = yield openUser(this.request.body)
+    let token = userToken(user)
+    this.body = { user, token }
+  },
+
+  * register() {
+    let user = yield createUser(this.request.body)
+    let token = userToken(user)
+    this.body = { user, token }
+  }
 }
