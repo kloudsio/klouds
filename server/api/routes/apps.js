@@ -1,12 +1,12 @@
-import db from '../../lib/db'
+import fs from 'fs'
 
+let list = fs.readdirSync('../../apps')
 
 function* apps() {
-  this.body = db.apps.toArray()
+  this.body = list
 }
 
 function* disabled() {
-  this.body = db.disabled.toArray()
 }
 
 export default { apps, disabled }

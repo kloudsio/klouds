@@ -1,8 +1,6 @@
 FROM iojs:latest
 
 RUN mkdir /klouds
-RUN mkdir /klouds/.bundled
-VOLUME /klouds/.bundled
 
 RUN npm install -g babel http-server
 

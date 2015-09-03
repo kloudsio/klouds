@@ -1,7 +1,11 @@
 #!/bin/bash
 
+for c in redis klouds-api; do 
+  docker kill $c;
+  docker rm $c;
+done
+
 # redis in docker
-docker run --restart="always" -d \
-  -p 6379:6379 \
-  -v /var/redis:/data \
-  --name="redis" redis
+docker run -d --restart="always" -v /var/redis:/data  --name="redis" redis
+
+docker run -d --restart=always -p 48113:48113 --link=redis:redis --name=klouds-api ds0nt/klouds-api

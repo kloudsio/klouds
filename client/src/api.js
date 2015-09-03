@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-let apiroot = 'http://localhost:48113'
+let apiroot = `http://${document.location.hostname}:48113`
 let token = null
 let headers = {}
 
