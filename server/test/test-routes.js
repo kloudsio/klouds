@@ -5,9 +5,10 @@
  */
 
 import axios from 'axios'
-let { PORT=2020 } = process.env
 
-let x = route => 'http://localhost:' + PORT + route
+let [ hostname, port ] = process.argv.slice(2)
+
+let x = route => `http://${hostname}:${port}` + route
 
 let testPass = c => {
   let { status, data } = c

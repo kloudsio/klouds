@@ -2,7 +2,7 @@
 
 cd $(dirname $0)/..
 
-target=$HOME/.klouds/bundled
+target=`pwd`/dist
 
 PATH=./node_modules/.bin:$PATH
 
@@ -15,7 +15,9 @@ fi
 
 cp -rvu src/public/* $target/
 
-# ./scripts/build-templates src/templates/*.html
+./scripts/build-templates
+echo Done generating templates
+
 # echo Done generating templates
 
 browserify -d src/app.js -t babelify -o $target/app.js -v

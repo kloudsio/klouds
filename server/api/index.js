@@ -1,4 +1,3 @@
-import spec from './spec'
 import users from './routes/users'
 import apps from './routes/apps'
 import stripe from './routes/stripe'
@@ -9,6 +8,30 @@ import route from 'koa-route'
 import jsonbody from 'koa-json-body'
 import jwt from 'koa-jwt'
 
+import validator from 'validator'
+
+let spec = {
+  '/(login|register)': {
+    request: {
+      method: 'POST',
+      body: {
+        email: validator.isEmail,
+        password: /.{6,100}/
+      },
+      type: 'json'
+    }
+  },
+  '/subscribe': {
+    request: {
+      method: 'POST',
+      body: {
+        app: str => validator.toString(str).length > 3,
+        source: str => validator.toString(str).length > 3
+      },
+      type: 'json'
+    }
+  }
+}
 
 
 export default app => {

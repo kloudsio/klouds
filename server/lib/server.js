@@ -6,11 +6,11 @@ import koa from 'koa'
 import cors from 'kcors'
 
 let app = koa()
-app.use(cors())
 
+// api stuff
 app.on('error', f => console.error(f.stack))
-
-function* errors(next) {
+app.use(cors())
+app.use(function* errors(next) {
   try {
     yield next
   } catch (err) {
@@ -18,11 +18,12 @@ function* errors(next) {
     this.body = { error: err.message }
     this.app.emit('error', err, this)
   }
-}
+})
 
-app.use(errors)
+// add routes
 routes(app)
 
+// event handlers
 app.on('subscribe', rancher.create)
 
 // Start Listening

@@ -1,16 +1,15 @@
 FROM iojs:latest
 
-WORKDIR /klouds
 
 RUN npm install -g babel nodemon
 
-COPY package.json /klouds/
+WORKDIR /klouds
+COPY package.json ./
 RUN npm install
 
-COPY config.js /klouds/
-COPY . /klouds/
+COPY config.js ./
+COPY . /klouds
 
-
-EXPOSE 48113
-
-CMD ./scripts/serve
+EXPOSE 8080
+ENV NODE_ENV production
+CMD babel-node main.js
