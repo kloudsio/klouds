@@ -1,8 +1,0 @@
-#!/bin/bash
-
-server=$1
-port=$2
-
-cd `dirname $0`/..
-
-./test/test-routes.js $server $port

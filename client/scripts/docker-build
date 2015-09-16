@@ -1,6 +1,0 @@
-#!/bin/bash
-
-TAG=ds0nt/klouds-ui
-BASE=$(dirname $0)/..
-
-docker build -t $TAG $BASE

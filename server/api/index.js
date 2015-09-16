@@ -1,7 +1,8 @@
+import unruly from 'unruly'
+
 import users from './routes/users'
 import apps from './routes/apps'
 import stripe from './routes/stripe'
-import config from '../config'
 
 import scheme from 'koa-scheme'
 import route from 'koa-route'
@@ -46,6 +47,6 @@ export default app => {
   wire`${route.post('/register', users.register)}`
   wire`${route.get('/apps', apps.apps)}`
   wire`${route.get('/disabled', apps.disabled)}`
-  wire`${jwt({ secret: config.JWT_KEY })}`
+  wire`${jwt({ secret: unruly['jwt_key'] })}`
   wire`${route.post('/subscribe', stripe.subscribe)}`
 }

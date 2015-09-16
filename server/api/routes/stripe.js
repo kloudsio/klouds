@@ -1,10 +1,9 @@
-import config from '../../config'
+import config from 'unruly'
 import db from '../../lib/db'
-
 import stripe from 'stripe'
 
 
-let client = stripe(config.STRIPE_SK)
+let client = stripe(config['stripe_sk'])
 
 /**
  * customer is a promisified wrapper for stripe.customers.create
@@ -25,7 +24,7 @@ function* subscribe() {
   let token = this.request.body.source
 
   let customerData = {
-    plan: config.STRIPE_PLAN,
+    plan: config['stripe_plan'],
     email: user.email,
     source: token,
     metadata: {user: user.id, app}

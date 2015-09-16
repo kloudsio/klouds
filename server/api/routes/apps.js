@@ -1,9 +1,9 @@
 import fs from 'fs'
 import path from 'path'
+import unruly from 'unruly'
 
-let list = fs.readdirSync(path.join(__dirname, '../../apps')).map(
-  folder => ({ name: folder })
-)
+let list = fs.readdirSync(unruly['apps'])
+	.map(x => ({ name: x }))
 
 function* apps() {
   this.body = list

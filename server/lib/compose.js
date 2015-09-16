@@ -1,13 +1,13 @@
-import config from '../config'
+import unruly from 'unruly'
 
 import { join } from 'path'
 import { exec } from 'child_process'
 
 const args = `\
-  --url "${config.RANCHER_URL}" \
-  --project-name ${config.RANCHER_PROJECTNAME}\
-  --access-key ${config.RANCHER_ACCESSKEY}\
-  --secret-key ${config.RANCHER_SECRETKEY}`
+  --url "${unruly['rancher_url']}" \
+  --project-name ${unruly['rancher_project_name']}\
+  --access-key ${unruly['rancher_access_key']}\
+  --secret-key ${unruly['rancher_secret_key']}`
 
 const commands = [
   ['create', 'create'],

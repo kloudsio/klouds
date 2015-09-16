@@ -1,10 +1,10 @@
-import config from '../config'
+import unruly from 'unruly'
 
 import lowdb from 'lowdb'
 import redis from 'then-redis'
 
-let low = lowdb(config.lowdb)
-let redisClient = redis.createClient(config.redis)
+let low = lowdb(unruly.lowdb)
+let redisClient = redis.createClient(unruly.redis)
 
 export default {
   redis: redisClient,

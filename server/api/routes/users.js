@@ -1,4 +1,4 @@
-import config from '../../config'
+import unruly from 'unruly'
 import db from '../../lib/db'
 import assert from 'assert'
 import createPswd from 'pswd'
@@ -10,7 +10,7 @@ let pswd = createPswd()
  * Access Token - jwt signs a user object
  */
 function userToken(user) {
-  return jwt.sign(user, config.JWT_KEY, { expiresInMinutes: 60 * 5 })
+  return jwt.sign(user, unruly['jwt_key'], { expiresInMinutes: 60 * 5 })
 }
 
 /**
