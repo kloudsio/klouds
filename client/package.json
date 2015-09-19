@@ -6,19 +6,16 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.5.4",
+    "babel": "^5.8.23",
     "babelify": "^6.1.2",
-    "browserify": "^10.2.4",
-    "codemirror": "^5.5.0",
+    "browserify": "^10.2.6",
     "deku": "0.4.4",
-    "inquirer": "^0.8.5",
+    "envify": "^3.4.0",
     "flexboxgrid": "^6.2.0",
-    "myth": "^1.4.0",
-    "shifty": "^1.5.0",
     "is_js": "^0.7.4",
-    "lodash": "^3.9.3"
+    "lodash": "^3.9.3",
+    "myth": "^1.5.0",
+    "shifty": "^1.5.0"
   },
-  "devDependencies": {
-    "mochify": "^2.9.0",
-    "phantomjs": "^1.9.17"
-  }
+  "devDependencies": {}
 }

@@ -1,9 +1,8 @@
 import axios from 'axios'
 
-let apiroot = process.env.API
 let token = null
 let headers = {}
-
+let apiroot = process.env.APIROOT
 //
 // Intercept Auth Tokens
 //

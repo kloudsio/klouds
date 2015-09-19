@@ -5,9 +5,9 @@ import koa from 'koa'
 import cors from 'kcors'
 
 let app = koa()
-app.on('error', f => console.error(f.stack))
 
 app.use(cors())
+app.on('error', f => console.error(f.stack))
 
 app.use(function* errors(next) {
   try {

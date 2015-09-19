@@ -1,32 +1,20 @@
 #!/bin/bash
-
-cd $(dirname $0)/..
-
-target=`pwd`/dist
-
 PATH=./node_modules/.bin:$PATH
 
-export NODE_ENV=development
-export API="http://localhost:8080"
+# cd client
+cd $(dirname $0)/..
 
-if [ ! -d $target ]; then
-    mkdir -p $target
-fi
+# output folder
+TARGET=../dist
+[[ "$1" != "" ]] || TARGET=$1
+[ -d $TARGET ] || mkdir -p $TARGET
 
-cp -rvu src/public/* $target/
+
+cp -rvu src/public/* $TARGET/
 
 ./scripts/build-templates
-echo Done generating templates
-
-# echo Done generating templates
-
-browserify -d src/app.js -t babelify -o $target/app.js -v
-echo Done generating app.js
-
-myth src/styles/app.css $target/app.css
-echo Done generating app.css
+browserify -d src/app.js -t babelify -t envify -o $TARGET/app.js -v
+myth src/styles/app.css $TARGET/app.css
 
 # ./scripts/lint-elements.sh
 # mochify --transform babelify --reporter spec ./test/index.js
-
-echo Done building
