@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # client bundle script
-output=`pwd`/dist
 src=/tmp/klouds
-rm -r $output
-mkdir $output
+
+
 
 export APIROOT=http://klouds.io:8080
+
 
 # clone to tmp
 git clone https://github.com/kloudsio/klouds /tmp/klouds
@@ -16,7 +16,6 @@ cd /tmp/klouds
 docker build --tag="klouds-build" - <<scaffold
 	FROM node
 	WORKDIR /src
-	VOLUME /output
 	VOLUME /src
 	RUN npm install -g babel browserify myth
 	CMD bash
@@ -25,15 +24,15 @@ scaffold
 
 # the dirty work
 # --env-file=".env"
-docker run --rm -i    \
+docker run -i --name=klouds-build \
   -e APIROOT=$APIROOT \
   -v /tmp/klouds:/src \
-  -v $output:/output  \
-  "klouds-build"      \
-  /bin/bash <<bundle
+  klouds-build        \
+  /bin/bash <<dobuild
 	echo "Starting Build"
-	cd client 
-	ls -al;
+	cd client
 	env
-	./scripts/build /output
-bundle
+	./scripts/build
+dobuild
+
+docker cp klouds-build:/src/client/dist ./
