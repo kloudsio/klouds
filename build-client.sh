@@ -6,13 +6,6 @@ set -o nounset
 set -o errexit
 
 
-
-
-# command || { echo "command failed"; exit 1; }
-# if ! command; then echo "command failed"; exit 1; fi
-# if ! git remote -v | grep -o "kloudsio/klouds"; then
-# fi
-
 envfile='klouds.env'
 cloneurl='https://github.com/kloudsio/klouds'
 
@@ -24,51 +17,53 @@ docker build -q --tag="bundler" - <<bundler
 	CMD /bin/bash
 bundler
 
-# worker=$(docker create --env-file="$envfile" bundler)
 
 # dockerized task
 #
-#   -> clone repo 
+#   -> clone from github
 #	-> build
-#   -> envify
-#   -> output /bundled.tar
-docker run -v `pwd`/bundled:/bundled -i bundler bash <<source
-	git clone https://github.com/kloudsio/klouds /klouds
+#
+docker run -v `pwd`/bundled:/y -i bundler bash <<source
+	set -o nounset
+	set -o errexit
 
-	cd /klouds/client/
-	ls /bundled
-	cp -rvu /klouds/client/src/public/* /bundled
+	git clone https://github.com/kloudsio/klouds /x
 
-	./scripts/build-templates
+	cd /x/client/
+	npm install
 
-	browserify -v -d src/app.js
+	cp -rvu /x/client/src/public/* /y
+	./scripts/deku-wrap.sh
+	browserify -v -d src/app.js \
 	 -t babelify\
 	 -t envify\
-	 -o /bundled/app.js
-
-	myth src/styles/app.css /bundled/app.css
-	cd /bundled
-	pwd
-	ls -al
+	 -o /y/app.js
+	myth src/styles/app.css /y/app.css
 source
 
-exit;
-# export CLIENT=./dist
+echo -n `pwd`/y bundled.
+ls bundled
 
-# docker rm klouds-build
 
+
+# the docker
+#
+# 	80	 publish /y
+# 	8080 api
+#
 docker build --tag="klouds-api" - <<Dockerfile
 FROM iojs:latest
-
-WORKDIR /code
-RUN npm install babel
-ADD . /code
+WORKDIR /root
 
 EXPOSE 80
 EXPOSE 8080
+VOLUME /y
+CMD ./klouds/main.js
 
-RUN cd /code/server && npm install
-CMD ./main.js
+RUN npm install babel
+RUN git clone https://github.com/kloudsio/klouds
+RUN cd /root/klouds && npm install
+
 Dockerfile
 
-docker run -d --name=klouds-api -p 8080:8080 -p 80:80
+docker run -d --name=klouds -p 80 -p 8080 -v `pwd`/y:/y
