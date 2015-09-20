@@ -1,38 +1,74 @@
 #!/bin/bash
 
-# client bundle script
-src=/tmp/klouds
+# dot-tagged: awesome docker, browserify, build klouds, awesome bash
+
+set -o nounset
+set -o errexit
 
 
 
-export APIROOT=http://klouds.io:8080
 
+# command || { echo "command failed"; exit 1; }
+# if ! command; then echo "command failed"; exit 1; fi
+# if ! git remote -v | grep -o "kloudsio/klouds"; then
+# fi
 
-# clone to tmp
-git clone https://github.com/kloudsio/klouds /tmp/klouds
-cd /tmp/klouds
+envfile='klouds.env'
+cloneurl='https://github.com/kloudsio/klouds'
 
-# bundle container
-docker build --tag="klouds-build" - <<scaffold
+# client build container
+docker build -q --tag="bundler" - <<bundler
 	FROM node
-	WORKDIR /src
-	VOLUME /src
-	RUN npm install -g babel browserify myth
-	CMD bash
-scaffold
+	WORKDIR /root
+	RUN npm install -g babel browserify myth watchify envify
+	CMD /bin/bash
+bundler
 
+# worker=$(docker create --env-file="$envfile" bundler)
 
-# the dirty work
-# --env-file=".env"
-docker run -i --name=klouds-build \
-  -e APIROOT=$APIROOT \
-  -v /tmp/klouds:/src \
-  klouds-build        \
-  /bin/bash <<dobuild
-	echo "Starting Build"
-	cd client
-	env
-	./scripts/build
-dobuild
+# dockerized task
+#
+#   -> clone repo 
+#	-> build
+#   -> envify
+#   -> output /bundled.tar
+docker run -v `pwd`/bundled:/bundled -i bundler bash <<source
+	git clone https://github.com/kloudsio/klouds /klouds
 
-docker cp klouds-build:/src/client/dist ./
+	cd /klouds/client/
+	ls /bundled
+	cp -rvu /klouds/client/src/public/* /bundled
+
+	./scripts/build-templates
+
+	browserify -v -d src/app.js
+	 -t babelify\
+	 -t envify\
+	 -o /bundled/app.js
+
+	myth src/styles/app.css /bundled/app.css
+	cd /bundled
+	pwd
+	ls -al
+source
+
+exit;
+# export CLIENT=./dist
+
+# docker rm klouds-build
+
+docker build --tag="klouds-api" - <<Dockerfile
+FROM iojs:latest
+
+WORKDIR /code
+RUN npm install babel
+ADD . /code
+
+EXPOSE 80
+EXPOSE 8080
+
+RUN cd /code/server && npm install
+CMD ./main.js
+Dockerfile
+
+docker run -d --name=klouds-api -p 8080:8080 -p 80:80

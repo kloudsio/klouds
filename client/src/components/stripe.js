@@ -2,6 +2,9 @@ import { element } from 'deku'
 import Debug from './debug'
 import Form from './form'
 
+Stripe.setPublishableKey(process.env.STRIPE_PK)
+
+
 let DebugFill = {
   render() {
     function fill() {
