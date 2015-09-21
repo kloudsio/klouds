@@ -41,11 +41,6 @@ docker run -v `pwd`/bundled:/y --env-file="$envfile" -i bundler bash <<source
 	myth src/styles/app.css /y/app.css
 source
 
-echo -n `pwd`/y bundled.
-ls bundled
-
-
-
 # the docker
 #
 # 	80	 publish /y
@@ -66,4 +61,4 @@ CMD babel-node /klouds/main.js
 
 Dockerfile
 
-docker run -d --env-file="$envfile" --name=klouds -p 80:80 -p 8080:8080 -v `pwd`/bundled:/bundled api
+docker run --env-file=klouds.env --name=klouds -p 80:80 -p 8080:8080 -v `pwd`/bundled:/bundled api
