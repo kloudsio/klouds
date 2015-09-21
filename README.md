@@ -1,5 +1,8 @@
 # Klouds - Domesticated Web Applications
 
+https://codeship.com/projects/b859ae10-4261-0133-3599-062894ba1566/status?branch=master
+
+
 Web application launchpad built for the open-source web.
 We host open-source web apps by making them available to users from a click of a button. We dont sell the open-source apps, instead, we sell the services to use them. And to be fair enough to the hard-working developers that contribute greatly to the open-source community, we pay them a substantial amount from the subscriber fee of their apps. Once users subscribe to use any app, the app author (developer) gets paid.
 
