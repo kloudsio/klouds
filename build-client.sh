@@ -26,7 +26,7 @@ bundler
 docker run -v `pwd`/bundled:/y --env-file="$envfile" -i bundler bash <<source
 	set -o nounset
 	set -o errexit
-   
+
 	git clone https://github.com/kloudsio/klouds /x
 
 	cd /x/client/
@@ -46,19 +46,26 @@ source
 # 	80	 publish /y
 # 	8080 api
 #
-docker build -t api - <<Dockerfile
+docker build -t api --no-cache - <<server
 FROM node:latest
 
 EXPOSE 80
 EXPOSE 8080
 VOLUME /bundled
+WORKDIR /root
 
-RUN npm install -g babel koa koa-static unruly
-RUN git clone https://github.com/kloudsio/klouds
-RUN cd /klouds && npm install babel koa koa-static unruly
-RUN cd /klouds/server && npm install
-CMD babel-node /klouds/main.js
+RUN npm install -g babel
 
-Dockerfile
+RUN git clone https://github.com/kloudsio/klouds klouds
+RUN npm install koa koa-static unruly debug
+RUN cd klouds/server && npm install
 
-docker run --env-file=klouds.env --name=klouds -p 80:80 -p 8080:8080 -v `pwd`/bundled:/bundled api
+CMD DEBUG=unruly babel-node klouds/main.js
+server
+
+docker run --rm \
+	-v `pwd`/bundled:/bundled \
+	--env-file="$envfile"     \
+	-p 80:80     \
+	-p 8080:8080 \
+	api
