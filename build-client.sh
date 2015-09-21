@@ -32,7 +32,10 @@ docker run -v `pwd`/bundled:/y --env-file="$envfile" -i bundler bash <<source
 	cd /x/client/
 	npm install
 
+	# copy index.html etc.
 	cp -rvu /x/client/src/public/* /y
+
+	# transpile src to -> app.js, app.css
 	./scripts/deku-wrap.sh
 	browserify -v -d src/app.js \
 	 -t babelify\
@@ -63,9 +66,9 @@ RUN cd klouds/server && npm install
 CMD DEBUG=unruly babel-node klouds/main.js
 server
 
-docker run --rm \
+docker run --rm -it \
 	-v `pwd`/bundled:/bundled \
 	--env-file="$envfile"     \
-	-p 80:80     \
+	-p 8000:80     \
 	-p 8080:8080 \
 	api
