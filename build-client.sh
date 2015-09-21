@@ -57,11 +57,12 @@ FROM node:latest
 EXPOSE 80
 EXPOSE 8080
 VOLUME /bundled
-CMD babel-node main.js
 
 RUN npm install -g babel koa koa-static unruly
 RUN git clone https://github.com/kloudsio/klouds
+RUN cd /klouds && npm install babel koa koa-static unruly
 RUN cd /klouds/server && npm install
+CMD babel-node /klouds/main.js
 
 Dockerfile
 
