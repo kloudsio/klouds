@@ -8,7 +8,7 @@ let debug = require('debug')('main')
 
 let app = koa()
 app.use(function*(){
-  this.header('klouds-api-endpoint', unruly.hostname + ':' api_port)
+  this.header('klouds-api-endpoint', unruly.hostname + ':' +unruly.api_port)
 })
 app.use(serve(unruly['client']))
 app.listen(unruly['www_port'], () => console.log(`file server started ${unruly['www_port']}`))

@@ -11,7 +11,7 @@ cloneurl='https://github.com/kloudsio/klouds'
 
 # client build container
 docker build -q --tag="bundler" - <<bundler
-	FROM node
+	FROM node:latest
 	WORKDIR /root
 	RUN npm install -g babel browserify myth watchify envify
 	CMD /bin/bash
@@ -23,10 +23,10 @@ bundler
 #   -> clone from github
 #	-> build
 #
-docker run -v `pwd`/bundled:/y -i bundler bash <<source
+docker run -v `pwd`/bundled:/y --env-file="$envfile" -i bundler bash <<source
 	set -o nounset
 	set -o errexit
-
+   
 	git clone https://github.com/kloudsio/klouds /x
 
 	cd /x/client/
@@ -51,19 +51,18 @@ ls bundled
 # 	80	 publish /y
 # 	8080 api
 #
-docker build --tag="klouds-api" - <<Dockerfile
-FROM iojs:latest
-WORKDIR /root
+docker build -t api - <<Dockerfile
+FROM node:latest
 
 EXPOSE 80
 EXPOSE 8080
-VOLUME /y
-CMD ./klouds/main.js
+VOLUME /bundled
+CMD babel-node main.js
 
-RUN npm install babel
+RUN npm install -g babel koa koa-static unruly
 RUN git clone https://github.com/kloudsio/klouds
-RUN cd /root/klouds && npm install
+RUN cd /klouds/server && npm install
 
 Dockerfile
 
-docker run -d --name=klouds -p 80 -p 8080 -v `pwd`/y:/y
+docker run -d --env-file="$envfile" --name=klouds -p 80:80 -p 8080:8080 -v `pwd`/bundled:/bundled api
