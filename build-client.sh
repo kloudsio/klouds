@@ -63,12 +63,12 @@ RUN git clone https://github.com/kloudsio/klouds klouds
 RUN npm install koa koa-static unruly debug
 RUN cd klouds/server && npm install
 
-CMD DEBUG=unruly babel-node klouds/main.js
+CMD babel-node klouds/main.js
 server
 
-docker run --rm -it \
+docker run -d --name=redis redis || docker start redis
+
+docker run -it --env-file="$envfile" \
+  --link=redis:redis \
 	-v `pwd`/bundled:/bundled \
-	--env-file="$envfile"     \
-	-p 8000:80     \
-	-p 8080:8080 \
-	api
+	-p 8000:80 -p 8080:8080 api
