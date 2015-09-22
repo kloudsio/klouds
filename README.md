@@ -10,13 +10,13 @@ We host open-source web apps by making them available to users from a click of a
 **Docker-based Application Vending Machine**
 
 
-1) Finds the best OSS web applications
-2) Dockerizes them
-3) Makes a very attractive menu of applications for users to chose from
-4) Allows users to spin up a 24 hour test of any applicaiton on our list
-5) Gathers feedback on OSS web applicaitons
-6) Collects requests for original application development from our user community
-7) Collaborates with authors to price applicatons according to the author's wishes
+ 1) Finds the best OSS web applications
+ 2) Dockerizes them
+ 3) Makes a very attractive menu of applications for users to chose from
+ 4) Allows users to spin up a 24 hour test of any applicaiton on our list
+ 5) Gathers feedback on OSS web applicaitons
+ 6) Collects requests for original application development from our user community
+ 7) Collaborates with authors to price applicatons according to the author's wishes
 
 **Coming Soon**
 
