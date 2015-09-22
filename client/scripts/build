@@ -1,5 +1,42 @@
 #!/bin/bash
 
+set -e
+
+print_help()
+{
+    cat 1>&2 <<EOF
+webify Usage:
+    webify [opts]
+    -d - Output Directory
+    -h - Print this message
+EOF
+}
+
+
+while getopts ":h:o:e" opt;do
+    case $opt in
+    o)
+        OUTPUT=${OPTARG}
+        ;;
+    h)
+        print_help
+        exit 1
+        ;;
+    \?)
+        echo "Invalid arguemnts" >&2
+        print_help
+        exit 1
+        ;;
+    :)
+        echo "Option -${OPTARG} requires arguement." >&2
+        print_help
+        exit 1
+        ;;
+    esac
+done
+shift $((OPTIND-1))
+
+
 set -o nounset
 
 src=$1
@@ -16,8 +53,6 @@ echo 'js transpiled'
 
 myth $src/styles/app.css $target/app.css
 echo 'css transpiled'
-
-
 
 # test
 # ./scripts/lint-elements.sh
