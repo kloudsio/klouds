@@ -1,6 +1,6 @@
 # Klouds - Domesticated Web Applications
 
-https://drone.io/github.com/kloudsio/klouds/status.png
+
 [![Build Status](https://drone.io/github.com/kloudsio/klouds/status.png)](https://drone.io/github.com/kloudsio/klouds/latest)
 
 Web application launchpad built for the open-source web.
