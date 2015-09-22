@@ -3,7 +3,7 @@
 set -e
 
 cd $(dirname $0) # work in our own turf.
-
+OUTPUT_DIR=client-build
 
 print_help()
 {
