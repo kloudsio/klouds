@@ -89,5 +89,5 @@ cp -vru src/public/* $OUTPUT_DIR/
 ##
 
 cd ../server
-npm install
-cd ..
+npm install -d --log-level=warn;
+./main.js
