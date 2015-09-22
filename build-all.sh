@@ -3,7 +3,7 @@
 set -e
 
 cd $(dirname $0) # work in our own turf.
-OUTPUT_DIR=client-build
+OUTPUT_DIR=www
 
 print_help()
 {
@@ -25,7 +25,8 @@ while getopts ":h:o:e:x:i:" opt;do
         OUTPUT_DIR=`realpath ${OPTARG}`
         ;;
     e)  # environment file
-		`cat klouds.env | grep = | sed -e "s/^/export /g"`
+        ENV_FILE=`realpath ${OPTARG}`
+		`cat $ENV_FILE | grep = | sed -e "s/^/export /g"`
 		;;
 	x)  # environment url
 		if [ echo $OPTARG | grep -E "^http" ]; then
@@ -86,3 +87,7 @@ cp -vru src/public/* $OUTPUT_DIR/
 ##
 ## build server
 ##
+
+cd ../server
+npm install
+cd ..
