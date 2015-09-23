@@ -1,30 +1,25 @@
 
-# the docker
-#
-# 	80	 publish /y
-# 	8080 api
-#
-docker build -t api --no-cache - <<server
-FROM node:latest
 
-EXPOSE 80
+
+docker build -t klouds-all - <<KEOF
+FROM node
+
+RUN npm install -g babel http-server
 EXPOSE 8080
+WORKDIR /klouds
 
-VOLUME /www
-WORKDIR /root
-
-RUN npm install -g babel
-
-RUN git clone https://github.com/kloudsio/klouds klouds
-RUN npm install koa koa-static unruly debug
-RUN cd klouds/server && npm install
-
-CMD babel-node klouds/main.js
-server
+CMD bash
+KEOF
 
 docker run -d --name=redis redis || docker start redis
+docker run -d -p 9000:${WWW_PORT} klouds-all http-server www -p ${WWW_PORT}
+docker run -d -p 8000:${API_PORT} klouds-all babel-node server/main.js
 
-docker run -it --env-file="$envfile" \
-  --link=redis:redis \
-	-v `pwd`/www:/www \
-	-p 8000:80 -p 8080:8080 api
+
+docker run -d --env-file="$envfile" \
+	-p 8080 klouds-all \
+  http-server /klouds/www -p 8080
+
+docker run -d --env-file="$envfile" \
+  --link=redis:redis -p 8080 klouds-all \
+  babel-node klouds/main.js
